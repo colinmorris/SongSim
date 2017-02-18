@@ -1,3 +1,24 @@
 rect.focused {
+    fill: purple;
+}
+
+rect.focal {
+    fill: green;
+}
+
+rect.undermouse {
+}
+
+.primary, .primary-diag {
+    fill-opacity: .7;
+}
+
+.incidental {
+    fill-opacity: .3;
+}
+
+rect.alley {
     fill: yellow;
+    fill-opacity: 0.2;
+    pointer-events: none;
 }

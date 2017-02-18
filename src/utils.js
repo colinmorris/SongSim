@@ -9,6 +9,14 @@ class Diagonal {
     this.y1 = y1;
   }
 
+  static fromPointAndLength(x, y, len) {
+    return new Diagonal(x, y, x+len, y+len);
+  }
+
+  get length() {
+    return this.x1 - this.x0;
+  }
+
   get xrange() {
     return [this.x0, this.x1];
   }
@@ -21,13 +29,36 @@ class Diagonal {
     return this.x0 === this.y0;
   }
 
+  contains(x, y) {
+    return (this.x0 <= x && x <= this.x1 && (x-y) === (this.x0 - this.y0));
+  }
+
+  reflection(about) {
+    return new Diagonal(this.y0, this.x0, this.y1, this.x1);
+  }
+
+  * points() {
+    for (let x = this.x0, y=this.y0; x <= this.x1; x++, y++) {
+      yield [x, y];
+    }
+  }
+
   /** Return the two main diagonal correlates of this diagonal.
    * (Or nothing, if this is part of the main diagonal)
    */
   mainCorrelates() {
-    var correlates = [];
-    if (this.isMain()) return correlates;
-    
+    if (this.isMain()) return [];
+    return [
+      Diagonal.fromPointAndLength(this.x0, this.x0, this.length),
+      Diagonal.fromPointAndLength(this.y0, this.y0, this.length),
+    ];
+  }
+
+  down_main() {
+    return Diagonal.fromPointAndLength(this.x0, this.x0, this.length);
+  }
+  side_main() {
+    return Diagonal.fromPointAndLength(this.y0, this.y0, this.length);
   }
 
 

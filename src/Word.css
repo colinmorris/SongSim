@@ -1,7 +1,14 @@
 span {
-    padding-right: .75ch;
 }
 
-.focus {
-    color: crimson;
+.focal {
+    font-weight: bold;
+}
+
+.focal, .primary, .primary-diag {
+    color: rgb(230, 60, 50);
+}
+
+.incidental {
+    color: rgb(150, 20, 30);
 }

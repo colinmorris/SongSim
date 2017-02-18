@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+
 import './Matrix.css';
+
+import {NOINDEX} from './constants.js';
 
 class Matrix extends Component {
   constructor(props) {
     super(props);
     this.H = 800;
     this.W = 800;
-    this.state = {focused_diagonal: undefined};
   }
 
   handleClick = (e) => {
@@ -14,27 +16,28 @@ class Matrix extends Component {
   }
 
   handleRectEnter = (e) => {
+    console.log('entered');
     var rect = e.target;
     var x = rect.x.baseVal.value, y = rect.y.baseVal.value;
-    // Extend selection along diagonal
-    var diag = this.getLocalDiagonal(x, y);
-    this.setState({focused_diagonal: diag});
-    // Highlight local chunk + corresponding chunks on main diag ( + corresp chunks off main diag?)
-    // transmit up the chain
-    this.props.hover_cb([x, y]);
+    this.props.hover_cb({x, y});
   }
 
   handleRectLeave = (e) => {
-    this.props.hover_cb([]);
-    // Clear any highlighting
-    this.setState({focused_diagonal: undefined});
+    console.log('left');
+    this.props.hover_cb({x:NOINDEX, y:NOINDEX});
   }
 
-  shouldHighlight(x, y) {
-    // TODO: fancier
-    var d = this.state.focused_diagonal;
-    if (!d) return false;
-    return (d.x0 <= x && x <= d.x1 && ((x - y) === (d.x0 - d.y0)));
+  rectClassName(x, y) {
+    if (x === this.props.focal_rect.x && y == this.props.focal_rect.y) {
+      return 'focal undermouse';
+    }
+    for (let [diag, strength] of this.props.focal_diags) {
+      if (diag.contains(x, y)) {
+        // TODO: use strength
+        return 'focal ' + strength;
+      }
+    }
+    return '';
   }
 
   RectFromCoords(coords) {
@@ -42,7 +45,7 @@ class Matrix extends Component {
     var key = (x * this.props.matrix.length) + y;
     // I don't quite get why the 1s need to be quoted?
     return (<rect key={key} 
-              className={this.shouldHighlight(x, y) ? "focused" : ""}
+              className={this.rectClassName(x, y)}
               x={x} y={y} width="1" height="1"
               onMouseEnter={this.handleRectEnter}
               onMouseLeave={this.handleRectLeave}
@@ -50,10 +53,20 @@ class Matrix extends Component {
            );
   }
 
+  row_rect() {
+    if (!this.props.focal_rows) return;
+    return (<rect className="alley" x="0" y={this.props.focal_rows[0]}
+        width={this.props.matrix.length} height={1+ this.props.focal_rows[1] - this.props.focal_rows[0]}
+        />);
+  }
+  col_rect() {
+    if (!this.props.focal_cols) return;
+    return (<rect className="alley" x={this.props.focal_cols[0]} y="0"
+        height={this.props.matrix.length} width={1+ this.props.focal_cols[1] - this.props.focal_cols[0]}
+        />);
+  }
+
   render() {
-    /** Given text, compute self-similarity matrix
-     *  naive drawing impl: for each x,y draw rect
-     */
     var rects = this.props.matrix.adjacency_list.map(
         this.RectFromCoords.bind(this)
     );
@@ -63,6 +76,8 @@ class Matrix extends Component {
         <svg height={this.H} width={this.W} >
         <g transform={scalestr}>
           {rects}
+          {this.row_rect()}
+          {this.col_rect()}
         </g>
         </svg>
     );

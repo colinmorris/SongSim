@@ -18,13 +18,19 @@ class Verse {
     var raw_words = [];
     var clean_words = [];
     var newlines = [];
-    for (const line of text.split("\n")) {
+    var skipped = 0;
+    for (const line of text.split(/[\n\r]+/)) {
       for (const word of line.trim().split(/\s+/)) {
+        if (!word) {
+          skipped ++;
+          continue;
+        }
         raw_words.push(word);
         clean_words.push(Verse.cleanWord(word));
       }
       newlines.push(clean_words.length - 1);
     }
+    console.log(`Skipped ${skipped} empty words`);
     this.raw_words = raw_words;
     this.clean_words = clean_words;
     this.newline_indices = newlines;
@@ -89,6 +95,39 @@ class VerseMatrix {
       }
     }
     return new Diagonal(x0, y0, x1, y1);
+  }
+
+  * matches_for_index(i) {
+    for (let y = 0; y < this.length; y++) {
+      if (y === i) continue;
+      if (this.at(i, y)) {
+        yield y;
+      }
+    }
+  }
+
+  containsDiagonal(diag) {
+    for (let [x, y] of diag.points()) {
+      if (!this.at(x, y)) return false;
+    }
+    return true;
+  }
+
+  * incidental_correlates(diag) {
+    for (let x of this.matches_for_index(diag.y0)) {
+      var cor = Diagonal.fromPointAndLength(x, diag.y0, diag.length);
+      if (this.containsDiagonal(cor)) {
+        yield cor;
+        yield cor.down_main();
+      }
+    }
+    for (let y of this.matches_for_index(diag.x0)) {
+      var cor = Diagonal.fromPointAndLength(diag.x0, y, diag.length);
+      if (this.containsDiagonal(cor)) {
+        yield cor;
+        yield cor.side_main();
+      }
+    }
   }
 
 }
