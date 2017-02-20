@@ -22,3 +22,17 @@ rect.alley {
     fill-opacity: 0.2;
     pointer-events: none;
 }
+
+rect.wordrect {
+    stroke: aqua;
+    /** Depending on the amount of text and the size of the viewport, individual
+     * rects can end up being really small, and hovering over them (and remaining
+     * there) turns into a very finnicky affair. This helps with that by adding
+     * some invisible padding around each rect. */
+    stroke-width: 1.5;
+    stroke-opacity: 0;
+}
+
+svg.matrix {
+    background-color: aliceblue;
+}

@@ -9,8 +9,11 @@ class Verse {
   }
 
   static cleanWord(word) {
-    // TODO: punctuation
-    return word.toLowerCase(); 
+    var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+    word = word.toLowerCase(); 
+    var depuncd = word.replace(punctRE, '');
+    // If this word is *all* punctuation, then leave it alone.
+    return depuncd || word;
   }
 
   parse(text) {

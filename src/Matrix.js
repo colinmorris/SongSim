@@ -29,24 +29,24 @@ class Matrix extends Component {
 
   rectClassName(x, y) {
     if (x === this.props.focal_rect.x && y == this.props.focal_rect.y) {
-      return 'focal undermouse';
+      return 'wordrect focal undermouse';
     }
     for (let [diag, strength] of this.props.focal_diags) {
       if (diag.contains(x, y)) {
         // TODO: use strength
-        return 'focal ' + strength;
+        return 'wordrect focal ' + strength;
       }
     }
-    return '';
+    return 'wordrect';
   }
 
   RectFromCoords(coords) {
     var x = coords.x, y = coords.y;
     var key = (x * this.props.matrix.length) + y;
-    // I don't quite get why the 1s need to be quoted?
+    var sidelength = 1.00;
     return (<rect key={key} 
               className={this.rectClassName(x, y)}
-              x={x} y={y} width="1" height="1"
+              x={x} y={y} width={sidelength} height={sidelength}
               onMouseEnter={this.handleRectEnter}
               onMouseLeave={this.handleRectLeave}
             />
@@ -73,7 +73,7 @@ class Matrix extends Component {
     var scale = this.H / this.props.matrix.length;
     var scalestr = `scale(${scale})`;
     return (
-        <svg height={this.H} width={this.W} >
+        <svg className="matrix" height={this.H} width={this.W} >
         <g transform={scalestr}>
           {rects}
           {this.row_rect()}
