@@ -13,7 +13,7 @@ import config from './config.js';
 class Songsim extends Component {
   constructor(props) {
     super(props);
-    var text = "I never wanna hear you say\nThat I want it that way";
+    var text = "foo";
     this.state = {verse: new Verse(text),
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,

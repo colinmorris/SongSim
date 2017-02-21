@@ -57,18 +57,15 @@ class Matrix extends Component {
     }
   }
 
-  RectFromCoords(coords) {
-    var x = coords.x, y = coords.y;
-    var key = (x * this.props.matrix.length) + y;
-    var sidelength = 1.00;
-    return (<rect key={key} 
-              className={this.rectClassName(x, y)}
-              x={x} y={y} width={sidelength} height={sidelength}
+  renderRect(r) {
+    var key = r.x + (this.props.matrix.length * r.y);
+    return (<rect key={key}
+              className={this.rectClassName(r.x, r.y)}
+              x={r.x} y={r.y} width={r.width} height={r.height}
               onMouseEnter={this.handleRectEnter}
               onMouseLeave={this.handleRectLeave}
-              fill={this.rectColor(x)}
-            />
-           );
+              fill={this.rectColor(r.x)}
+            />);
   }
 
   row_rect() {
@@ -86,16 +83,15 @@ class Matrix extends Component {
 
   render() {
     this.cm = this._cm();
-    var rects = this.props.matrix.adjacency_list.map(
-        this.RectFromCoords.bind(this)
-    );
+    var rects = Array.from(this.props.verse.rects()).map(
+        this.renderRect.bind(this));
     var scale = this.H / this.props.matrix.length;
     var scalestr = `scale(${scale})`;
     var debug;
     if (config.debug) {
       debug = (<p>
           {this.props.matrix.length} x {this.props.matrix.length}{", "} 
-          {this.props.matrix.adjacency_list.length} rects
+          {rects.length} rects
         </p>);
     }
     var res = (

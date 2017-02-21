@@ -1,5 +1,18 @@
 import {Diagonal} from './utils.js';
 
+class Lala {
+  constructor(start, end, word) {
+    this.start = start;
+    this.end = end;
+    this.word = word;
+    this.length = 1 + (this.end - this.start);
+  }
+
+  includes(i) {
+    return (this.start <= i && i <= this.end);
+  }
+}
+
 /**
  * A chunk of text, presumably some kind of poem/song.
  */
@@ -27,6 +40,7 @@ class Verse {
     var lala_start;
     var last_word;
     var i = 0;
+    var lala;
     for (const line of text.split(/[\n\r]+/)) {
       for (const word of line.trim().split(/\s+/)) {
         if (!word) {
@@ -44,9 +58,9 @@ class Verse {
           if (lala_start === undefined) {
             lala_start = i - 1;
           }
-        } else if (lala_start) {
+        } else if (lala_start !== undefined) {
           // The end of a lala
-          var lala = new Lala(lala_start, i, cleaned);
+          lala = new Lala(lala_start, i-1, last_word);
           lalas.push(lala);
           lala_start = undefined;
         }
@@ -57,7 +71,7 @@ class Verse {
     }
     // Clean up unresolved lala, if there is one
     if (lala_start) {
-      var lala = new Lala(lala_start, i, cleaned);
+      lala = new Lala(lala_start, i-1, last_word);
       lalas.push(lala);
     }
     console.log(`Skipped ${skipped} empty words`);
@@ -102,11 +116,30 @@ class Verse {
   }
 
   * rects() {
-    for (let lala of this.lalas) {
-      for (let [x, y] of [[0,0]]) {
-        yield {size: lala.length};
+    for (let i=0; i < this.lalas.length; i++) {
+      let lala = this.lalas[i];
+      for (let j=i; j < this.lalas.length; j++) {
+        let lala2 = this.lalas[j];
+        if (lala.word !== lala2.word) {
+          continue;
+        }
+        yield {x: lala.start, y: lala2.start, width: lala.length, height: lala2.length};
+        if (i !== j) {
+          yield {y: lala.start, x: lala2.start, height: lala.length, width: lala2.length};
+        }
       }
     }
+    for (let pt of this.matrix.adjacency_list) {
+     // this feels inefficient. I guess we're trading time for memory.
+     var foundx = false, foundy = false;
+     for (let lalax of this.lalas) {
+      foundx = foundx || lalax.includes(pt.x);
+      foundy = foundy || lalax.includes(pt.y);
+     }
+     if (!foundx || !foundy) {
+       yield {x: pt.x, y: pt.y, width: 1, height: 1};
+     }
+   }
   }
 
   uniqueWordId(idx) {
@@ -125,15 +158,6 @@ class Verse {
       lines.push(line);
     }
     return lines;
-  }
-}
-
-class Lala {
-  constructor(start, end, word) {
-    this.start = start;
-    this.end = end;
-    this.word = word;
-    this.length = 1 + (this.end - this.start);
   }
 }
 
@@ -215,15 +239,16 @@ class VerseMatrix {
    * the main diagonal correlates of *those* diagonals. 
    */
   * incidental_correlates(diag) {
+    var cor;
     for (let x of this.matches_for_index(diag.y0)) {
-      var cor = Diagonal.fromPointAndLength(x, diag.y0, diag.length);
+      cor = Diagonal.fromPointAndLength(x, diag.y0, diag.length);
       if (this.containsDiagonal(cor)) {
         yield cor;
         yield cor.down_main();
       }
     }
     for (let y of this.matches_for_index(diag.x0)) {
-      var cor = Diagonal.fromPointAndLength(diag.x0, y, diag.length);
+      cor = Diagonal.fromPointAndLength(diag.x0, y, diag.length);
       if (this.containsDiagonal(cor)) {
         yield cor;
         yield cor.side_main();
