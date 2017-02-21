@@ -22,6 +22,7 @@ class Verse {
     var clean_words = [];
     var newlines = [];
     var skipped = 0;
+    var word_ids = new Map();
     for (const line of text.split(/[\n\r]+/)) {
       for (const word of line.trim().split(/\s+/)) {
         if (!word) {
@@ -29,7 +30,10 @@ class Verse {
           continue;
         }
         raw_words.push(word);
-        clean_words.push(Verse.cleanWord(word));
+        var cleaned = Verse.cleanWord(word);
+        clean_words.push(cleaned);
+        var count = word_ids.has(cleaned) ? word_ids.get(cleaned)+1 : 1;
+        word_ids.set(cleaned, count);
       }
       newlines.push(clean_words.length - 1);
     }
@@ -37,6 +41,45 @@ class Verse {
     this.raw_words = raw_words;
     this.clean_words = clean_words;
     this.newline_indices = newlines;
+    let RANDOMIZE = false;
+    let IGNORE_HAPAX = true;
+    var next_idx = 0;
+    var nWords = 0;
+    for (let [word, count] of word_ids) {
+      if (IGNORE_HAPAX && count == 1) {
+        word_ids.set(word, -1);
+      } else {
+        word_ids.set(word, next_idx++);
+        nWords++;
+      }
+    }
+    if (RANDOMIZE) {
+      console.warn("this is broken now");
+      this.word_ids = this.scramble(word_ids);
+    } else {
+      this.word_ids = word_ids;
+    }
+    this.nWords = nWords;
+    console.log(`Found ${word_ids.size} unique words out of ${clean_words.length}`);
+  }
+
+  scramble(wids) {
+    var words = Array.from(wids.keys());
+    for (let i=words.length; i>0; i--) {
+      let j = Math.floor(Math.random() * i);
+      [words[i-1], words[j]] = [words[j], words[i-1]];
+    }
+    let res = new Map();
+    for (let i=0; i < words.length; i++) {
+      res.set(words[i], i);
+    }
+    return res;
+  }
+
+
+
+  uniqueWordId(idx) {
+    return this.word_ids.get(this.clean_words[idx]);
   }
 
   get lines() {
@@ -65,21 +108,35 @@ class VerseMatrix {
   constructor(words) {
     this.length = words.length;
     this.adjacency_list = [];
+    this.adjacency_map = new Array(this.length);
     for (var x=0; x < words.length; x++) {
       for (var y=0; y < words.length; y++) {
         // TODO: wasteful to include diagonal and both reflections off diag
         if (words[x] == words[y]) {
-          this.adjacency_list.push({x, y});
+          this.set_pair(x, y);
         }
       }
     }
   }
 
-  at(x, y) {
-    // TODO: sooo unoptimized
-    return this.adjacency_list.some((pt) => { return pt.x == x && pt.y == y });
+  set_pair(x, y) {
+    this.adjacency_list.push({x, y});
+    if (this.adjacency_map[x] === undefined) {
+      this.adjacency_map[x] = new Set();
+    }
+    this.adjacency_map[x].add(y);
   }
 
+  /** Return whether the words at the given indices match. */
+  at(x, y) {
+    if (x < 0 || this.length <= x || y < 0 || this.length <= y) {
+      return false;
+    }
+    return this.adjacency_map[x].has(y);
+  }
+
+  /** Return the diagonal that contains the given point. Behaviour undefined if
+   * there's no match at (x, y), or if x == y. */
   local_diagonal(x, y) {
     var x0 = x, x1 = x;
     var y0 = y, y1 = y;
@@ -109,6 +166,7 @@ class VerseMatrix {
     }
   }
 
+  /** Does the given diagonal exist in this matrix? */
   containsDiagonal(diag) {
     for (let [x, y] of diag.points()) {
       if (!this.at(x, y)) return false;
@@ -116,6 +174,10 @@ class VerseMatrix {
     return true;
   }
 
+  /** Extant diagonals in this matrix which are translations of the given
+   * diagonal in the x or y direction and not on the main diagonal. Plus 
+   * the main diagonal correlates of *those* diagonals. 
+   */
   * incidental_correlates(diag) {
     for (let x of this.matches_for_index(diag.y0)) {
       var cor = Diagonal.fromPointAndLength(x, diag.y0, diag.length);

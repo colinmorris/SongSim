@@ -17,6 +17,7 @@ class Songsim extends Component {
     this.state = {verse: new Verse(text),
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
+      color: config.color_words, 
     };
     // TODO: this is silly. Should just bundle the default txt file.
     SongSelector.loadSong(this.onTextChange);
@@ -107,29 +108,39 @@ class Songsim extends Component {
     var rows = rowcols[0], cols = rowcols[1];
     return (
         <div>
+
         <SongSelector onSelect={this.onTextChange} />
+
         <div className="row">
+          <div className="col-xs-8">
+            <Matrix 
+              matrix={this.state.verse.matrix} 
+              verse={this.state.verse} 
+              hover_cb={(pt) => this.setState({matrix_focal: pt})}
+              focal_rect={this.focal_rect}
+              focal_rows={rows}
+              focal_cols={cols}
+              focal_diags={this.focal_diags}
+              color_words={this.state.color}
+            />
+          </div>
 
-        <div className="col-xs-8">
-          <Matrix 
-            matrix={this.state.verse.matrix} 
-            verse={this.state.verse} 
-            hover_cb={(pt) => this.setState({matrix_focal: pt})}
-            focal_rect={this.focal_rect}
-            focal_rows={rows}
-            focal_cols={cols}
-            focal_diags={this.focal_diags}
-          />
+          <div className="lyricspane col-xs-4">
+            <LyricsPane verse={this.state.verse} 
+              hover_cb={(i) => this.setState({lyrics_focal: i})}
+              highlights={this.lyrics_highlights}
+            />
+          </div>
         </div>
 
-        <div className="lyricspane col-xs-4">
-          <LyricsPane verse={this.state.verse} 
-            hover_cb={(i) => this.setState({lyrics_focal: i})}
-            highlights={this.lyrics_highlights}
-          />
+        <div className="row">
+          <label>
+            Colorify
+            <input type="checkbox" checked={this.state.color}
+              onChange={(e) => this.setState({color: e.target.checked})} />
+          </label>
         </div>
 
-        </div>
         </div>
         );
   }

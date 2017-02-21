@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import colormap from 'colormap';
 
 import './Matrix.css';
 
 import {NOINDEX} from './constants.js';
+import config from './config.js';
 
 class Matrix extends Component {
   constructor(props) {
@@ -11,19 +13,22 @@ class Matrix extends Component {
     this.W = 800;
   }
 
+  _cm() {
+    return colormap({colormap: config.colormap, 
+      nshades: Math.max(11, this.props.verse.nWords)});
+  }
+
   handleClick = (e) => {
     console.log(`Clicky click of type ${e.type}`);
   }
 
   handleRectEnter = (e) => {
-    console.log('entered');
     var rect = e.target;
     var x = rect.x.baseVal.value, y = rect.y.baseVal.value;
     this.props.hover_cb({x, y});
   }
 
   handleRectLeave = (e) => {
-    console.log('left');
     this.props.hover_cb({x:NOINDEX, y:NOINDEX});
   }
 
@@ -40,6 +45,18 @@ class Matrix extends Component {
     return 'wordrect';
   }
 
+  rectColor(x) {
+    if (!this.props.color_words) {
+      return 'black';
+    } else {
+      var i = this.props.verse.uniqueWordId(x);
+      if (i == -1) { // hapax
+        return 'black';
+      }
+      return this.cm[i];
+    }
+  }
+
   RectFromCoords(coords) {
     var x = coords.x, y = coords.y;
     var key = (x * this.props.matrix.length) + y;
@@ -49,6 +66,7 @@ class Matrix extends Component {
               x={x} y={y} width={sidelength} height={sidelength}
               onMouseEnter={this.handleRectEnter}
               onMouseLeave={this.handleRectLeave}
+              fill={this.rectColor(x)}
             />
            );
   }
@@ -67,6 +85,7 @@ class Matrix extends Component {
   }
 
   render() {
+    this.cm = this._cm();
     var rects = this.props.matrix.adjacency_list.map(
         this.RectFromCoords.bind(this)
     );
