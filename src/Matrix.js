@@ -91,7 +91,14 @@ class Matrix extends Component {
     );
     var scale = this.H / this.props.matrix.length;
     var scalestr = `scale(${scale})`;
-    return (
+    var debug;
+    if (config.debug) {
+      debug = (<p>
+          {this.props.matrix.length} x {this.props.matrix.length}{", "} 
+          {this.props.matrix.adjacency_list.length} rects
+        </p>);
+    }
+    var res = (
         <svg className="matrix" height={this.H} width={this.W} >
         <g transform={scalestr}>
           {rects}
@@ -100,6 +107,10 @@ class Matrix extends Component {
         </g>
         </svg>
     );
+    if (config.debug) {
+      return <div>{res} {debug}</div>;
+    }
+    return res;
   }
 }
 
