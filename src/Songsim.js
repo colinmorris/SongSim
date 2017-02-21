@@ -75,13 +75,7 @@ class Songsim extends Component {
       add(correl, 'primary-maindiag');
     }
     for (let correl of this.state.verse.matrix.incidental_correlates(primary)) {
-      // TODO: diag label
       add(correl, 'incidental');
-      /*for (let subcorrel of correl.mainCorrelates()) {
-        if (!foc.has(subcorrel)) {
-          foc.set(correl, 'incidental-maindiag');
-        }
-      }*/
     }
     return foc;
   }

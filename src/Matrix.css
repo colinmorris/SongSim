@@ -1,4 +1,6 @@
 .matrixHighlights {
+    /* So that we don't get spurious mouseLeave events when a highlight rect
+     * pops up on top of a wordrect. */
     pointer-events: none;
 }
 
@@ -16,6 +18,10 @@ rect.focalBlock, rect.alley {
 
 rect.alley {
     fill-opacity: .3;
+}
+
+.alley.lyrics-alley {
+    fill-opacity: 1;
 }
 
 rect.wordrect {

@@ -68,17 +68,21 @@ class BaseMatrix extends Component {
   }
 }
 
+/** This component is just responsible for the responsive highlighting stuff
+ * we do when hovering over the matrix. **/
 class MatrixHighlights extends Component {
 
   row_rect() {
     if (!this.props.focal_rows) return;
-    return (<rect className="alley" x="0" y={this.props.focal_rows[0]}
+    var className = (this.props.lyrics_focal !== NOINDEX) ? "alley lyrics-alley" : "alley";
+    return (<rect className={className} x="0" y={this.props.focal_rows[0]}
         width={this.props.matrix_length} height={1+ this.props.focal_rows[1] - this.props.focal_rows[0]}
         />);
   }
   col_rect() {
     if (!this.props.focal_cols) return;
-    return (<rect className="alley" x={this.props.focal_cols[0]} y="0"
+    var className = (this.props.lyrics_focal !== NOINDEX) ? "alley lyrics-alley" : "alley";
+    return (<rect className={className} x={this.props.focal_cols[0]} y="0"
         height={this.props.matrix_length} width={1+ this.props.focal_cols[1] - this.props.focal_cols[0]}
         />);
   }
@@ -98,13 +102,9 @@ class MatrixHighlights extends Component {
     console.assert(this.props.lyrics_focal === NOINDEX || 
         this.props.matrix_focal.x === NOINDEX, "In two places at once?");
     var filling = '';
-    if (this.props.lyrics_focal !== NOINDEX) {
-      // TODO
-    } else if (this.props.matrix_focal.x !== NOINDEX) {
+    if (this.props.matrix_focal.x !== NOINDEX) {
       filling = Array.from(this.props.focal_diags).map(this.rectFromDiagonal);
-    } else {
-      // TODO: any way to just say "don't render in this case?"
-    }
+    } 
     return (<g className="matrixHighlights">
         {filling} {this.row_rect()} {this.col_rect()}
         </g>);
@@ -114,7 +114,6 @@ class MatrixHighlights extends Component {
 class Matrix extends Component {
   constructor(props) {
     super(props);
-    // TODO: static vars
     this.H = 800;
     this.W = 800;
   }
