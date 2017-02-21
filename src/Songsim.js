@@ -7,19 +7,18 @@ import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {Verse} from './verse.js';
 import {NOINDEX} from './constants.js';
+import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
 
 class Songsim extends Component {
   constructor(props) {
     super(props);
-    var text = "foo";
+    var text = LANDING_LYRICS;
     this.state = {verse: new Verse(text),
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
       color: config.color_words, 
     };
-    // TODO: this is silly. Should just bundle the default txt file.
-    SongSelector.loadSong(this.onTextChange);
   }
 
   onTextChange = (t) => {

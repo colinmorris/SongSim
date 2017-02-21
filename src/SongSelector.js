@@ -43,7 +43,7 @@ var CANNED_SONGS = [
   //{fname: '.txt', artist: '', title: ''},
 ];
 
-var DEFAULT_SONG = 'plan.txt';
+var DEFAULT_SONG = 'buddyholly.txt';
 //var DEFAULT_SONG = 'test.txt';
 
 class SongSelector extends Component {
