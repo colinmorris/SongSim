@@ -30,7 +30,6 @@ class Verse {
   }
 
   parse(text) {
-    // TODO: portable newlines?
     var raw_words = [];
     var clean_words = [];
     var newlines = [];
@@ -161,10 +160,12 @@ class Verse {
   }
 }
 
-/** TODO: the naive approach here is probably wildly inefficient.
- * Is there some js implementation of bitstrings I could use here?
- */
 class VerseMatrix {
+  /** TODO: implementation isn't *totally* naive at this point, but is still
+   * probably pretty darn inefficient. Might be worth thinking about faster/
+   * more compact data structures at some point. But, in practice, it seems 
+   * like the dominating perf concern is just the number of elements (rects)
+   * we're drawing, not our js objects/methods. */
   constructor(words) {
     this.length = words.length;
     this.adjacency_list = [];

@@ -18,7 +18,6 @@ class Word extends Component {
   }
 
   render() {
-    // TODO: incorporate strength
     var kls = this.props.focus;
     return (<span className={kls} onMouseEnter={this.onEnter}
              onMouseLeave={this.onLeave}>

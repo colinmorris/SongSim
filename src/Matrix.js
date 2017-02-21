@@ -38,7 +38,6 @@ class Matrix extends Component {
     }
     for (let [diag, strength] of this.props.focal_diags) {
       if (diag.contains(x, y)) {
-        // TODO: use strength
         return 'wordrect focal ' + strength;
       }
     }

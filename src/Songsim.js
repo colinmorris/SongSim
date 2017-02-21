@@ -70,7 +70,6 @@ class Songsim extends Component {
       return foc;
     }
     var primary = this.focal_local_diag;
-    // TODO: prolly just use string (classname) values instead of ints
     foc.set(primary, 'primary');
     for (let correl of primary.mainCorrelates()) {
       foc.set(correl, 'primary-diag');
@@ -85,7 +84,6 @@ class Songsim extends Component {
     var hl = new Map();
     if (this.state.lyrics_focal !== NOINDEX) {
       hl.set(this.state.lyrics_focal, 'focal');
-      // TODO: row/col matches?
     } else if (this.state.matrix_focal.x !== NOINDEX) {
       // Focal rect
       hl.set(this.state.matrix_focal.x, 'focal');
