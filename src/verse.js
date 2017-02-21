@@ -23,6 +23,10 @@ class Verse {
     var newlines = [];
     var skipped = 0;
     var word_ids = new Map();
+    var lalas = [];
+    var lala_start;
+    var last_word;
+    var i = 0;
     for (const line of text.split(/[\n\r]+/)) {
       for (const word of line.trim().split(/\s+/)) {
         if (!word) {
@@ -34,13 +38,33 @@ class Verse {
         clean_words.push(cleaned);
         var count = word_ids.has(cleaned) ? word_ids.get(cleaned)+1 : 1;
         word_ids.set(cleaned, count);
+
+        if (cleaned === last_word) {
+          // Should we start a new lala?
+          if (lala_start === undefined) {
+            lala_start = i - 1;
+          }
+        } else if (lala_start) {
+          // The end of a lala
+          var lala = new Lala(lala_start, i, cleaned);
+          lalas.push(lala);
+          lala_start = undefined;
+        }
+        last_word = cleaned;
+        i++;
       }
       newlines.push(clean_words.length - 1);
+    }
+    // Clean up unresolved lala, if there is one
+    if (lala_start) {
+      var lala = new Lala(lala_start, i, cleaned);
+      lalas.push(lala);
     }
     console.log(`Skipped ${skipped} empty words`);
     this.raw_words = raw_words;
     this.clean_words = clean_words;
     this.newline_indices = newlines;
+    this.lalas = lalas;
     let RANDOMIZE = false;
     let IGNORE_HAPAX = true;
     var next_idx = 0;
@@ -61,6 +85,7 @@ class Verse {
     }
     this.nWords = nWords;
     console.log(`Found ${word_ids.size} unique words out of ${clean_words.length}`);
+    this.matrix = new VerseMatrix(this.clean_words);
   }
 
   scramble(wids) {
@@ -76,7 +101,13 @@ class Verse {
     return res;
   }
 
-
+  * rects() {
+    for (let lala of this.lalas) {
+      for (let [x, y] of [[0,0]]) {
+        yield {size: lala.length};
+      }
+    }
+  }
 
   uniqueWordId(idx) {
     return this.word_ids.get(this.clean_words[idx]);
@@ -95,9 +126,14 @@ class Verse {
     }
     return lines;
   }
+}
 
-  get matrix() {
-    return new VerseMatrix(this.clean_words);
+class Lala {
+  constructor(start, end, word) {
+    this.start = start;
+    this.end = end;
+    this.word = word;
+    this.length = 1 + (this.end - this.start);
   }
 }
 
