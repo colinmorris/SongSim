@@ -125,10 +125,11 @@ class Songsim extends Component {
             />
           </div>
 
-          <div className="lyricspane col-xs-4">
+          <div className="col-xs-4">
             <LyricsPane verse={this.state.verse} 
               hover_cb={(i) => this.setState({lyrics_focal: i})}
               highlights={this.lyrics_highlights}
+              onChange={this.onTextChange}
             />
           </div>
         </div>

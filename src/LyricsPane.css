@@ -1,3 +1,10 @@
-div.line {
-    /*overflow-wrap: break-word;*/
+div.words {
+    column-count: 2;
+}
+
+textarea {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: 500px;
 }

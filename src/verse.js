@@ -118,6 +118,7 @@ class VerseMatrix {
  */
 class Verse {
   constructor(text) {
+    this.raw = text;
     this.parse(text);
   }
 
