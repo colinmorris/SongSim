@@ -1,5 +1,6 @@
 import {Diagonal} from './utils.js';
 
+/** A sequence of repeated words. */
 class Lala {
   constructor(start, end, word) {
     this.start = start;
@@ -10,153 +11,6 @@ class Lala {
 
   includes(i) {
     return (this.start <= i && i <= this.end);
-  }
-}
-
-/**
- * A chunk of text, presumably some kind of poem/song.
- */
-class Verse {
-  constructor(text) {
-    this.parse(text);
-  }
-
-  static cleanWord(word) {
-    var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
-    word = word.toLowerCase(); 
-    var depuncd = word.replace(punctRE, '');
-    // If this word is *all* punctuation, then leave it alone.
-    return depuncd || word;
-  }
-
-  parse(text) {
-    var raw_words = [];
-    var clean_words = [];
-    var newlines = [];
-    var skipped = 0;
-    var word_ids = new Map();
-    var lalas = [];
-    var lala_start;
-    var last_word;
-    var i = 0;
-    var lala;
-    for (const line of text.split(/[\n\r]+/)) {
-      for (const word of line.trim().split(/\s+/)) {
-        if (!word) {
-          skipped ++;
-          continue;
-        }
-        raw_words.push(word);
-        var cleaned = Verse.cleanWord(word);
-        clean_words.push(cleaned);
-        var count = word_ids.has(cleaned) ? word_ids.get(cleaned)+1 : 1;
-        word_ids.set(cleaned, count);
-
-        if (cleaned === last_word) {
-          // Should we start a new lala?
-          if (lala_start === undefined) {
-            lala_start = i - 1;
-          }
-        } else if (lala_start !== undefined) {
-          // The end of a lala
-          lala = new Lala(lala_start, i-1, last_word);
-          lalas.push(lala);
-          lala_start = undefined;
-        }
-        last_word = cleaned;
-        i++;
-      }
-      newlines.push(clean_words.length - 1);
-    }
-    // Clean up unresolved lala, if there is one
-    if (lala_start) {
-      lala = new Lala(lala_start, i-1, last_word);
-      lalas.push(lala);
-    }
-    console.log(`Skipped ${skipped} empty words`);
-    this.raw_words = raw_words;
-    this.clean_words = clean_words;
-    this.newline_indices = newlines;
-    this.lalas = lalas;
-    let RANDOMIZE = false;
-    let IGNORE_HAPAX = true;
-    var next_idx = 0;
-    var nWords = 0;
-    for (let [word, count] of word_ids) {
-      if (IGNORE_HAPAX && count == 1) {
-        word_ids.set(word, -1);
-      } else {
-        word_ids.set(word, next_idx++);
-        nWords++;
-      }
-    }
-    if (RANDOMIZE) {
-      console.warn("this is broken now");
-      this.word_ids = this.scramble(word_ids);
-    } else {
-      this.word_ids = word_ids;
-    }
-    this.nWords = nWords;
-    console.log(`Found ${word_ids.size} unique words out of ${clean_words.length}`);
-    this.matrix = new VerseMatrix(this.clean_words);
-  }
-
-  scramble(wids) {
-    var words = Array.from(wids.keys());
-    for (let i=words.length; i>0; i--) {
-      let j = Math.floor(Math.random() * i);
-      [words[i-1], words[j]] = [words[j], words[i-1]];
-    }
-    let res = new Map();
-    for (let i=0; i < words.length; i++) {
-      res.set(words[i], i);
-    }
-    return res;
-  }
-
-  * rects() {
-    for (let i=0; i < this.lalas.length; i++) {
-      let lala = this.lalas[i];
-      for (let j=i; j < this.lalas.length; j++) {
-        let lala2 = this.lalas[j];
-        if (lala.word !== lala2.word) {
-          continue;
-        }
-        yield {x: lala.start, y: lala2.start, width: lala.length, height: lala2.length};
-        if (i !== j) {
-          yield {y: lala.start, x: lala2.start, height: lala.length, width: lala2.length};
-        }
-      }
-    }
-    for (let pt of this.matrix.adjacency_list) {
-     // this feels inefficient. I guess we're trading time for memory.
-     var foundx = false, foundy = false;
-     for (let lalax of this.lalas) {
-      foundx = foundx || lalax.includes(pt.x);
-      foundy = foundy || lalax.includes(pt.y);
-     }
-     if (!foundx || !foundy) {
-       yield {x: pt.x, y: pt.y, width: 1, height: 1};
-     }
-   }
-  }
-
-  uniqueWordId(idx) {
-    return this.word_ids.get(this.clean_words[idx]);
-  }
-
-  get lines() {
-    var lines = []
-    var i = 0;
-    for (const eol of this.newline_indices) {
-      var line = [];
-      // TODO: this is stupid, don't need a loop
-      for (; i <= eol; i++) {
-        line.push({i: i, raw: this.raw_words[i]});
-      }
-      lines.push(line);
-    }
-    return lines;
   }
 }
 
@@ -173,7 +27,7 @@ class VerseMatrix {
     for (var x=0; x < words.length; x++) {
       for (var y=0; y < words.length; y++) {
         // TODO: wasteful to include diagonal and both reflections off diag
-        if (words[x] == words[y]) {
+        if (words[x] === words[y]) {
           this.set_pair(x, y);
         }
       }
@@ -256,7 +110,155 @@ class VerseMatrix {
       }
     }
   }
-
 }
+
+
+/**
+ * A chunk of text, presumably some kind of poem/song.
+ */
+class Verse {
+  constructor(text) {
+    this.parse(text);
+  }
+
+  static cleanWord(word) {
+    var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+    word = word.toLowerCase(); 
+    var depuncd = word.replace(punctRE, '');
+    // If this word is *all* punctuation, then leave it alone.
+    return depuncd || word;
+  }
+
+  parse(text) {
+    var raw_words = [];
+    var clean_words = [];
+    var newlines = [];
+    var skipped = 0;
+    var word_ids = new Map();
+    var lalas = [];
+    var lala_start;
+    var last_word;
+    var i = 0;
+    var lala;
+    for (const line of text.split(/[\n\r]+/)) {
+      for (const word of line.trim().split(/\s+/)) {
+        if (!word) {
+          skipped ++;
+          continue;
+        }
+        raw_words.push(word);
+        var cleaned = Verse.cleanWord(word);
+        clean_words.push(cleaned);
+        var count = word_ids.has(cleaned) ? word_ids.get(cleaned)+1 : 1;
+        word_ids.set(cleaned, count);
+
+        if (cleaned === last_word) {
+          // Should we start a new lala?
+          if (lala_start === undefined) {
+            lala_start = i - 1;
+          }
+        } else if (lala_start !== undefined) {
+          // The end of a lala
+          lala = new Lala(lala_start, i-1, last_word);
+          lalas.push(lala);
+          lala_start = undefined;
+        }
+        last_word = cleaned;
+        i++;
+      }
+      newlines.push(clean_words.length - 1);
+    }
+    // Clean up unresolved lala, if there is one
+    if (lala_start) {
+      lala = new Lala(lala_start, i-1, last_word);
+      lalas.push(lala);
+    }
+    console.log(`Skipped ${skipped} empty words`);
+    this.raw_words = raw_words;
+    this.clean_words = clean_words;
+    this.newline_indices = newlines;
+    this.lalas = lalas;
+    let RANDOMIZE = false;
+    let IGNORE_HAPAX = true;
+    var next_idx = 0;
+    var nWords = 0;
+    for (let [word, count] of word_ids) {
+      if (IGNORE_HAPAX && count === 1) {
+        word_ids.set(word, -1);
+      } else {
+        word_ids.set(word, next_idx++);
+        nWords++;
+      }
+    }
+    if (RANDOMIZE) {
+      console.warn("this is broken now");
+      this.word_ids = this.scramble(word_ids);
+    } else {
+      this.word_ids = word_ids;
+    }
+    this.nWords = nWords;
+    console.log(`Found ${word_ids.size} unique words out of ${clean_words.length}`);
+    this.matrix = new VerseMatrix(this.clean_words);
+  }
+
+  scramble(wids) {
+    var words = Array.from(wids.keys());
+    for (let i=words.length; i>0; i--) {
+      let j = Math.floor(Math.random() * i);
+      [words[i-1], words[j]] = [words[j], words[i-1]];
+    }
+    let res = new Map();
+    for (let i=0; i < words.length; i++) {
+      res.set(words[i], i);
+    }
+    return res;
+  }
+
+  * rects() {
+    for (let i=0; i < this.lalas.length; i++) {
+      let lala = this.lalas[i];
+      for (let j=i; j < this.lalas.length; j++) {
+        let lala2 = this.lalas[j];
+        if (lala.word !== lala2.word) {
+          continue;
+        }
+        yield {x: lala.start, y: lala2.start, width: lala.length, height: lala2.length};
+        if (i !== j) {
+          yield {y: lala.start, x: lala2.start, height: lala.length, width: lala2.length};
+        }
+      }
+    }
+    for (let pt of this.matrix.adjacency_list) {
+     // this feels inefficient. I guess we're trading time for memory.
+     var foundx = false, foundy = false;
+     for (let lalax of this.lalas) {
+      foundx = foundx || lalax.includes(pt.x);
+      foundy = foundy || lalax.includes(pt.y);
+     }
+     if (!foundx || !foundy) {
+       yield {x: pt.x, y: pt.y, width: 1, height: 1};
+     }
+   }
+  }
+
+  uniqueWordId(idx) {
+    return this.word_ids.get(this.clean_words[idx]);
+  }
+
+  get lines() {
+    var lines = []
+    var i = 0;
+    for (const eol of this.newline_indices) {
+      var line = [];
+      // TODO: this is stupid, don't need a loop
+      for (; i <= eol; i++) {
+        line.push({i: i, raw: this.raw_words[i]});
+      }
+      lines.push(line);
+    }
+    return lines;
+  }
+}
+
 
 export {Verse, VerseMatrix};

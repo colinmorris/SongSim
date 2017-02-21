@@ -48,10 +48,6 @@ var DEFAULT_SONG = 'plan.txt';
 
 class SongSelector extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   renderOption = (song) => {
     return (<option key={song.fname} value={song.fname}>
               {song.artist} - {song.title}

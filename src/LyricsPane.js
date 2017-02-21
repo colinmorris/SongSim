@@ -5,14 +5,7 @@ import './LyricsPane.css';
 import Word from './Word.js';
 
 class LyricsPane extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleHover = (e) => {
-
-  }
-
+  
   renderWord = (word) => {
     return (<Word i={word.i} key={word.i} raw={word.raw} 
                 focus={this.props.highlights.get(word.i) || 0} 

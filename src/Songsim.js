@@ -5,9 +5,8 @@ import './Songsim.css';
 import Matrix from './Matrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
-import {VerseMatrix, Verse} from './verse.js';
+import {Verse} from './verse.js';
 import {NOINDEX} from './constants.js';
-import {Diagonal} from './utils.js';
 import config from './config.js';
 
 class Songsim extends Component {
@@ -90,7 +89,7 @@ class Songsim extends Component {
       hl.set(this.state.matrix_focal.y, 'focal');
       // This is lazy, but should basically work for now
       for (let [diag, strength] of this.focal_diags) {
-        for (let [x, y] of diag.points()) {
+        for (let [x, _y] of diag.points()) {
           if (!hl.has(x)) {
             hl.set(x, strength);
           }

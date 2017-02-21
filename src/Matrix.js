@@ -42,7 +42,7 @@ class BaseMatrix extends Component {
       return 'black';
     } else {
       var i = this.props.verse.uniqueWordId(x);
-      if (i == -1) { // hapax
+      if (i === -1) { // hapax
         return 'black';
       }
       return this.cm[i];
