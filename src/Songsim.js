@@ -100,6 +100,9 @@ class Songsim extends Component {
     return hl;
   }
 
+  matrix_hover_cb = (pt) => {
+    this.setState({matrix_focal: pt})
+  }
 
   render() {
     var rowcols = this.focal_rowcols;
@@ -114,7 +117,7 @@ class Songsim extends Component {
             <Matrix 
               matrix={this.state.verse.matrix} 
               verse={this.state.verse} 
-              hover_cb={(pt) => this.setState({matrix_focal: pt})}
+              hover_cb={this.matrix_hover_cb}
               focal_rect={this.focal_rect}
               focal_rows={rows}
               focal_cols={cols}
