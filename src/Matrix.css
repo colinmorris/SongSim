@@ -2,15 +2,20 @@
     pointer-events: none;
 }
 
-rect.focalBlock {
-    fill-opacity: 1;
-    fill: rgb(235, 235, 255);
+rect.focalBlock, rect.alley {
+    fill: rgb(215, 235, 255);
 }
 
+.focalBlock.primary, .focalBlock.primary-maindiag {
+    fill-opacity: .9;
+}
+
+.focalBlock.incidental {
+    fill-opacity: .5;
+}
 
 rect.alley {
-    fill: yellow;
-    fill-opacity: 0.0;
+    fill-opacity: .3;
 }
 
 rect.wordrect {
@@ -24,7 +29,7 @@ rect.wordrect {
 }
 
 svg.matrix {
-    background-color: rgb(255, 255, 245);
+    background-color: rgb(255, 255, 240);
     border: black;
     border-style: solid;
     border-width: 1px;

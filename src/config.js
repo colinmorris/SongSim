@@ -1,6 +1,6 @@
 var config = {
   alleys: true, 
-  colormap: 'rainbow-soft',
+  colormap: 'hsv',
   color_words: true,
   debug: true,
 };
