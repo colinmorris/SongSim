@@ -17,6 +17,11 @@ class Diagonal {
     return this.x1 - this.x0;
   }
 
+  // A uniquely identifying key suitable for hashing/comparison
+  get key() {
+    return `${this.x0}_${this.y0}_${this.length}`;
+  }
+
   get xrange() {
     return [this.x0, this.x1];
   }

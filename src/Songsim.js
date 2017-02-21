@@ -27,15 +27,6 @@ class Songsim extends Component {
     this.setState({verse: new Verse(t)});
   }
 
-  get focal_rect() {
-    console.assert(this.state.lyrics_focal === NOINDEX 
-        || this.state.matrix_focal.x === NOINDEX, "Shouldn't both be set");
-    if (this.state.lyrics_focal !== NOINDEX) {
-      return {x: this.state.lyrics_focal, y: this.state.lyrics_focal};
-    }
-    return this.state.matrix_focal;
-  }
-
   get focal_rowcols() {
     if (!config.alleys) {
       return [undefined, undefined];
@@ -62,20 +53,35 @@ class Songsim extends Component {
     );
   }
 
-  /** Return a map of diagonals to 'strength' (ints)
+  /** Return a map of diagonals to labels
    */
   get focal_diags() {
     var foc = new Map();
     if (this.state.matrix_focal.x === NOINDEX) {
       return foc;
     }
+    // this is kinda dumb but whatever
+    var seen = new Set();
+    var add = (diag, label) => {
+      let k = diag.key;
+      if (!seen.has(k)) {
+        foc.set(diag, label);
+        seen.add(k);
+      }
+    }
     var primary = this.focal_local_diag;
-    foc.set(primary, 'primary');
+    add(primary, 'primary');
     for (let correl of primary.mainCorrelates()) {
-      foc.set(correl, 'primary-diag');
+      add(correl, 'primary-maindiag');
     }
     for (let correl of this.state.verse.matrix.incidental_correlates(primary)) {
-      foc.set(correl, 'incidental');
+      // TODO: diag label
+      add(correl, 'incidental');
+      /*for (let subcorrel of correl.mainCorrelates()) {
+        if (!foc.has(subcorrel)) {
+          foc.set(correl, 'incidental-maindiag');
+        }
+      }*/
     }
     return foc;
   }
@@ -118,9 +124,10 @@ class Songsim extends Component {
               matrix={this.state.verse.matrix} 
               verse={this.state.verse} 
               hover_cb={this.matrix_hover_cb}
-              focal_rect={this.focal_rect}
               focal_rows={rows}
               focal_cols={cols}
+              matrix_focal={this.state.matrix_focal}
+              lyrics_focal={this.state.lyrics_focal}
               focal_diags={this.focal_diags}
               color_words={this.state.color}
             />

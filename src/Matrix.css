@@ -1,26 +1,16 @@
-rect.focused {
-    fill: purple;
+.matrixHighlights {
+    pointer-events: none;
 }
 
-rect.focal {
-    fill: green;
+rect.focalBlock {
+    fill-opacity: 1;
+    fill: rgb(235, 235, 255);
 }
 
-rect.undermouse {
-}
-
-.primary, .primary-diag {
-    fill-opacity: .7;
-}
-
-.incidental {
-    fill-opacity: .3;
-}
 
 rect.alley {
     fill: yellow;
-    fill-opacity: 0.2;
-    pointer-events: none;
+    fill-opacity: 0.0;
 }
 
 rect.wordrect {
@@ -34,5 +24,8 @@ rect.wordrect {
 }
 
 svg.matrix {
-    background-color: aliceblue;
+    background-color: rgb(255, 255, 245);
+    border: black;
+    border-style: solid;
+    border-width: 1px;
 }

@@ -83,8 +83,31 @@ class MatrixHighlights extends Component {
         />);
   }
 
+  rectFromDiagonal(diag_label_pair) {
+    var diag = diag_label_pair[0];
+    var className = diag_label_pair[1];
+    return (<rect 
+        key={diag.x0 + "_" + diag.y0}
+        className={"focalBlock " + className} 
+        x={diag.x0} y={diag.y0}
+        width={diag.length} height={diag.length}
+        />);
+  }
+
   render() {
-    return (<g>{this.row_rect()} {this.col_rect()}</g>);
+    console.assert(this.props.lyrics_focal === NOINDEX || 
+        this.props.matrix_focal.x === NOINDEX, "In two places at once?");
+    var filling = '';
+    if (this.props.lyrics_focal !== NOINDEX) {
+      // TODO
+    } else if (this.props.matrix_focal.x !== NOINDEX) {
+      filling = Array.from(this.props.focal_diags).map(this.rectFromDiagonal);
+    } else {
+      // TODO: any way to just say "don't render in this case?"
+    }
+    return (<g className="matrixHighlights">
+        {filling} {this.row_rect()} {this.col_rect()}
+        </g>);
   }
 }
 
@@ -110,16 +133,20 @@ class Matrix extends Component {
     var res = (
         <svg className="matrix" height={this.H} width={this.W} >
         <g transform={scalestr}>
+          <MatrixHighlights 
+            focal_rows={this.props.focal_rows} 
+            focal_cols={this.props.focal_cols} 
+            matrix_length={this.props.matrix.length} 
+            matrix_focal={this.props.matrix_focal}
+            lyrics_focal={this.props.lyrics_focal}
+            focal_diags={this.props.focal_diags}
+          />
           <BaseMatrix 
             verse={this.props.verse}
             matrix={this.props.matrix}
             hover_cb={this.props.hover_cb}
             color_words={this.props.color_words}
           />
-          <MatrixHighlights 
-            focal_rows={this.props.focal_rows} 
-            focal_cols={this.props.focal_cols} 
-            matrix_length={this.props.matrix.length} />
         </g>
         </svg>
     );
