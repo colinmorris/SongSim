@@ -120,8 +120,8 @@ class Verse {
   constructor(text, title) {
     this.raw = text;
     this.title = title;
-    this.clean_title = Verse.cleanWord(title);
-    this.title_tokens = this.clean_title.split(" ");
+    this.clean_title = title ? Verse.cleanWord(title) : "";
+    this.title_tokens = title ? this.clean_title.split(" ") : [];
     this.parse(text);
   }
 
