@@ -45,6 +45,9 @@ var CANNED_SONGS = [
   {fname: 'mysharona.txt', artist: 'The Knack', title: 'My Sharona'},
   {fname: 'stuckin.txt', artist: 'that guy', title: 'Stuck In The Middle With You'},
   {fname: 'killvmaim.txt', artist: 'Grimes', title: 'Kill v Maim'},
+  {fname: 'whenafelon.txt', artist: 'Gilbert & Sullivan', title: "When A Felon's Not Engaged In His Employment"},
+  {fname: 'majorgeneral.txt', artist: 'Gilbert & Sullivan', title: "The Major-General's Song"},
+  {fname: 'whenitrains.txt', artist: 'They Might Be Giants', title: 'When It Rains It Snows'},
   
   //{fname: '.txt', artist: '', title: ''},
 ];

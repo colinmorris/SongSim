@@ -9,7 +9,7 @@ class App extends Component {
         <div className="App-header">
           <h2>SongSim</h2>
         </div>
-        <Songsim />
+        <Songsim songId={this.props.params.songId} />
       </div>
     );
   }

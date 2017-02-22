@@ -11,12 +11,44 @@ import config from './config.js';
 class Songsim extends Component {
   constructor(props) {
     super(props);
-    var text = LANDING_LYRICS;
-    this.state = {verse: new Verse(text, "Buddy Holly"),
+    var verse = this.getVerse(this.props.songId);
+    this.state = {verse: verse,
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
       mode: config.default_mode,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.songId === nextProps.songId) {
+      return;
+    }
+    // new songid
+    var verse = this.getVerse(nextProps.songId);
+    // TODO: hack
+    if (verse.text !== "loading") {
+      this.setState({verse: verse});
+    }
+  }
+
+  
+  getVerse(songId) {
+    if (!songId) {
+      // No song id in the URL. Return the default landing song.
+      return new Verse(LANDING_LYRICS, "Buddy Holly");
+    }
+    // We have a song id in the URL. We're going to have to perform a request
+    // to get the text. Until that happens, just return a placeholder.
+    // TODO: should handle this more gracefully. e.g. define an isLoading state
+    // variable, and when it's true, hold off on rendering the matrix/lyrics
+    // stuff, and just show some kind of "loading" animation
+    var canned = SongSelector.lookupCanned(songId);
+    if (canned) {
+      SongSelector.loadSong(this.onTextChange, canned);
+    } else {
+      console.error("Not implemented yet.");
+    }
+    return new Verse("loading");
   }
 
   onTextChange = (text, title) => {
@@ -123,7 +155,10 @@ class Songsim extends Component {
     return (
         <div>
 
-        <SongSelector onSelect={this.onTextChange} />
+        <SongSelector 
+          onSelect={this.onTextChange} 
+          selectedTitle={this.state.verse.title}
+        />
 
         <div className="row">
           <div className="col-xs-8">

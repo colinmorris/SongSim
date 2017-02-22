@@ -8,8 +8,10 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "colormap": "^2.2.0",
+    "firebase": "^3.6.10",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-router": "^3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {hashHistory} from 'react-router';
+
 import {CANNED_SONGS, DEFAULT_SONG} from './constants.js';
   
 class SongSelector extends Component {
@@ -10,18 +12,28 @@ class SongSelector extends Component {
   }
 
   handleChange = (e) => {
-    SongSelector.loadSong(this.props.onSelect, e.target.value);
+    // TODO: just use slugs everywhere, and tack on the extension when sending req
+    var slug = e.target.value.slice(0, -1 * '.txt'.length);
+    hashHistory.push(slug);
   }
 
-  static loadSong(cb, fname) {
-    // TODO: hack
-    var title;
+  static lookupCanned(fname) {
+    // Handle fnames with or without extension (URL slugs will have no extension)
+    if (!fname.endsWith('.txt')) {
+      fname += '.txt';
+    }
     for (let canned of CANNED_SONGS) {
       if (canned.fname === fname) {
-        title = canned.title;
+        return canned;
       }
     }
-    fname = fname || DEFAULT_SONG;
+    return undefined;
+  }
+
+  static loadSong(cb, canned) {
+    // TODO: hack
+    var title = canned.title;
+    var fname = canned.fname || DEFAULT_SONG;
     var r = new XMLHttpRequest();
     var url = process.env.PUBLIC_URL + '/canned/' + fname;
     console.log(`Loading ${url}`);
@@ -35,7 +47,18 @@ class SongSelector extends Component {
 
 
   render() {
-    return (<select onChange={this.handleChange} defaultValue={DEFAULT_SONG} >
+    // TODO: hacky (parent should probably know the slug)
+    var selected = DEFAULT_SONG;
+    if (this.props.selectedTitle) {
+      for (let c of CANNED_SONGS) {
+        if (c.title === this.props.selectedTitle) {
+          selected = c.fname;
+          break;
+        }
+      }
+    }
+    this.selected = selected;
+    return (<select onChange={this.handleChange} value={selected} >
               {CANNED_SONGS.map(this.renderOption)}
            </select>
         );
