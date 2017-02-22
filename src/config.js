@@ -1,7 +1,9 @@
+import {MODE} from './constants.js';
+
 var config = {
   alleys: true, 
   colormap: 'hsv',
-  color_words: true,
+  default_mode: MODE.vanilla,
   debug: true,
 };
 

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-import './Songsim.css';
-
 import Matrix from './Matrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {Verse} from './verse.js';
-import {NOINDEX} from './constants.js';
+import {NOINDEX, MODE} from './constants.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
 
@@ -14,15 +12,19 @@ class Songsim extends Component {
   constructor(props) {
     super(props);
     var text = LANDING_LYRICS;
-    this.state = {verse: new Verse(text),
+    this.state = {verse: new Verse(text, "Buddy Holly"),
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
-      color: config.color_words, 
+      mode: config.default_mode,
     };
   }
 
-  onTextChange = (t) => {
-    this.setState({verse: new Verse(t)});
+  onTextChange = (text, title) => {
+    this.setState({verse: new Verse(text, title)});
+  }
+
+  onModeChange = (e) => {
+    this.setState({mode: e.target.value});
   }
 
   get focal_rowcols() {
@@ -102,9 +104,22 @@ class Songsim extends Component {
     this.setState({matrix_focal: pt})
   }
 
+  renderRadio = (mode_key) => {
+    var mode = MODE[mode_key];
+    return (<label key={mode}><input type="radio" 
+              checked={this.state.mode === mode}
+              value={mode}
+              onChange={this.onModeChange}
+              name="mode" />
+              {mode}
+              </label>
+    );
+  }
+
   render() {
     var rowcols = this.focal_rowcols;
     var rows = rowcols[0], cols = rowcols[1];
+    var radios = Object.keys(MODE).map(this.renderRadio)
     return (
         <div>
 
@@ -121,7 +136,7 @@ class Songsim extends Component {
               matrix_focal={this.state.matrix_focal}
               lyrics_focal={this.state.lyrics_focal}
               focal_diags={this.focal_diags}
-              color_words={this.state.color}
+              mode={this.state.mode}
             />
           </div>
 
@@ -136,9 +151,10 @@ class Songsim extends Component {
 
         <div className="row">
           <label>
-            Colorify
-            <input type="checkbox" checked={this.state.color}
-              onChange={(e) => this.setState({color: e.target.checked})} />
+            Mode
+            <form>
+              {radios}
+            </form>
           </label>
         </div>
 

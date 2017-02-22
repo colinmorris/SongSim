@@ -1,3 +1,8 @@
+var MODE = {
+  vanilla: 'black & white',
+  colorful: 'colorful',
+  color_title: 'color title',
+};
 
 var NOINDEX = -1;
 
@@ -47,4 +52,4 @@ var CANNED_SONGS = [
 var DEFAULT_SONG = 'buddyholly.txt';
 //var DEFAULT_SONG = 'test.txt';
 
-export {NOINDEX, CANNED_SONGS, DEFAULT_SONG};
+export {NOINDEX, CANNED_SONGS, DEFAULT_SONG, MODE};

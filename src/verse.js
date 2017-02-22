@@ -117,8 +117,11 @@ class VerseMatrix {
  * A chunk of text, presumably some kind of poem/song.
  */
 class Verse {
-  constructor(text) {
+  constructor(text, title) {
     this.raw = text;
+    this.title = title;
+    this.clean_title = Verse.cleanWord(title);
+    this.title_tokens = this.clean_title.split(" ");
     this.parse(text);
   }
 

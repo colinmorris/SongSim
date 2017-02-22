@@ -3,7 +3,7 @@ import colormap from 'colormap';
 
 import './Matrix.css';
 
-import {NOINDEX} from './constants.js';
+import {NOINDEX, MODE} from './constants.js';
 import config from './config.js';
 
 /** For reasons of performance, we separate the highlighting effects we do on
@@ -18,8 +18,12 @@ import config from './config.js';
 class BaseMatrix extends Component {
 
   _cm() {
-    return colormap({colormap: config.colormap, 
-      nshades: Math.max(11, this.props.verse.nWords)});
+    if (this.props.mode === MODE.color_title) {
+      return colormap({colormap: "warm", nshades: 11});
+    } else {
+      return colormap({colormap: config.colormap, 
+        nshades: Math.max(11, this.props.verse.nWords)});
+    }
   }
   
   handleRectEnter = (e) => {
@@ -34,18 +38,33 @@ class BaseMatrix extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return !(this.props.verse === nextProps.verse
         && this.props.matrix === nextProps.matrix
-        && this.props.color_words === nextProps.color_words);
+        && this.props.mode === nextProps.mode);
   }
 
   rectColor(x) {
-    if (!this.props.color_words) {
+    if (this.props.mode === MODE.vanilla) {
       return 'black';
-    } else {
+    } else if (this.props.mode === MODE.colorful) {
       var i = this.props.verse.uniqueWordId(x);
       if (i === -1) { // hapax
         return 'black';
       }
       return this.cm[i];
+    } else if (this.props.mode === MODE.color_title) {
+      // TODO: maybe should only color intact instances of the title? kind of 
+      // annoying to draw a bunch of useless colored dots because the title
+      // has the word "the". Trickier to implement though.
+      var word = this.props.verse.clean_words[x];
+      var title_tokens = this.props.verse.title_tokens;
+      var idx = title_tokens.indexOf(word);
+      //idx *= Math.floor(11 / title_tokens.length);
+      if (idx === -1) {
+        return 'black';
+      } else {
+        return this.cm[idx+1];    
+      }
+    } else {
+      console.error("Not implemented");
     }
   }
 
@@ -144,7 +163,7 @@ class Matrix extends Component {
             verse={this.props.verse}
             matrix={this.props.matrix}
             hover_cb={this.props.hover_cb}
-            color_words={this.props.color_words}
+            mode={this.props.mode}
           />
         </g>
         </svg>

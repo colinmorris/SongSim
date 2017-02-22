@@ -14,13 +14,20 @@ class SongSelector extends Component {
   }
 
   static loadSong(cb, fname) {
+    // TODO: hack
+    var title;
+    for (let canned of CANNED_SONGS) {
+      if (canned.fname === fname) {
+        title = canned.title;
+      }
+    }
     fname = fname || DEFAULT_SONG;
     var r = new XMLHttpRequest();
     var url = process.env.PUBLIC_URL + '/canned/' + fname;
     console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
-      cb(r.response);
+      cb(r.response, title);
     };
     r.onerror = () => { console.log("uh oh"); };
     r.send();
