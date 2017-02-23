@@ -2,28 +2,25 @@ import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
 
 import {CANNED_SONGS, DEFAULT_SONG} from './constants.js';
+import {CannedVerse} from './verse.js';
   
 class SongSelector extends Component {
 
   renderOption = (song) => {
-    return (<option key={song.fname} value={song.fname}>
+    return (<option key={song.slug} value={song.slug}>
               {song.artist} - {song.title}
             </option>);
   }
 
   handleChange = (e) => {
-    // TODO: just use slugs everywhere, and tack on the extension when sending req
-    var slug = e.target.value.slice(0, -1 * '.txt'.length);
+    var slug = e.target.value;
     hashHistory.push(slug);
   }
 
-  static lookupCanned(fname) {
-    // Handle fnames with or without extension (URL slugs will have no extension)
-    if (!fname.endsWith('.txt')) {
-      fname += '.txt';
-    }
+  static lookupCanned(slug) {
+    // TODO: should prolly just have a map
     for (let canned of CANNED_SONGS) {
-      if (canned.fname === fname) {
+      if (canned.slug === slug) {
         return canned;
       }
     }
@@ -33,13 +30,14 @@ class SongSelector extends Component {
   static loadSong(cb, canned) {
     // TODO: hack
     var title = canned.title;
-    var fname = canned.fname || DEFAULT_SONG;
+    var slug = canned.slug;
     var r = new XMLHttpRequest();
-    var url = process.env.PUBLIC_URL + '/canned/' + fname;
+    var url = process.env.PUBLIC_URL + '/canned/' + slug + '.txt';
     console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
-      cb(r.response, title);
+      var verse = new CannedVerse(r.response, title, slug);
+      cb(verse);
     };
     r.onerror = () => { console.log("uh oh"); };
     r.send();
@@ -52,7 +50,7 @@ class SongSelector extends Component {
     if (this.props.selectedTitle) {
       for (let c of CANNED_SONGS) {
         if (c.title === this.props.selectedTitle) {
-          selected = c.fname;
+          selected = c.slug;
           break;
         }
       }

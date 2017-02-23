@@ -143,10 +143,13 @@ class Matrix extends Component {
     var debug;
     if (config.debug) {
       var rects = Array.from(this.props.verse.rects());
-      debug = (<p>
+      debug = (<div>
+          <p>
           {this.props.matrix.length} x {this.props.matrix.length}{", "} 
           {rects.length} rects
-        </p>);
+          </p>
+          <p>Custom: {JSON.stringify(this.props.verse.isCustom())}</p>
+        </div>);
     }
     var res = (
         <svg className="matrix" height={this.H} width={this.W} >

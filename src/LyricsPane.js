@@ -4,6 +4,7 @@ import './LyricsPane.css';
 
 import {NOINDEX} from './constants.js';
 import Word from './Word.js';
+import {CustomVerse} from './verse.js';
 
 class LyricsPane extends Component {
 
@@ -26,7 +27,13 @@ class LyricsPane extends Component {
 
   onTextEdit = (e) => {
     this.setState({editing: false});
-    this.props.onChange(e.target.value);
+    // TODO: be a bit more careful here...
+    // - if the new text value is blank, revert to the old text
+    // - if the text is unchanged, don't do anything (we don't
+    //    want to overwrite a CannedVerse with a CustomVerse having
+    //    the same content).
+    var verse = new CustomVerse(e.target.value, "customsong");
+    this.props.onChange(verse);
   }
 
   componentDidUpdate() {

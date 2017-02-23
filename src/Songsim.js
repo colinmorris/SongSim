@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Matrix from './Matrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
-import {Verse} from './verse.js';
+import {Verse, CustomVerse, CannedVerse} from './verse.js';
 import {NOINDEX, MODE} from './constants.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
@@ -35,7 +35,7 @@ class Songsim extends Component {
   getVerse(songId) {
     if (!songId) {
       // No song id in the URL. Return the default landing song.
-      return new Verse(LANDING_LYRICS, "Buddy Holly");
+      return new CannedVerse(LANDING_LYRICS, "Buddy Holly", "buddyholly"); // TODO: constants
     }
     // We have a song id in the URL. We're going to have to perform a request
     // to get the text. Until that happens, just return a placeholder.
@@ -48,11 +48,11 @@ class Songsim extends Component {
     } else {
       console.error("Not implemented yet.");
     }
-    return new Verse("loading");
+    return new CannedVerse("loading");
   }
 
-  onTextChange = (text, title) => {
-    this.setState({verse: new Verse(text, title)});
+  onTextChange = (verse) => {
+    this.setState({verse: verse});
   }
 
   onModeChange = (e) => {

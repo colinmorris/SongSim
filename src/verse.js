@@ -117,9 +117,10 @@ class VerseMatrix {
  * A chunk of text, presumably some kind of poem/song.
  */
 class Verse {
-  constructor(text, title) {
+  constructor(text, title, id) {
     this.raw = text;
     this.title = title;
+    this.id = id;
     this.clean_title = title ? Verse.cleanWord(title) : "";
     this.title_tokens = title ? this.clean_title.split(" ") : [];
     this.parse(text);
@@ -262,7 +263,23 @@ class Verse {
     }
     return lines;
   }
+
+  isCustom() {
+    console.error("iunno");
+  }
+}
+
+class CannedVerse extends Verse {
+  isCustom() {
+    return false;
+  }
+}
+
+class CustomVerse extends Verse {
+  isCustom() {
+    return true;
+  }
 }
 
 
-export {Verse, VerseMatrix};
+export {Verse, VerseMatrix, CannedVerse, CustomVerse};
