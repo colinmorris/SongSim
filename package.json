@@ -1,6 +1,7 @@
 {
   "name": "songsim",
   "version": "0.1.0",
+  "homepage": "https://colinmorris.github.io/SongSim/",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.9.0"
@@ -9,6 +10,7 @@
     "bootstrap": "^3.3.7",
     "colormap": "^2.2.0",
     "firebase": "^3.6.10",
+    "gh-pages": "^0.12.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2"
@@ -16,6 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
