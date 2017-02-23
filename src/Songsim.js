@@ -173,13 +173,19 @@ class Songsim extends Component {
 
   renderRadio = (mode_key) => {
     var mode = MODE[mode_key];
-    return (<label key={mode}><input type="radio" 
+    var disabled = (mode == MODE.color_title && !this.state.verse.title);
+    var divCname = disabled ? "radio-inline disabled" : "radio-inline";
+    return (
+        <div className={divCname} key={mode}>
+          <label><input type="radio" 
+              disabled={disabled}
               checked={this.state.mode === mode}
               value={mode}
               onChange={this.onModeChange}
               name="mode" />
-              {mode}
-              </label>
+            {mode}
+          </label>
+        </div>
     );
   }
 
@@ -238,7 +244,7 @@ class Songsim extends Component {
         <div className="row">
           <label>
             Mode
-            <form>
+            <form className="form-control">
               {radios}
             </form>
           </label>
