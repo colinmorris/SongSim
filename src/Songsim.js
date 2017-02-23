@@ -3,14 +3,16 @@ import React, { Component } from 'react';
 import Matrix from './Matrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
-import {Verse, CustomVerse, CannedVerse} from './verse.js';
+import {CustomVerse, CannedVerse} from './verse.js';
 import {NOINDEX, MODE} from './constants.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
+import DBHelper from './firebasehelper.js';
 
 class Songsim extends Component {
   constructor(props) {
     super(props);
+    this.db = new DBHelper();
     var verse = this.getVerse(this.props.songId);
     this.state = {verse: verse,
       matrix_focal: {x: NOINDEX, y: NOINDEX},
@@ -46,7 +48,13 @@ class Songsim extends Component {
     if (canned) {
       SongSelector.loadSong(this.onTextChange, canned);
     } else {
-      console.error("Not implemented yet.");
+      // Okay, it's a firebase key
+      console.log(`Looking up firebase key ${songId}`);
+      this.db.load(songId).then( (snapshot) => {
+        var txt = snapshot.val();
+        var verse = new CustomVerse(txt, "", songId);
+        this.onTextChange(verse);
+      });
     }
     return new CannedVerse("loading");
   }
@@ -57,6 +65,15 @@ class Songsim extends Component {
 
   onModeChange = (e) => {
     this.setState({mode: e.target.value});
+  }
+
+  makePermalink = () => {
+    console.assert(!this.state.verse.id);
+    var ref = this.db.push(this.state.verse);
+    console.log(ref);
+    console.log(`Url = ${ref.toString()}`);
+    console.log(`key = ${ref.key}`);
+    this.state.verse.id = ref.key;
   }
 
   get focal_rowcols() {
@@ -181,6 +198,10 @@ class Songsim extends Component {
               highlights={this.lyrics_highlights}
               onChange={this.onTextChange}
             />
+
+            {this.state.verse.isCustom() &&
+              <button onClick={this.makePermalink}>Export</button>
+            }
           </div>
         </div>
 
