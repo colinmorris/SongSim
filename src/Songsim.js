@@ -28,12 +28,13 @@ class Songsim extends Component {
     // new songid
     var verse = this.getVerse(nextProps.songId);
     // TODO: hack
-    if (verse.text !== "loading") {
+    if (verse) {
       this.setState({verse: verse});
     }
   }
 
   
+  // TODO: make this return a promise or something
   getVerse(songId) {
     if (!songId) {
       // No song id in the URL. Return the default landing song.
@@ -58,7 +59,7 @@ class Songsim extends Component {
         this.onTextChange(verse);
       });
     }
-    return new CannedVerse("loading");
+    return undefined;
   }
 
   onTextChange = (verse) => {
@@ -171,14 +172,17 @@ class Songsim extends Component {
     var rowcols = this.focal_rowcols;
     var rows = rowcols[0], cols = rowcols[1];
     var radios = Object.keys(MODE).map(this.renderRadio)
+    // TODO: this method is getting pretty huge
     return (
         <div>
 
         <SongSelector 
           onSelect={this.onTextChange} 
-          selectedTitle={this.state.verse.title}
+          selected={this.state.verse && 
+            !this.state.verse.isCustom() && this.state.verse.id}
         />
 
+        {this.state.verse &&
         <div className="row">
           <div className="col-xs-8">
             <Matrix 
@@ -206,6 +210,10 @@ class Songsim extends Component {
             }
           </div>
         </div>
+        }
+        {!this.state.verse &&
+          <h3>Loading...</h3>
+        }
 
         <div className="row">
           <label>

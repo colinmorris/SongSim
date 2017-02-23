@@ -45,17 +45,7 @@ class SongSelector extends Component {
 
 
   render() {
-    // TODO: hacky (parent should probably know the slug)
-    var selected = DEFAULT_SONG;
-    if (this.props.selectedTitle) {
-      for (let c of CANNED_SONGS) {
-        if (c.title === this.props.selectedTitle) {
-          selected = c.slug;
-          break;
-        }
-      }
-    }
-    this.selected = selected;
+    var selected = this.props.selected || DEFAULT_SONG;
     return (<select onChange={this.handleChange} value={selected} >
               {CANNED_SONGS.map(this.renderOption)}
            </select>
