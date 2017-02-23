@@ -27,10 +27,7 @@ class Songsim extends Component {
     }
     // new songid
     var verse = this.getVerse(nextProps.songId);
-    // TODO: hack
-    if (verse) {
-      this.setState({verse: verse});
-    }
+    this.setState({verse: verse});
   }
 
   
@@ -173,7 +170,11 @@ class Songsim extends Component {
 
   renderRadio = (mode_key) => {
     var mode = MODE[mode_key];
-    var disabled = (mode === MODE.color_title && !this.state.verse.title);
+    // TODO: Really when we get a change to state.verse, we should see if
+    // the new verse is custom && mode is color_title, and if so, we should
+    // automatically switch to a different mode. But bleh.
+    var disabled = (mode === MODE.color_title && 
+        (!this.state.verse || !this.state.verse.title));
     var divCname = disabled ? "radio-inline disabled" : "radio-inline";
     return (
         <div className={divCname} key={mode}>
