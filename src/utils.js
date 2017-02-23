@@ -10,7 +10,7 @@ class Diagonal {
   }
 
   static fromPointAndLength(x, y, len) {
-    return new Diagonal(x, y, x+len, y+len);
+    return new Diagonal(x, y, x+(len-1), y+(len-1));
   }
 
   get length() {
