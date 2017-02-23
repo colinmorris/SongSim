@@ -4,7 +4,7 @@ import Matrix from './Matrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse, CannedVerse} from './verse.js';
-import {NOINDEX, MODE} from './constants.js';
+import {CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
 import DBHelper from './firebasehelper.js';
@@ -36,10 +36,19 @@ class Songsim extends Component {
   
   // TODO: make this return a promise or something
   getVerse(songId) {
+    // Four possibilities:
+    // - no songId -> return default landing song
+    // - songId that matches one of our canned slugs -> load that canned song
+    // - songId === CUSTOM_SLUG -> load an empty custom verse and go into edit mode
+    //          (TODO: maybe this should just redirect to #/ on load?
+    // - other songId, which is presumably a key in our firebase store
     if (!songId) {
       // No song id in the URL. Return the default landing song.
       return new CannedVerse(LANDING_LYRICS, 
           "buddyholly", "Buddy Holly", "Weezer"); // TODO: constants
+    }
+    if (songId === CUSTOM_SLUG) {
+      return CustomVerse.BlankVerse();
     }
     // We have a song id in the URL. We're going to have to perform a request
     // to get the text. Until that happens, just return a placeholder.

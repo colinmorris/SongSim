@@ -4,10 +4,17 @@
 }
 
 div.words {
+    /* TODO: should probably be conditional on media query */
     column-count: 2;
 }
 
 textarea {
     width: 90%;
-    min-height: 500px;
+}
+
+.lyrics {
+    background-color: rgb(255, 255, 245);
+    border-style: solid;
+    border-color: rgb(240, 240, 255);
+    min-height: 25vh;
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './LyricsPane.css';
 
-import {NOINDEX} from './constants.js';
+import {NOINDEX, CUSTOM_SLUG} from './constants.js';
 import Word from './Word.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse} from './verse.js';
@@ -11,7 +11,7 @@ class LyricsPane extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editing: false};
+    this.state = {editing: props.verse.isBlank()};
   }
   
   renderWord = (word) => {
@@ -27,24 +27,22 @@ class LyricsPane extends Component {
   }
 
   onTextEdit = (e) => {
+    // TODO: unnecessary?
     this.setState({editing: false});
     // TODO: be a bit more careful here...
     // - if the new text value is blank, revert to the old text
     // - if the text is unchanged, don't do anything (we don't
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
-    var verse = new CustomVerse(e.target.value); // No title/artist/id yet
+    var verse = new CustomVerse(e.target.value, this.props.verse.id);
     this.props.onChange(verse);
   }
 
   componentDidUpdate() {
+    // If we just rendered a textarea, focus it
     if (this.ta) {
       this.ta.focus();
     }
-  }
-
-  get editable() {
-    return this.props.verse.isCustom();
   }
 
   startEditing = () => {
@@ -60,7 +58,7 @@ class LyricsPane extends Component {
     var filling;
     if (this.state.editing) {
       filling = (<textarea 
-          className="form-control"
+          className="form-control lyrics"
           defaultValue={this.props.verse.raw} 
           onBlur={this.onTextEdit}
           ref={(ta) => {this.ta = ta}}
@@ -68,21 +66,25 @@ class LyricsPane extends Component {
     } else {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
-          <div>
-            <SongSelector 
-              onSelect={this.props.onChange} 
-              selected={this.props.verse}
-            />
-
-            <div className="words" onClick={this.editable && this.startEditing} >
+            <div className="words lyrics" 
+              onClick={this.props.verse.isCustom() && this.startEditing} >
               {lines}
             </div>
-            <button onClick={this.startEditing}>Edit</button>
-          </div>
       );
     }
-    return <div className="lyricsPane">{filling}</div>;
+    return (<div className="lyricsPane">
+              <SongSelector 
+                selected={this.props.verse}
+              />
+             {filling}
+           </div>);
   }
+}
+
+LyricsPane.propTypes = {
+  verse: React.PropTypes.object.isRequired,
+  hover_cb: React.PropTypes.func,
+  highlights: React.PropTypes.instanceOf(Map),
 }
 
 export default LyricsPane;

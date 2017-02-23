@@ -264,6 +264,10 @@ class Verse {
   isCustom() {
     console.error("iunno");
   }
+  
+  isBlank() {
+    return this.raw === '';
+  }
 }
 
 class CannedVerse extends Verse {
@@ -288,6 +292,12 @@ class CustomVerse extends Verse {
   isCustom() {
     return true;
   }
+
+  // heh, I made a funny
+  static BlankVerse() {
+    return new CustomVerse('');
+  }
+
 }
 
 

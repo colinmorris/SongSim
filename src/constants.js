@@ -6,6 +6,8 @@ var MODE = {
 
 var NOINDEX = -1;
 
+var CUSTOM_SLUG = 'custom';
+
 var POP = 'Pop Songs';
 var POETRY = 'Poetry';
 
@@ -58,4 +60,4 @@ var CANNED_SONGS = [
 var DEFAULT_SONG = 'buddyholly';
 //var DEFAULT_SONG = 'test';
 
-export {NOINDEX, CANNED_SONGS, DEFAULT_SONG, MODE};
+export {NOINDEX, CANNED_SONGS, DEFAULT_SONG, MODE, CUSTOM_SLUG};

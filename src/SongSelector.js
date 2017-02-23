@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
 
-import {CANNED_SONGS, DEFAULT_SONG} from './constants.js';
+import {CUSTOM_SLUG, CANNED_SONGS, DEFAULT_SONG} from './constants.js';
 import {CannedVerse} from './verse.js';
+
   
 class SongSelector extends Component {
 
@@ -36,6 +37,10 @@ class SongSelector extends Component {
       groupMap.get(c.group).push(c);
     }
     var res = [];
+    // The first option is a special case: custom song
+    var custom = (<option key='custom' value={CUSTOM_SLUG}>Custom</option>);
+    res.push(custom)
+
     for (let [group, cans] of groupMap) {
       // sort groups alphabetically by artist
       let cmp = (a,b) => {
@@ -69,7 +74,8 @@ class SongSelector extends Component {
 
 
   render() {
-    var selected = this.props.selected.slug || DEFAULT_SONG;
+    var selected = (this.props.selected.isCustom() ? 
+                      CUSTOM_SLUG : this.props.selected.slug);
     return (
               <select className="form-control input-lg" 
                 onChange={this.handleChange} value={selected} >
