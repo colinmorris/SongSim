@@ -131,15 +131,10 @@ class MatrixHighlights extends Component {
 }
 
 class Matrix extends Component {
-  constructor(props) {
-    super(props);
-    this.H = 800;
-    this.W = 800;
-  }
 
   render() {
-    var scale = this.H / this.props.matrix.length;
-    var scalestr = `scale(${scale})`;
+    var n = this.props.matrix.length;
+    var viewBox = `0 0 ${n} ${n}`;
     var debug;
     if (config.debug) {
       var rects = Array.from(this.props.verse.rects());
@@ -152,8 +147,8 @@ class Matrix extends Component {
         </div>);
     }
     var res = (
-        <svg className="matrix" height={this.H} width={this.W} >
-        <g transform={scalestr}>
+        <svg className="matrix" viewBox={viewBox} >
+        <g>
           <MatrixHighlights 
             focal_rows={this.props.focal_rows} 
             focal_cols={this.props.focal_cols} 

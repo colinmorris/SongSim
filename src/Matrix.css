@@ -39,4 +39,11 @@ svg.matrix {
     border: black;
     border-style: solid;
     border-width: 1px;
+    max-height: 80vh;
+    max-width: 80vh;
+}
+
+svg.matrix::before {
+    max-width: 90%;
+    height: auto;
 }
