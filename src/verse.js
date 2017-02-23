@@ -1,4 +1,5 @@
 import {Diagonal} from './utils.js';
+import {CUSTOM_SLUG} from './constants.js';
 
 /** A sequence of repeated words. */
 class Lala {
@@ -268,6 +269,14 @@ class Verse {
   isBlank() {
     return this.raw === '';
   }
+
+  isFrozen() {
+    return true;
+  }
+
+  editable() {
+    return !this.isFrozen();
+  }
 }
 
 class CannedVerse extends Verse {
@@ -289,8 +298,22 @@ class CannedVerse extends Verse {
 }
 
 class CustomVerse extends Verse {
+  /* Optional firebase key. */
+  constructor(text, key) {
+    super(text, CUSTOM_SLUG);
+    this.key = key;
+  }
   isCustom() {
     return true;
+  }
+  isFrozen() {
+    return this.key !== undefined && this.key.length > 0;
+  }
+  get permalink() {
+    if (this.key) {
+      // TODO: probably a better way
+      return window.location.origin + '/#/' + this.key;
+    }
   }
 
   // heh, I made a funny

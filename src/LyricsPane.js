@@ -34,7 +34,7 @@ class LyricsPane extends Component {
     // - if the text is unchanged, don't do anything (we don't
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
-    var verse = new CustomVerse(e.target.value, this.props.verse.id);
+    var verse = new CustomVerse(e.target.value);
     this.props.onChange(verse);
   }
 
@@ -67,7 +67,7 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
             <div className="words lyrics" 
-              onClick={this.props.verse.isCustom() && this.startEditing} >
+              onClick={!this.props.verse.isFrozen() && this.startEditing} >
               {lines}
             </div>
       );

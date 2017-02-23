@@ -80,12 +80,18 @@ class Songsim extends Component {
   }
 
   makePermalink = () => {
-    console.assert(!this.state.verse.id);
+    console.assert(this.state.verse.isCustom() && !this.state.verse.key);
     var ref = this.db.push(this.state.verse);
     console.log(ref);
     console.log(`Url = ${ref.toString()}`);
     console.log(`key = ${ref.key}`);
-    this.state.verse.id = ref.key;
+    this.setState(prevState => ({
+      verse: new CustomVerse(prevState.verse.raw, ref.key)
+    }));
+    // should this also change the URL? Probably easier to say that
+    // if you have a firebase key in the URL (i.e. you presumably had this
+    // link shared from someone), the text should be immutable, and if 
+    // url=custom, it's mutable. 
   }
 
   get focal_rowcols() {
@@ -208,7 +214,19 @@ class Songsim extends Component {
             />
 
             {this.state.verse.isCustom() &&
-              <button onClick={this.makePermalink}>Export</button>
+              <div>
+              <button disabled={this.state.verse.isFrozen()} 
+                      onClick={!this.state.verse.isFrozen() && this.makePermalink}>
+                Export
+              </button>
+              {this.state.verse.key && 
+                <p><b>Permalink:</b> 
+                  <a href={this.state.verse.permalink}>
+                    {this.state.verse.permalink}
+                  </a>
+                </p>
+              }
+              </div>
             }
           </div>
         </div>
