@@ -117,12 +117,9 @@ class VerseMatrix {
  * A chunk of text, presumably some kind of poem/song.
  */
 class Verse {
-  constructor(text, title, id) {
+  constructor(text, id) {
     this.raw = text;
-    this.title = title;
     this.id = id;
-    this.clean_title = title ? Verse.cleanWord(title) : "";
-    this.title_tokens = title ? this.clean_title.split(" ") : [];
     this.parse(text);
   }
 
@@ -270,6 +267,14 @@ class Verse {
 }
 
 class CannedVerse extends Verse {
+  constructor(text, id, title, artist) {
+    super(text, id);
+    this.title = title;
+    this.artist = artist;
+    this.clean_title = title ? Verse.cleanWord(title) : "";
+    this.title_tokens = title ? this.clean_title.split(" ") : [];
+  }
+
   isCustom() {
     return false;
   }

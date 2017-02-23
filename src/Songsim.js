@@ -37,7 +37,8 @@ class Songsim extends Component {
   getVerse(songId) {
     if (!songId) {
       // No song id in the URL. Return the default landing song.
-      return new CannedVerse(LANDING_LYRICS, "Buddy Holly", "buddyholly"); // TODO: constants
+      return new CannedVerse(LANDING_LYRICS, 
+          "buddyholly", "Buddy Holly", "Weezer"); // TODO: constants
     }
     // We have a song id in the URL. We're going to have to perform a request
     // to get the text. Until that happens, just return a placeholder.
@@ -51,8 +52,9 @@ class Songsim extends Component {
       // Okay, it's a firebase key
       console.log(`Looking up firebase key ${songId}`);
       this.db.load(songId).then( (snapshot) => {
+        // TODO: gracefully fail here?
         var txt = snapshot.val();
-        var verse = new CustomVerse(txt, "", songId);
+        var verse = new CustomVerse(txt, songId);
         this.onTextChange(verse);
       });
     }

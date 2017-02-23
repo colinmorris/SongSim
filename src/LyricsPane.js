@@ -32,7 +32,7 @@ class LyricsPane extends Component {
     // - if the text is unchanged, don't do anything (we don't
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
-    var verse = new CustomVerse(e.target.value, "customsong");
+    var verse = new CustomVerse(e.target.value); // No title/artist/id yet
     this.props.onChange(verse);
   }
 
@@ -42,6 +42,10 @@ class LyricsPane extends Component {
     }
   }
 
+  get editable() {
+    return this.props.verse.isCustom();
+  }
+
   startEditing = () => {
     this.clearHover();
     this.setState({editing: true});
@@ -49,6 +53,12 @@ class LyricsPane extends Component {
 
   clearHover() {
     this.props.hover_cb(NOINDEX);
+  }
+
+  renderTitle() {
+    var title = this.props.verse.title || "untitled";
+    var artist = this.props.verse.artist || "unknown artist";
+    return <h3>{artist} - {title}</h3>;
   }
 
   render() {
@@ -63,7 +73,8 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
           <div>
-            <div className="words" onClick={this.startEditing} >
+            {!this.props.verse.isCustom() && this.renderTitle()}
+            <div className="words" onClick={this.editable && this.startEditing} >
               {lines}
             </div>
             <button onClick={this.startEditing}>Edit</button>

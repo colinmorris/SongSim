@@ -36,7 +36,7 @@ class SongSelector extends Component {
     console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
-      var verse = new CannedVerse(r.response, title, slug);
+      var verse = new CannedVerse(r.response, slug, title, canned.artist);
       cb(verse);
     };
     r.onerror = () => { console.log("uh oh"); };
