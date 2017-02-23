@@ -5,7 +5,7 @@ import {Router, Route, hashHistory} from 'react-router';
 import './index.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+//import 'bootstrap/dist/css/bootstrap-theme.css';
 
 ReactDOM.render(
   (<Router history={hashHistory}>
