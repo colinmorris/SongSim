@@ -4,7 +4,7 @@ var config = {
   alleys: true, 
   colormap: 'hsv',
   default_mode: MODE.vanilla,
-  debug: true,
+  debug: false,
 };
 
 export default config;
