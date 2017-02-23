@@ -27,6 +27,30 @@ class SongSelector extends Component {
     return undefined;
   }
 
+  renderOptionGroups() {
+    var groupMap = new Map();
+    for (let c of CANNED_SONGS) {
+      if (!groupMap.has(c.group)) {
+        groupMap.set(c.group, []);
+      }
+      groupMap.get(c.group).push(c);
+    }
+    var res = [];
+    for (let [group, cans] of groupMap) {
+      // sort groups alphabetically by artist
+      let cmp = (a,b) => {
+        return a.artist < b.artist ? -1 : 
+          (b.artist < a.artist ? 1 : 0)
+      };
+      cans = cans.sort(cmp);
+      let og = (<optgroup key={group} label={group}>
+                  {cans.map(this.renderOption)}
+                </optgroup>);
+      res.push(og);
+    }
+    return res;
+  }
+
   static loadSong(cb, canned) {
     // TODO: hack
     var title = canned.title;
@@ -45,10 +69,12 @@ class SongSelector extends Component {
 
 
   render() {
-    var selected = this.props.selected || DEFAULT_SONG;
-    return (<select onChange={this.handleChange} value={selected} >
-              {CANNED_SONGS.map(this.renderOption)}
-           </select>
+    var selected = this.props.selected.slug || DEFAULT_SONG;
+    return (
+              <select className="form-control input-lg" 
+                onChange={this.handleChange} value={selected} >
+              {this.renderOptionGroups()}
+              </select>
         );
   }
 }

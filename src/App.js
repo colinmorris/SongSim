@@ -6,9 +6,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>SongSim</h2>
-        </div>
         <Songsim songId={this.props.params.songId} />
       </div>
     );

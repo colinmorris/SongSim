@@ -278,6 +278,10 @@ class CannedVerse extends Verse {
   isCustom() {
     return false;
   }
+
+  get slug() {
+    return this.id;
+  }
 }
 
 class CustomVerse extends Verse {

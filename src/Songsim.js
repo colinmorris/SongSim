@@ -175,13 +175,6 @@ class Songsim extends Component {
     // TODO: this method is getting pretty huge
     return (
         <div>
-
-        <SongSelector 
-          onSelect={this.onTextChange} 
-          selected={this.state.verse && 
-            !this.state.verse.isCustom() && this.state.verse.id}
-        />
-
         {this.state.verse &&
         <div className="row">
           <div className="col-xs-8">

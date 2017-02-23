@@ -4,6 +4,7 @@ import './LyricsPane.css';
 
 import {NOINDEX} from './constants.js';
 import Word from './Word.js';
+import SongSelector from './SongSelector.js';
 import {CustomVerse} from './verse.js';
 
 class LyricsPane extends Component {
@@ -55,16 +56,11 @@ class LyricsPane extends Component {
     this.props.hover_cb(NOINDEX);
   }
 
-  renderTitle() {
-    var title = this.props.verse.title || "untitled";
-    var artist = this.props.verse.artist || "unknown artist";
-    return <h3>{artist} - {title}</h3>;
-  }
-
   render() {
     var filling;
     if (this.state.editing) {
       filling = (<textarea 
+          className="form-control"
           defaultValue={this.props.verse.raw} 
           onBlur={this.onTextEdit}
           ref={(ta) => {this.ta = ta}}
@@ -73,7 +69,11 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
           <div>
-            {!this.props.verse.isCustom() && this.renderTitle()}
+            <SongSelector 
+              onSelect={this.props.onChange} 
+              selected={this.props.verse}
+            />
+
             <div className="words" onClick={this.editable && this.startEditing} >
               {lines}
             </div>
