@@ -173,7 +173,7 @@ class Songsim extends Component {
 
   renderRadio = (mode_key) => {
     var mode = MODE[mode_key];
-    var disabled = (mode == MODE.color_title && !this.state.verse.title);
+    var disabled = (mode === MODE.color_title && !this.state.verse.title);
     var divCname = disabled ? "radio-inline disabled" : "radio-inline";
     return (
         <div className={divCname} key={mode}>

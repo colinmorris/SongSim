@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './LyricsPane.css';
 
-import {NOINDEX, CUSTOM_SLUG} from './constants.js';
+import {NOINDEX} from './constants.js';
 import Word from './Word.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse} from './verse.js';

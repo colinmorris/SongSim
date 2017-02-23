@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
 
-import {CUSTOM_SLUG, CANNED_SONGS, DEFAULT_SONG} from './constants.js';
+import {CUSTOM_SLUG, CANNED_SONGS} from './constants.js';
 import {CannedVerse} from './verse.js';
 
   
