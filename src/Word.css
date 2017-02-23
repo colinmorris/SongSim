@@ -1,11 +1,12 @@
 .focal {
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 .focal, .primary, .primary-maindiag {
-    color: rgb(230, 60, 50);
+    text-shadow: 0 0 1.5em rgb(0, 135, 255);
+    font-weight: bold;
 }
 
 .incidental {
-    color: rgb(150, 20, 30);
+    text-shadow: 0 0 1.5em rgb(0, 135, 255);
 }
