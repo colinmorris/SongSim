@@ -59,12 +59,12 @@ class VerseMatrix {
     // Don't do anything further if this point is on the main diagonal.
     if (x !== y) {
       // Probe up and left
-      for (let x_ = x, y_ = y; x_ >= 0 && y_ >= 0 && this.at(x_, y_); x_--, y_--) {
+      for (let x_ = x-1, y_ = y-1; x_ >= 0 && y_ >= 0 && this.at(x_, y_); x_--, y_--) {
         x0 = x_;
         y0 = y_;
       }
       // Probe down and to the right
-      for (let x_ = x, y_ = y; x_ < this.length && y_ < this.length 
+      for (let x_ = x+1, y_ = y+1; x_ < this.length && y_ < this.length 
           && this.at(x_, y_); x_++, y_++) {
         x1 = x_;
         y1 = y_;

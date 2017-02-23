@@ -14,7 +14,7 @@ class Diagonal {
   }
 
   get length() {
-    return this.x1 - this.x0;
+    return 1 + (this.x1 - this.x0);
   }
 
   // A uniquely identifying key suitable for hashing/comparison

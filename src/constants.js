@@ -10,6 +10,7 @@ var CUSTOM_SLUG = 'custom';
 
 var POP = 'Pop Songs';
 var POETRY = 'Poetry';
+var NR = 'Nursery Rhymes';
 
 var CANNED_SONGS = [
   {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP},
@@ -53,6 +54,13 @@ var CANNED_SONGS = [
   {slug: 'whenafelon', artist: 'Gilbert & Sullivan', title: "When A Felon's Not Engaged In His Employment", group: POP},
   {slug: 'majorgeneral', artist: 'Gilbert & Sullivan', title: "The Major-General's Song", group: POP},
   {slug: 'whenitrains', artist: 'They Might Be Giants', title: 'When It Rains It Snows', group: POP},
+  
+  {slug: 'itsraining', artist: '', title: "It's Raining, It's Pouring", group:NR},
+  {slug: 'threeblindmice', artist: '', title: "Three Blind Mice", group:NR},
+  {slug: 'hotcrossbuns', artist: '', title: "Hot Cross Buns", group:NR},
+  {slug: 'frerejacques', artist: '', title: "Frere Jacques", group:NR},
+  {slug: 'baabaa', artist: '', title: "Baa Baa Black Sheep", group:NR},
+  //{slug: '', artist: '', title: "", group:NR},
   
   //{slug: '', artist: '', title: ''},
 ];

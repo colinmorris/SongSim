@@ -8,8 +8,9 @@ import {CannedVerse} from './verse.js';
 class SongSelector extends Component {
 
   renderOption = (song) => {
+    var text = (song.artist ? song.artist + " - " : "") + song.title;
     return (<option key={song.slug} value={song.slug}>
-              {song.artist} - {song.title}
+              {text}
             </option>);
   }
 
@@ -42,10 +43,12 @@ class SongSelector extends Component {
     res.push(custom)
 
     for (let [group, cans] of groupMap) {
-      // sort groups alphabetically by artist
+      // sort groups alphabetically by artist (or title, if there's no artist)
       let cmp = (a,b) => {
-        return a.artist < b.artist ? -1 : 
-          (b.artist < a.artist ? 1 : 0)
+        var keya = a.artist || a.title;
+        var keyb = b.artist || b.title;
+        return keya < keyb ? -1 : 
+          (keyb < keya ? 1 : 0)
       };
       cans = cans.sort(cmp);
       let og = (<optgroup key={group} label={group}>
