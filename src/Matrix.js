@@ -26,12 +26,23 @@ class BaseMatrix extends Component {
     }
   }
   
+  /** These handlers are a little tricky. We use a wide zero-opacity stroke
+   * around rects to make them easier to hover on (they can be really small,
+   * for long songs/small screens). But a nasty side effect of this is that 
+   * we can get spurious mouse entry from one rect to an adjacent one. 
+   */
   handleRectEnter = (e) => {
     var rect = e.target;
     var x = rect.x.baseVal.value, y = rect.y.baseVal.value;
     this.props.hover_cb({x, y});
   }
   handleRectLeave = (e) => {
+    // TODO: Do some math comparing the centre of the currently hovered
+    // rect, with the related target. If the currently hovered rect is closer
+    // to (e.clientX, e.clientY), then ignore this event (and the associated
+    // rectEnter event). 
+    //console.log(e.currentTarget.getBoundingClientRect());
+    //console.log(e.relatedTarget.getBoundingClientRect());
     this.props.hover_cb({x:NOINDEX, y:NOINDEX});
   }
 
