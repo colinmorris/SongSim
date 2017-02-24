@@ -166,6 +166,7 @@ class Matrix extends Component {
         </div>);
     }
     var res = (
+        <div className="matrixWrapper">
         <svg className="matrix" viewBox={viewBox} >
         <g>
           <MatrixHighlights 
@@ -183,7 +184,7 @@ class Matrix extends Component {
             mode={this.props.mode}
           />
         </g>
-        </svg>
+        </svg></div>
     );
     if (config.debug) {
       return <div>{res} {debug}</div>;
