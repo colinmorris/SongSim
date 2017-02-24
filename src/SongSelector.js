@@ -29,6 +29,7 @@ class SongSelector extends Component {
     return undefined;
   }
 
+  // TODO: this is basically a static variable 
   renderOptionGroups() {
     var groupMap = new Map();
     for (let c of CANNED_SONGS) {
