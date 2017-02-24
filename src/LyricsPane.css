@@ -1,11 +1,21 @@
 .lyricsPane {
-    margin-right: 5%;
-    margin-left: 5%;
+    margin-right: 2%;
+    margin-left: 2%;
 }
 
-div.words {
-    /* TODO: should probably be conditional on media query */
-    column-count: 2;
+@media (max-width: 800px) {
+    div.words {
+        column-count: 1;
+    }
+    .lyricsPane {
+        width: 300px;
+    }
+}
+
+@media (min-width: 800px) {
+    div.words {
+        column-count: 2;
+    }
 }
 
 textarea {

@@ -34,8 +34,12 @@ class Songsim extends Component {
       return;
     }
     // new songid
+    // update verse
     var verse = this.getVerse(nextProps.songId);
-    this.setState({verse: verse});
+    // and clear any old highlighting
+    this.setState({verse: verse, matrix_focal: {x: NOINDEX, y:NOINDEX},
+      lyrics_focal: NOINDEX});
+
   }
 
   
