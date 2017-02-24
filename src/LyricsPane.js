@@ -11,7 +11,18 @@ class LyricsPane extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editing: !props.loading && props.verse.isBlank()};
+    this.state = {editingExtant: false};
+  }
+
+  get editing() {
+    return this.state.editingExtant || 
+      (!this.props.loading && this.props.verse.isBlank());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loading || (nextProps.verse !== this.props.verse)) {
+      this.setState({editingExtant: false});
+    }
   }
   
   renderWord = (word) => {
@@ -27,13 +38,18 @@ class LyricsPane extends Component {
   }
 
   onTextEdit = () => {
+    if (this.props.verse.isFrozen()) {
+      console.error("Tried to edit a song that shouldn't be editable. Bailing.");
+      return;
+    }
     // TODO: unnecessary?
-    this.setState({editing: false});
+    //this.setState({editing: false});
     // TODO: be a bit more careful here...
     // - if the new text value is blank, revert to the old text
     // - if the text is unchanged, don't do anything (we don't
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
+    console.log(this.ta.value);
     var verse = new CustomVerse(this.ta.value);
     console.log("Got text edit event");
     this.props.onChange(verse);
@@ -41,7 +57,13 @@ class LyricsPane extends Component {
 
   abortEditing = () => {
     console.log("Aborted editing");
-    this.setState({editing: false});
+    this.setState({editingExtant: false});
+  }
+
+  componentDidMount() {
+    if (this.ta) {
+      this.ta.focus();
+    }
   }
 
   componentDidUpdate() {
@@ -53,7 +75,7 @@ class LyricsPane extends Component {
 
   startEditing = () => {
     this.clearHover();
-    this.setState({editing: true});
+    this.setState({editingExtant: true});
   }
 
   clearHover() {
@@ -71,7 +93,7 @@ class LyricsPane extends Component {
 
   render() {
     var filling;
-    if (this.state.editing) {
+    if (this.editing) {
       filling = (
         <div>
           <textarea 

@@ -6,12 +6,13 @@ var MODE = {
 
 var NOINDEX = -1;
 
-var CUSTOM_SLUG = 'custom';
-var LANDING_CANNED = {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP};
-
 var POP = 'Pop Songs';
 var POETRY = 'Poetry';
 var NR = 'Nursery Rhymes';
+
+var CUSTOM_SLUG = 'custom';
+var LANDING_CANNED = {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP};
+
 
 var CANNED_SONGS = [
   {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP},
@@ -62,6 +63,11 @@ var CANNED_SONGS = [
   {slug: 'frerejacques', artist: '', title: "Frere Jacques", group:NR},
   {slug: 'baabaa', artist: '', title: "Baa Baa Black Sheep", group:NR},
   //{slug: '', artist: '', title: "", group:NR},
+  
+  //{slug: '', artist: '', title: '', group:POP},
+  {slug: 'sidetoside', artist: 'Ariana Grande (feat. Nicki Minaj)', title: 'Side To Side', group:POP},
+  {slug: 'millionreasons', artist: 'Lady Gaga', title: 'Million Reasons', group:POP},
+  {slug: 'mmmbop', artist: 'Hanson', title: 'Mmmbop', group:POP},
   
   //{slug: '', artist: '', title: ''},
 ];
