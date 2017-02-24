@@ -7,7 +7,7 @@ import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse, CannedVerse} from './verse.js';
-import {CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
+import {LANDING_CANNED, CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
 import DBHelper from './firebasehelper.js';
@@ -25,7 +25,7 @@ class Songsim extends Component {
   }
 
   get slug() {
-    return this.props.songId || CUSTOM_SLUG;
+    return this.props.songId || LANDING_CANNED.slug;
   }
     
 
@@ -49,8 +49,8 @@ class Songsim extends Component {
     // - other songId, which is presumably a key in our firebase store
     if (!songId) {
       // No song id in the URL. Return the default landing song.
-      return new CannedVerse(LANDING_LYRICS, 
-          "buddyholly", "Buddy Holly", "Weezer"); // TODO: constants
+      var c = LANDING_CANNED;
+      return new CannedVerse(LANDING_LYRICS, c.slug, c.title, c.artist);
     }
     if (songId === CUSTOM_SLUG) {
       return CustomVerse.BlankVerse();

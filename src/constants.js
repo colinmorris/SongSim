@@ -7,6 +7,7 @@ var MODE = {
 var NOINDEX = -1;
 
 var CUSTOM_SLUG = 'custom';
+var LANDING_CANNED = {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP};
 
 var POP = 'Pop Songs';
 var POETRY = 'Poetry';
@@ -65,7 +66,4 @@ var CANNED_SONGS = [
   //{slug: '', artist: '', title: ''},
 ];
 
-var DEFAULT_SONG = 'buddyholly';
-//var DEFAULT_SONG = 'test';
-
-export {NOINDEX, CANNED_SONGS, DEFAULT_SONG, MODE, CUSTOM_SLUG};
+export {NOINDEX, CANNED_SONGS, MODE, CUSTOM_SLUG, LANDING_CANNED};
