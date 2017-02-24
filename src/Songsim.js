@@ -239,9 +239,10 @@ class Songsim extends Component {
               slug={this.slug}
             />
 
-            {this.state.verse && this.state.verse.isCustom() &&
+            {this.state.verse && this.state.verse.isCustom() && 
+             !this.state.verse.isBlank() &&
               <div>
-              <button disabled={this.state.verse.isFrozen()} 
+              <button className="btn" disabled={this.state.verse.isFrozen()} 
                       onClick={!this.state.verse.isFrozen() && this.makePermalink}>
                 Export
               </button>

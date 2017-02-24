@@ -26,7 +26,7 @@ class LyricsPane extends Component {
     return <div key={idx}>{words}</div>;
   }
 
-  onTextEdit = (e) => {
+  onTextEdit = () => {
     // TODO: unnecessary?
     this.setState({editing: false});
     // TODO: be a bit more careful here...
@@ -34,9 +34,14 @@ class LyricsPane extends Component {
     // - if the text is unchanged, don't do anything (we don't
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
-    var verse = new CustomVerse(e.target.value);
+    var verse = new CustomVerse(this.ta.value);
     console.log("Got text edit event");
     this.props.onChange(verse);
+  }
+
+  abortEditing = () => {
+    console.log("Aborted editing");
+    this.setState({editing: false});
   }
 
   componentDidUpdate() {
@@ -55,15 +60,31 @@ class LyricsPane extends Component {
     this.props.hover_cb(NOINDEX);
   }
 
+  textAreaBlur = (e) => {
+    // When the textarea loses focus, treat this as an intent to save unless
+    // the thing gaining focus is the "cancel" button.
+    if (e.relatedTarget && e.relatedTarget.id === "cancelEdit") {
+      return;
+    }
+    this.onTextEdit();
+  }
+
   render() {
     var filling;
     if (this.state.editing) {
-      filling = (<textarea 
+      filling = (
+        <div>
+          <textarea 
           className="form-control lyrics"
           defaultValue={this.props.verse.raw} 
-          onBlur={this.onTextEdit}
+          onBlur={this.textAreaBlur}
           ref={(ta) => {this.ta = ta}}
-      />);
+          />
+          
+          <button className="btn" onClick={this.onTextEdit}>Save</button>
+          <button id="cancelEdit" className="btn" onClick={this.abortEditing}>Cancel</button>
+        </div>
+      );
     } else {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
