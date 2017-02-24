@@ -1,0 +1,12 @@
+.mainContainer {
+    display: flex;
+}
+
+.matrixPane {
+    background-color: aliceblue;
+    overflow: auto;
+    resize: both;
+}
+
+.lyricsPane {
+}

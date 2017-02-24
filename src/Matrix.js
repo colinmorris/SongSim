@@ -155,16 +155,6 @@ class Matrix extends Component {
     var n = Math.max(1, this.props.matrix.length);
     var viewBox = `0 0 ${n} ${n}`;
     var debug;
-    if (config.debug) {
-      var rects = Array.from(this.props.verse.rects());
-      debug = (<div>
-          <p>
-          {this.props.matrix.length} x {this.props.matrix.length}{", "} 
-          {rects.length} rects
-          </p>
-          <p>Custom: {JSON.stringify(this.props.verse.isCustom())}</p>
-        </div>);
-    }
     var res = (
         <div className="matrixWrapper">
         <svg className="matrix" viewBox={viewBox} >

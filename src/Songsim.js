@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './Songsim.css';
+
 import Matrix from './Matrix.js';
 import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
@@ -223,14 +225,26 @@ class Songsim extends Component {
         />
       );
     }
+    var debug;
+    if (config.debug && this.state.verse) {
+      var rects = Array.from(this.state.verse.rects());
+      debug = (<div>
+          <p>
+          {this.state.verse.matrix.length} x {this.state.verse.matrix.length}{", "} 
+          {rects.length} rects
+          </p>
+          <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
+        </div>);
+    }
     return (
         <div>
-        <div className="row">
-          <div className="col-xs-8">
-            {matrix}
-          </div>
 
-          <div className="col-xs-4">
+        <div className="mainContainer">
+        <div className="matrixPane">
+            {matrix}
+        </div>
+
+        <div className="lyricsPane">
             <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
               loading={!this.state.verse}
               hover_cb={(i) => this.setState({lyrics_focal: i})}
@@ -255,7 +269,7 @@ class Songsim extends Component {
               }
               </div>
             }
-          </div>
+        </div>
         </div>
 
         <div className="row">
@@ -266,6 +280,8 @@ class Songsim extends Component {
             </form>
           </label>
         </div>
+
+        {debug}
 
         </div>
         );
