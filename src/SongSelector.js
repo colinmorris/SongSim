@@ -77,8 +77,16 @@ class SongSelector extends Component {
 
 
   render() {
-    var selected = (this.props.selected.isCustom() ? 
-                      CUSTOM_SLUG : this.props.selected.slug);
+    // It's possible the "selected" slug we got was actually a firebase key,
+    // in which case selected should be set to CUSTOM_SLUG
+    var selected = this.props.selected;
+    if (selected !== CUSTOM_SLUG) {
+      var canned = SongSelector.lookupCanned(selected);
+      if (!canned) {
+        console.log("Couldn't find canned value for this slug. Assume firebase key.");
+        selected = CUSTOM_SLUG;
+      }
+    }
     return (
               <select className="form-control input-lg" 
                 onChange={this.handleChange} value={selected} >

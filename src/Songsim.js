@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Matrix from './Matrix.js';
+import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse, CannedVerse} from './verse.js';
@@ -20,6 +21,11 @@ class Songsim extends Component {
       mode: config.default_mode,
     };
   }
+
+  get slug() {
+    return this.props.songId || CUSTOM_SLUG;
+  }
+    
 
   componentWillReceiveProps(nextProps) {
     if (this.props.songId === nextProps.songId) {
@@ -195,36 +201,45 @@ class Songsim extends Component {
   }
 
   render() {
+    // TODO: this method is getting pretty huge
     var rowcols = this.focal_rowcols;
     var rows = rowcols[0], cols = rowcols[1];
     var radios = Object.keys(MODE).map(this.renderRadio)
-    // TODO: this method is getting pretty huge
+    var matrix;
+    if (!this.state.verse) {
+      matrix = <DummyMatrix />;
+    } else {
+      matrix = (
+        <Matrix 
+          matrix={this.state.verse.matrix} 
+          verse={this.state.verse} 
+          hover_cb={this.matrix_hover_cb}
+          focal_rows={rows}
+          focal_cols={cols}
+          matrix_focal={this.state.matrix_focal}
+          lyrics_focal={this.state.lyrics_focal}
+          focal_diags={this.focal_diags}
+          mode={this.state.mode}
+        />
+      );
+    }
     return (
         <div>
-        {this.state.verse &&
         <div className="row">
           <div className="col-xs-8">
-            <Matrix 
-              matrix={this.state.verse.matrix} 
-              verse={this.state.verse} 
-              hover_cb={this.matrix_hover_cb}
-              focal_rows={rows}
-              focal_cols={cols}
-              matrix_focal={this.state.matrix_focal}
-              lyrics_focal={this.state.lyrics_focal}
-              focal_diags={this.focal_diags}
-              mode={this.state.mode}
-            />
+            {matrix}
           </div>
 
           <div className="col-xs-4">
-            <LyricsPane verse={this.state.verse} 
+            <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
+              loading={!this.state.verse}
               hover_cb={(i) => this.setState({lyrics_focal: i})}
               highlights={this.lyrics_highlights}
               onChange={this.onTextChange}
+              slug={this.slug}
             />
 
-            {this.state.verse.isCustom() &&
+            {this.state.verse && this.state.verse.isCustom() &&
               <div>
               <button disabled={this.state.verse.isFrozen()} 
                       onClick={!this.state.verse.isFrozen() && this.makePermalink}>
@@ -241,10 +256,6 @@ class Songsim extends Component {
             }
           </div>
         </div>
-        }
-        {!this.state.verse &&
-          <h3>Loading...</h3>
-        }
 
         <div className="row">
           <label>

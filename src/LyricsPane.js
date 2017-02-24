@@ -11,7 +11,7 @@ class LyricsPane extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {editing: props.verse.isBlank()};
+    this.state = {editing: !props.loading && props.verse.isBlank()};
   }
   
   renderWord = (word) => {
@@ -35,6 +35,7 @@ class LyricsPane extends Component {
     //    want to overwrite a CannedVerse with a CustomVerse having
     //    the same content).
     var verse = new CustomVerse(e.target.value);
+    console.log("Got text edit event");
     this.props.onChange(verse);
   }
 
@@ -68,13 +69,16 @@ class LyricsPane extends Component {
       filling = (
             <div className="words lyrics" 
               onClick={!this.props.verse.isFrozen() && this.startEditing} >
+              {this.props.loading &&
+                <h3>Loading...</h3>
+              }
               {lines}
             </div>
       );
     }
     return (<div className="lyricsPane">
               <SongSelector 
-                selected={this.props.verse}
+                selected={this.props.slug}
               />
              {filling}
            </div>);
