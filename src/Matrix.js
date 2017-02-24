@@ -133,7 +133,7 @@ class MatrixHighlights extends Component {
 class Matrix extends Component {
 
   render() {
-    var n = this.props.matrix.length;
+    var n = Math.max(1, this.props.matrix.length);
     var viewBox = `0 0 ${n} ${n}`;
     var debug;
     if (config.debug) {
