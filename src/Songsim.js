@@ -146,8 +146,12 @@ class Songsim extends Component {
 
   get lyrics_highlights() {
     var hl = new Map();
-    if (this.state.lyrics_focal !== NOINDEX) {
-      hl.set(this.state.lyrics_focal, 'focal');
+    var lindex = this.state.lyrics_focal;
+    if (lindex !== NOINDEX) {
+      hl.set(lindex, 'focal');
+      for (let j of this.state.verse.matrix.matches_for_index(lindex)) {
+        hl.set(j, 'incidental');
+      }
     } else if (this.state.matrix_focal.x !== NOINDEX) {
       // Focal rect
       hl.set(this.state.matrix_focal.x, 'focal');
