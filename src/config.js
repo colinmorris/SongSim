@@ -2,7 +2,7 @@ import {MODE} from './constants.js';
 
 var config = {
   alleys: true, 
-  colormap: 'hsv',
+  colormap: 'warm',
   default_mode: MODE.vanilla,
   debug: true,
 };

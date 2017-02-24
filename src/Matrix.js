@@ -6,6 +6,11 @@ import './Matrix.css';
 import {NOINDEX, MODE} from './constants.js';
 import config from './config.js';
 
+// TODO: colormap docs (https://www.npmjs.com/package/colormap) say that n>10
+// should be enough divisions for any colormap, but using the 'warm' colormap
+// with n=12 led to 4 repeated colors. Should file a bug.
+var MIN_COLORS = 128;
+
 /** For reasons of performance, we separate the highlighting effects we do on
  * hover into a separate component from the basic structure of the matrix. The
  * former will change frequently, and the latter rarely (only when the user 
@@ -22,7 +27,7 @@ class BaseMatrix extends Component {
       return colormap({colormap: "warm", nshades: 11});
     } else {
       return colormap({colormap: config.colormap, 
-        nshades: Math.max(11, this.props.verse.nWords)});
+        nshades: Math.max(MIN_COLORS, this.props.verse.nWords)});
     }
   }
   
@@ -59,6 +64,9 @@ class BaseMatrix extends Component {
       var i = this.props.verse.uniqueWordId(x);
       if (i === -1) { // hapax
         return 'black';
+      }
+      if (this.props.verse.nWords < MIN_COLORS) {
+        i = Math.floor(i * (MIN_COLORS / this.props.verse.nWords));
       }
       return this.cm[i];
     } else if (this.props.mode === MODE.color_title) {
