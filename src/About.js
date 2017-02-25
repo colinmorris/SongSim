@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import './About.css';
 
@@ -24,6 +25,7 @@ class About extends Component {
     var sections = SECTIONS.map(this.renderSection);
     return (
       <div className="container">
+        <Link to="/">Home</Link>
         <h1>About</h1>
         {sections}
       </div>);

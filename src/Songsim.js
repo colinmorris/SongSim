@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 
 import './Songsim.css';
 
@@ -286,6 +287,10 @@ class Songsim extends Component {
         </div>
 
         {debug}
+
+        <div className="footer">
+          <Link to="/about">About</Link>
+        </div>
 
         </div>
         );
