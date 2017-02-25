@@ -5,6 +5,7 @@ var config = {
   colormap: 'warm',
   default_mode: MODE.vanilla,
   debug: true,
+  exportSVGEnabled: false,
 };
 
 export default config;

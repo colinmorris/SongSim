@@ -151,13 +151,24 @@ class MatrixHighlights extends Component {
 
 class Matrix extends Component {
 
+  exportSVG = () => {
+    console.log("Exporting svg");
+    this.svg.setAttribute('version', '1.1');
+    this.svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
+    var svg = this.svg.outerHTML;
+    var b64 = window.btoa(svg);
+    var url='data:image/svg+xml;base64,\n'+b64
+    window.open(url, 'foo');
+  }
+
   render() {
     var n = Math.max(1, this.props.matrix.length);
     var viewBox = `0 0 ${n} ${n}`;
-    var debug;
     var res = (
         <div className="matrixWrapper">
-        <svg className="matrix" viewBox={viewBox} >
+        <svg className="matrix" viewBox={viewBox} 
+          ref={(r) => {this.svg = r;}}
+        >
         <g>
           <MatrixHighlights 
             focal_rows={this.props.focal_rows} 
@@ -174,11 +185,12 @@ class Matrix extends Component {
             mode={this.props.mode}
           />
         </g>
-        </svg></div>
+        </svg>
+        {config.exportSVGEnabled &&
+          <button onClick={this.exportSVG}>Export SVG</button>
+        }
+        </div>
     );
-    if (config.debug) {
-      return <div>{res} {debug}</div>;
-    }
     return res;
   }
 }
