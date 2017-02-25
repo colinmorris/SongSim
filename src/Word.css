@@ -3,8 +3,10 @@
 }
 
 .focal, .primary, .primary-maindiag {
-    text-shadow: 0 0 1.5em rgb(0, 135, 255);
-    font-weight: bold;
+    /* The second shadow is a sort of pseudo-bold, because setting font-weight
+     * to bold tends to increase the width of the span, and cause the containing
+     * box to jump around in size. */
+    text-shadow: 0 0 1.5em rgb(0, 135, 255), .2px 0 0 black;
 }
 
 .incidental {

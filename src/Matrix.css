@@ -36,7 +36,7 @@ rect.wordrect {
 
 
 svg.matrix {
-    background-color: rgb(255, 255, 240);
+    background-color: white;
     border: black;
     border-style: solid;
     border-width: 1px;
