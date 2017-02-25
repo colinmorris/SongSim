@@ -53,7 +53,6 @@ class BaseMatrix extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(this.props.verse === nextProps.verse
-        && this.props.matrix === nextProps.matrix
         && this.props.mode === nextProps.mode);
   }
 
@@ -88,7 +87,7 @@ class BaseMatrix extends Component {
   }
 
   renderRect(r) {
-    var key = r.x + (this.props.matrix.length * r.y);
+    var key = r.x + (this.props.verse.matrix.length * r.y);
     return (<rect key={key}
               className="wordrect"
               x={r.x} y={r.y} width={r.width} height={r.height}
@@ -163,7 +162,7 @@ class Matrix extends Component {
   }
 
   render() {
-    var n = Math.max(1, this.props.matrix.length);
+    var n = Math.max(1, this.props.verse.matrix.length);
     var viewBox = `0 0 ${n} ${n}`;
     var res = (
         <div className="matrixWrapper">
@@ -174,14 +173,13 @@ class Matrix extends Component {
           <MatrixHighlights 
             focal_rows={this.props.focal_rows} 
             focal_cols={this.props.focal_cols} 
-            matrix_length={this.props.matrix.length} 
+            matrix_length={this.props.verse.matrix.length} 
             matrix_focal={this.props.matrix_focal}
             lyrics_focal={this.props.lyrics_focal}
             focal_diags={this.props.focal_diags}
           />
           <BaseMatrix 
             verse={this.props.verse}
-            matrix={this.props.matrix}
             hover_cb={this.props.hover_cb}
             mode={this.props.mode}
           />

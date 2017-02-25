@@ -219,7 +219,6 @@ class Songsim extends Component {
     } else {
       matrix = (
         <Matrix 
-          matrix={this.state.verse.matrix} 
           verse={this.state.verse} 
           hover_cb={this.matrix_hover_cb}
           focal_rows={rows}
