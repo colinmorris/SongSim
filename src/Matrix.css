@@ -34,23 +34,6 @@ rect.wordrect {
     stroke-opacity: 0;
 }
 
-@media (max-width: 800px) {
-    .matrixWrapper {
-        min-width: 300px;
-    }
-}
-
-@media (min-width: 800px) {
-    .matrixWrapper {
-        min-width: 500px;
-    }
-}
-
-@media (min-width: 1100px) {
-    .matrixWrapper {
-        min-width: 700px;
-    }
-}
 
 svg.matrix {
     background-color: rgb(255, 255, 240);

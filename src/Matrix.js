@@ -158,6 +158,7 @@ class Matrix extends Component {
     var svg = this.svg.outerHTML;
     var b64 = window.btoa(svg);
     var url='data:image/svg+xml;base64,\n'+b64
+    // Could also use FileSaver
     window.open(url, 'foo');
   }
 
