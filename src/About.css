@@ -3,4 +3,7 @@
     background-color: white;
     padding: 10px;
     border-radius: 10px;
+    border-style: solid;
+    background-color: rgb(252, 253, 255);
+    border-color: rgb(220, 240, 255);
 }

@@ -5,6 +5,7 @@ import About from './About.js';
 import {Router, Route, hashHistory} from 'react-router';
 import './index.css';
 
+import 'react-resizable/css/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
 //import 'bootstrap/dist/css/bootstrap-theme.css';
 

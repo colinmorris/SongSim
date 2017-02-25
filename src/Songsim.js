@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
+import { ResizableBox } from 'react-resizable';
 
 import './Songsim.css';
 
@@ -211,7 +212,7 @@ class Songsim extends Component {
     // TODO: this method is getting pretty huge
     var rowcols = this.focal_rowcols;
     var rows = rowcols[0], cols = rowcols[1];
-    var radios = Object.keys(MODE).map(this.renderRadio)
+    var radios = Object.keys(MODE).map(this.renderRadio);
     var matrix;
     if (!this.state.verse) {
       matrix = <DummyMatrix />;
@@ -241,13 +242,16 @@ class Songsim extends Component {
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
         </div>);
     }
+    var defaultMatrixSize = 400; // TODO: have this flow from above (and calculate from screen.height or something)
     return (
         <div>
 
         <div className="mainContainer">
-        <div className="matrixPane">
+        <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
+          lockAspectRatio={true}
+          >
             {matrix}
-        </div>
+        </ResizableBox>
 
         <div className="lyricsPane">
             <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
