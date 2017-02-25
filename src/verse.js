@@ -51,6 +51,11 @@ class VerseMatrix {
     return this.adjacency_map[x].has(y);
   }
 
+  /** Precondition: (x, y) is in the adjacency list **/
+  is_singleton(x, y) {
+    return (x !== y && !this.at(x-1, y-1) && !this.at(x+1,y+1));
+  }
+
   /** Return the diagonal that contains the given point. Behaviour undefined if
    * there's no match at (x, y), or if x == y. */
   local_diagonal(x, y) {

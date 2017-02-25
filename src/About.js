@@ -39,7 +39,8 @@ const SECTIONS = [
       'The diagonal running from top-left to bottom-right corresponds to cases where x=y, and is always filled in. The portions on either side of it are symmetric.',
     ]},
   {img: 'baa_the.png', paras: [
-      'Single squares off the main diagonal like this represent words that are used repeatedly in the song (in this case, "the", which is used 4 times).'
+      'Single squares off the main diagonal like this represent words that are used repeatedly in the song (in this case, "the", which is used 4 times).',
+      'You can hide these by checking the "Ignore single-word matches" box.'
     ]},
   {img: 'baa_oneforthe.png', paras: [
       'Diagonal lines represent repeated sequences of words. "one for the" appears 3 times.'

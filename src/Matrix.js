@@ -53,7 +53,9 @@ class BaseMatrix extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(this.props.verse === nextProps.verse
-        && this.props.mode === nextProps.mode);
+        && this.props.mode === nextProps.mode
+        && this.props.ignore_singletons === nextProps.ignore_singletons
+        );
   }
 
   rectColor(x) {
@@ -87,6 +89,9 @@ class BaseMatrix extends Component {
   }
 
   renderRect(r) {
+    if (this.props.ignore_singletons && this.props.verse.matrix.is_singleton(r.x, r.y)) {
+      return;
+    }
     var key = r.x + (this.props.verse.matrix.length * r.y);
     return (<rect key={key}
               className="wordrect"
@@ -182,6 +187,7 @@ class Matrix extends Component {
             verse={this.props.verse}
             hover_cb={this.props.hover_cb}
             mode={this.props.mode}
+            ignore_singletons={this.props.ignore_singletons}
           />
         </g>
         </svg>

@@ -23,6 +23,7 @@ class Songsim extends Component {
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
       mode: config.default_mode,
+      ignore_singletons: false,
     };
   }
 
@@ -227,6 +228,7 @@ class Songsim extends Component {
           lyrics_focal={this.state.lyrics_focal}
           focal_diags={this.focal_diags}
           mode={this.state.mode}
+          ignore_singletons={this.state.ignore_singletons}
         />
       );
     }
@@ -287,6 +289,14 @@ class Songsim extends Component {
               {radios}
             </form>
           </label>
+          <div className="checkbox">
+            <label>
+              <input type="checkbox" checked={this.state.ignore_singletons}
+                onChange={(e) => {this.setState({ignore_singletons: e.target.checked});}}
+              />
+                Ignore single-word matches
+            </label>
+          </div>
         </div>
 
         {debug}
