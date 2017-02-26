@@ -68,6 +68,9 @@ var CANNED_SONGS = [
   {slug: 'sidetoside', artist: 'Ariana Grande (feat. Nicki Minaj)', title: 'Side To Side', group:POP},
   {slug: 'millionreasons', artist: 'Lady Gaga', title: 'Million Reasons', group:POP},
   {slug: 'mmmbop', artist: 'Hanson', title: 'Mmmbop', group:POP},
+  {slug: 'abc', artist: 'Jackson 5', title: 'ABC', group:POP},
+  {slug: 'getthepartystarted', artist: 'Pink', title: 'Get The Party Started', group:POP},
+  {slug: 'beatit', artist: 'Michael Jackson', title: 'Beat It', group:POP},
   
   //{slug: '', artist: '', title: ''},
 ];
