@@ -113,7 +113,6 @@ class BaseMatrix extends Component {
 /** This component is just responsible for the responsive highlighting stuff
  * we do when hovering over the matrix. **/
 class MatrixHighlights extends Component {
-
   row_rect() {
     if (!this.props.focal_rows) return;
     var className = (this.props.lyrics_focal !== NOINDEX) ? "alley lyrics-alley" : "alley";
@@ -153,6 +152,37 @@ class MatrixHighlights extends Component {
   }
 }
 
+/** WIP: Another way of doing highlighting, drawing 'shadow' rects on top of
+ * the BaseMatrix rects, having some distinctive color.
+ * Could be a replacement for the current MatrixHighlights method of highlighting
+ * hovered diagonals, or maybe just use in cases where the highlighted diagonal is
+ * of length 1 (or less than, say, 5), where the MatrixHighlights approach fails.
+ */
+class ShadowMatrix extends Component {
+
+  renderRect(r) {
+    if (this.props.ignore_singletons && this.props.verse.matrix.is_singleton(r.x, r.y)) {
+      return;
+    }
+    var key = r.x + (this.props.verse.matrix.length * r.y);
+    return (<rect key={key}
+              className="shadowwordrect"
+              x={r.x} y={r.y} width={r.width} height={r.height}
+              fill='#00e1f7'
+            />);
+  }
+
+  render() {
+    var rects = [];
+    for (let [diag, label] of this.props.focal_diags) {
+      for (let [x, y] of diag.points()) {
+        rects.push( this.renderRect( {x: x, y: y, width: 1, height: 1} ) );
+      }
+    }
+    return <g>{rects}</g>
+  }
+}
+
 class Matrix extends Component {
 
   exportSVG = () => {
@@ -169,6 +199,7 @@ class Matrix extends Component {
   render() {
     var n = Math.max(1, this.props.verse.matrix.length);
     var viewBox = `0 0 ${n} ${n}`;
+    // TODO: Highlights, then base, then shadow rects
     var res = (
         <div className="matrixWrapper">
         <svg className="matrix" viewBox={viewBox} 
