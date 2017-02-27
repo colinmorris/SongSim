@@ -5,6 +5,7 @@ import { ResizableBox } from 'react-resizable';
 import './Songsim.css';
 
 import Matrix from './Matrix.js';
+import { Diagonal } from './utils.js';
 import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
@@ -156,6 +157,20 @@ class Songsim extends Component {
     for (let correl of this.state.verse.matrix.incidental_correlates(primary)) {
       add(correl, 'incidental');
     }
+
+    if (config.checkerboard) {
+      var indices = new Set();
+      for (let diag of foc.keys()) {
+        indices.add(diag.x0);
+        indices.add(diag.y0);
+      }
+      for (let x0 of indices) {
+        for (let y0 of indices) {
+          add(Diagonal.fromPointAndLength(x0, y0, primary.length),
+              'incidental');
+        }
+      }
+    }
     return foc;
   }
 
@@ -243,7 +258,7 @@ class Songsim extends Component {
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
         </div>);
     }
-    var defaultMatrixSize = 400; // TODO: have this flow from above (and calculate from screen.height or something)
+    var defaultMatrixSize = 800; // TODO: have this flow from above (and calculate from screen.height or something)
     return (
         <div>
 
