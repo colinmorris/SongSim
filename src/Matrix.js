@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import colormap from 'colormap';
+import { hsluvToHex } from 'hsluv';
 
 import './Matrix.css';
 
@@ -22,15 +22,6 @@ var MIN_COLORS = 128;
  */
 class BaseMatrix extends Component {
 
-  _cm() {
-    if (this.props.mode === MODE.color_title) {
-      return colormap({colormap: "warm", nshades: 11});
-    } else {
-      return colormap({colormap: config.colormap, 
-        nshades: Math.max(MIN_COLORS, this.props.verse.nWords)});
-    }
-  }
-  
   /** These handlers are a little tricky. We use a wide zero-opacity stroke
    * around rects to make them easier to hover on (they can be really small,
    * for long songs/small screens). But a nasty side effect of this is that 
@@ -58,6 +49,11 @@ class BaseMatrix extends Component {
         );
   }
 
+  static colorify(i, n_indices) {
+    var hue = Math.min(360, Math.floor(360 * i/n_indices));
+    return hsluvToHex([hue, config.rect_saturation, config.rect_lightness]);
+  }
+
   rectColor(x) {
     if (this.props.mode === MODE.vanilla) {
       return 'black';
@@ -66,10 +62,7 @@ class BaseMatrix extends Component {
       if (i === -1) { // hapax
         return 'black';
       }
-      if (this.props.verse.nWords < MIN_COLORS) {
-        i = Math.floor(i * (MIN_COLORS / this.props.verse.nWords));
-      }
-      return this.cm[i];
+      return BaseMatrix.colorify(i, this.props.verse.nWords);
     } else if (this.props.mode === MODE.color_title) {
       // TODO: maybe should only color intact instances of the title? kind of 
       // annoying to draw a bunch of useless colored dots because the title
@@ -77,12 +70,10 @@ class BaseMatrix extends Component {
       var word = this.props.verse.clean_words[x];
       var title_tokens = this.props.verse.title_tokens;
       var idx = title_tokens.indexOf(word);
-      //idx *= Math.floor(11 / title_tokens.length);
       if (idx === -1) {
         return 'black';
-      } else {
-        return this.cm[idx+1];    
       }
+      return BaseMatrix.colorify(idx, title_tokens.length);
     } else {
       console.error("Not implemented");
     }
@@ -103,7 +94,6 @@ class BaseMatrix extends Component {
   }
 
   render() {
-    this.cm = this._cm();
     var rects = Array.from(this.props.verse.rects()).map(
         this.renderRect.bind(this));
     return <g>{rects}</g>;

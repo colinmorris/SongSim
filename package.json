@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "colormap": "^2.2.0",
     "firebase": "^3.6.10",
     "gh-pages": "^0.12.0",
     "hsluv": "0.0.1",
