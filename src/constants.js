@@ -75,4 +75,10 @@ var CANNED_SONGS = [
   //{slug: '', artist: '', title: ''},
 ];
 
+// TODO: use me
+var STOPWORDS = [
+  'i', 'you', 'the', 'a', 'to', 'me', 'my', "i'm", 'your', 'in', 'and', 'it',
+  'that', 'on', 'be', 'is', 'with',
+]
+
 export {NOINDEX, CANNED_SONGS, MODE, CUSTOM_SLUG, LANDING_CANNED};
