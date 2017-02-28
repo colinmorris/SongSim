@@ -1,6 +1,7 @@
 .lyricsPane {
     margin-right: 2%;
     margin-left: 2%;
+    text-align: center;
 }
 
 @media (max-width: 800px) {

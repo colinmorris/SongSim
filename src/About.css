@@ -1,4 +1,4 @@
-.section {
+.abtPanel {
     margin-top: 40px;
     background-color: white;
     padding: 10px;
@@ -7,3 +7,4 @@
     background-color: rgb(252, 253, 255);
     border-color: rgb(220, 240, 255);
 }
+
