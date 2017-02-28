@@ -11,7 +11,7 @@ class Gallery extends Component {
     return (
         <div key={c.slug} className="col-xs-4 col-lg-3">
           <img className="img-responsive" 
-            src={process.env.PUBLIC_URL + GALLERY_FILE_PATH + c.slug + '.svg'}
+            src={process.env.PUBLIC_URL + GALLERY_FILE_PATH + c.slug + '.png'}
             />
           <span><Link to={c.href}>{c.tagline}</Link></span>
         </div>

@@ -27,7 +27,7 @@ var CANNED_SONGS = [
   {slug: 'praiseyou', artist: 'Fatboy Slim', title: 'Praise You', group: POP},
   {slug: 'badgirls', artist: 'M.I.A.', title: 'Bad Girls', group: POP},
   {slug: 'royals', artist: 'Lorde', title: 'Royals', group: POP},
-  {slug: 'whereismymind', artist: 'Pixies', title: 'Where Is My Mind?', group: POP},
+  {slug: 'whereismymind', artist: 'The Pixies', title: 'Where Is My Mind?', group: POP},
   {slug: 'chandelier', artist: 'Sia', title: 'Chandelier', group: POP},
   {slug: 'sexotheque', artist: 'La Roux', title: 'Sexotheque', group: POP},
   

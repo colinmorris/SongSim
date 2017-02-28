@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 
 import './About.css';
 
+const IMG_DIR = '/img/about/';
+
 class About extends Component {
 
   renderSection = (s) => {
@@ -17,7 +19,7 @@ class About extends Component {
           <div key={s.img} className="section row">
               <div className="col-xs-12 col-lg-6 col-md-8">
                 <img className="img-responsive"
-                  src={process.env.PUBLIC_URL + '/img/' + s.img} />
+                  src={process.env.PUBLIC_URL + IMG_DIR + s.img} />
               </div>
               <div className="col-xs-12 col-lg-6 col-md-4">
               {paras}
@@ -30,7 +32,6 @@ class About extends Component {
     var sections = SECTIONS[chapter].map(this.renderSection);
     return (
       <div className="container">
-        <Link to="/">Home</Link>
         <h1>About</h1>
         <ul className="nav nav-tabs">
           <li className={chapter === 'default' ? 'active' : ''}>

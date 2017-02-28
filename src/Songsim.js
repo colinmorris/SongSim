@@ -38,12 +38,12 @@ class Songsim extends Component {
     
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.params.songId === nextProps.songId) {
+    if (this.props.params.songId === nextProps.params.songId) {
       return;
     }
     // new songid
     // update verse
-    var verse = this.getVerse(nextProps.songId);
+    var verse = this.getVerse(nextProps.params.songId);
     // and clear any old highlighting
     this.setState({verse: verse, matrix_focal: {x: NOINDEX, y:NOINDEX},
       lyrics_focal: NOINDEX});
