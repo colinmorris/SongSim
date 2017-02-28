@@ -10,13 +10,22 @@ const LINKS = [
 
 class App extends Component {
   renderNavLink = (link) => {
-    return (<li className={this.props.location.pathname === link.path ? "active" : ""}
+    // I'm sure there's a better way to do this...
+    let active = link.path === "/" ? 
+        !LINKS.some((l) => 
+            ( l.path !== "/" && this.props.location.pathname.startsWith(l.path))
+        )
+        : 
+        this.props.location.pathname.startsWith(link.path)
+    ;
+    return (<li className={active ? "active" : ""}
             key={link.name}
           >
             <Link to={link.path}>{link.name}</Link></li>);
   }
   render() {
     var links = LINKS.map(this.renderNavLink);
+    console.log(this.props.location);
     return (
       <div className="App">
         <nav className="navbar navbar-default">
