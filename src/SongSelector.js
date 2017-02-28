@@ -3,7 +3,9 @@ import {hashHistory} from 'react-router';
 
 import './SongSelector.css';
 
-import {CUSTOM_SLUG, CANNED_SONGS} from './constants.js';
+import {CUSTOM_SLUG} from './constants.js';
+import { GROUPED_CANS } from './canned.js';
+import CANNED_SONGS from './canned-data.js';
 import {CannedVerse} from './verse.js';
 
   
@@ -33,27 +35,11 @@ class SongSelector extends Component {
 
   // TODO: this is basically a static variable 
   renderOptionGroups() {
-    var groupMap = new Map();
-    for (let c of CANNED_SONGS) {
-      if (!groupMap.has(c.group)) {
-        groupMap.set(c.group, []);
-      }
-      groupMap.get(c.group).push(c);
-    }
     var res = [];
     // The first option is a special case: custom song
     var custom = (<option key='custom' value={CUSTOM_SLUG}>Custom</option>);
     res.push(custom)
-
-    for (let [group, cans] of groupMap) {
-      // sort groups alphabetically by artist (or title, if there's no artist)
-      let cmp = (a,b) => {
-        var keya = a.artist || a.title;
-        var keyb = b.artist || b.title;
-        return keya < keyb ? -1 : 
-          (keyb < keya ? 1 : 0)
-      };
-      cans = cans.sort(cmp);
+    for (let [group, cans] of GROUPED_CANS) {
       let og = (<optgroup key={group} label={group}>
                   {cans.map(this.renderOption)}
                 </optgroup>);
@@ -71,7 +57,7 @@ class SongSelector extends Component {
     console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
-      var verse = new CannedVerse(r.response, slug, title, canned.artist);
+      var verse = CannedVerse.fromCanned(canned, r.response);
       cb(verse);
     };
     r.onerror = () => { console.log("uh oh"); };

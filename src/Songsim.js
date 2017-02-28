@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 import { ResizableBox } from 'react-resizable';
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
 import './Songsim.css';
 
@@ -10,10 +12,12 @@ import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse, CannedVerse} from './verse.js';
-import {LANDING_CANNED, CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
+import {CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
+import { LANDING_CANNED } from './canned.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
 import DBHelper from './firebasehelper.js';
+import CANNED_SONGS from './canned-data.js';
 
 class Songsim extends Component {
   constructor(props) {
@@ -58,7 +62,7 @@ class Songsim extends Component {
     if (!songId) {
       // No song id in the URL. Return the default landing song.
       var c = LANDING_CANNED;
-      return new CannedVerse(LANDING_LYRICS, c.slug, c.title, c.artist);
+      return CannedVerse.fromCanned(c, LANDING_LYRICS);
     }
     if (songId === CUSTOM_SLUG) {
       return CustomVerse.BlankVerse();
@@ -105,6 +109,36 @@ class Songsim extends Component {
     // if you have a firebase key in the URL (i.e. you presumably had this
     // link shared from someone), the text should be immutable, and if 
     // url=custom, it's mutable. 
+  }
+
+  /** Only used to generate SVGs for gallery. Super hacky. **/
+  batchExportSVGs = () => {
+    let zip = new JSZip();
+    let i = 0;
+    let dur = 3000;
+    var max = 333;
+    for (let canned of CANNED_SONGS) {
+      window.setTimeout(() => {
+      SongSelector.loadSong( (verse) => {
+        this.setState({verse: verse});
+      }, canned);
+      }, i*dur);
+      window.setTimeout(() => {
+        var svg = this.matrix.getSVG();
+        zip.file(canned.slug + '.svg', svg);
+      }, i*dur+ (dur/2));
+      i++;
+      if (i >= max) {
+        break;
+      }
+    }
+    window.setTimeout(() => {
+      zip.generateAsync({type:'blob'}).then( (c) => {
+        saveAs(c, 'matrices.zip');
+      });
+    }, dur * Math.min(max, CANNED_SONGS.length));
+    //var blob = new Blob(['hello world'], {type: 'text/plain'});
+    //saveAs(blob, 'hello.txt');
   }
 
   get focal_rowcols() {
@@ -244,6 +278,7 @@ class Songsim extends Component {
           focal_diags={this.focal_diags}
           mode={this.state.mode}
           ignore_singletons={this.state.ignore_singletons}
+          ref={(m) => {this.matrix = m}}
         />
       );
     }
@@ -258,7 +293,7 @@ class Songsim extends Component {
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
         </div>);
     }
-    var defaultMatrixSize = 800; // TODO: have this flow from above (and calculate from screen.height or something)
+    var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
     return (
         <div>
 
@@ -319,6 +354,8 @@ class Songsim extends Component {
         <div className="footer">
           <Link to="/about">About</Link>
         </div>
+
+        <button onClick={this.batchExportSVGs}>Do stuff</button>
 
         </div>
         );

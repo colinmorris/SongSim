@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { hsluvToHex } from 'hsluv';
+import { saveAs } from 'file-saver';
 
 import './Matrix.css';
 
-import {NOINDEX, MODE} from './constants.js';
+import {STOPWORDS, NOINDEX, MODE} from './constants.js';
 import config from './config.js';
 
 // TODO: colormap docs (https://www.npmjs.com/package/colormap) say that n>10
@@ -81,6 +82,12 @@ class BaseMatrix extends Component {
 
   renderRect(r) {
     if (this.props.ignore_singletons && this.props.verse.matrix.is_singleton(r.x, r.y)) {
+      return;
+    }
+    // TODO: should probably go further up the chain
+    if (config.stopwords && STOPWORDS.has(this.props.verse.clean_words[r.x])
+        && this.props.verse.matrix.is_singleton(r.x, r.y)
+        ) {
       return;
     }
     var key = r.x + (this.props.verse.matrix.length * r.y);
@@ -177,14 +184,18 @@ class Matrix extends Component {
 
   exportSVG = () => {
     console.log("Exporting svg");
+    var svg = this.getSVG();
+    var blob = new Blob([svg], {type: 'image/svg+xml'});
+    var fname = this.props.verse.id + '.svg';
+    saveAs(blob, fname);
+  }
+
+  getSVG = () => {
     this.svg.setAttribute('version', '1.1');
     this.svg.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-    var svg = this.svg.outerHTML;
-    var b64 = window.btoa(svg);
-    var url='data:image/svg+xml;base64,\n'+b64
-    // Could also use FileSaver
-    window.open(url, 'foo');
+    return this.svg.outerHTML;
   }
+
 
   render() {
     var n = Math.max(1, this.props.verse.matrix.length);

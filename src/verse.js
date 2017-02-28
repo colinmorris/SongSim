@@ -293,6 +293,10 @@ class CannedVerse extends Verse {
     this.title_tokens = title ? this.clean_title.split(" ") : [];
   }
 
+  static fromCanned(c, text) {
+    return new CannedVerse(text, c.slug, c.title, c.artist);
+  }
+
   isCustom() {
     return false;
   }
