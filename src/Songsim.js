@@ -23,7 +23,7 @@ class Songsim extends Component {
   constructor(props) {
     super(props);
     this.db = new DBHelper();
-    var verse = this.getVerse(this.props.songId);
+    var verse = this.getVerse(this.props.params.songId);
     this.state = {verse: verse,
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
@@ -33,12 +33,12 @@ class Songsim extends Component {
   }
 
   get slug() {
-    return this.props.songId || LANDING_CANNED.slug;
+    return this.props.params.songId || LANDING_CANNED.slug;
   }
     
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.songId === nextProps.songId) {
+    if (this.props.params.songId === nextProps.songId) {
       return;
     }
     // new songid
