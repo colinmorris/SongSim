@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
 import './LyricsPane.css';
 
-import {NOINDEX} from './constants.js';
+import { NOINDEX, CUSTOM_SLUG } from './constants.js';
 import Word from './Word.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse} from './verse.js';
@@ -91,6 +92,15 @@ class LyricsPane extends Component {
     this.onTextEdit();
   }
 
+  // Called then the edit button is clicked. Duh.
+  onEditButton = () => {
+    if (this.props.verse.isCustom()) {
+      this.startEditing();
+    } else {
+      hashHistory.push(CUSTOM_SLUG); 
+    }
+  }
+
   render() {
     var filling;
     if (this.editing) {
@@ -104,6 +114,11 @@ class LyricsPane extends Component {
           />
           
           <button className="btn" onClick={this.onTextEdit}>Save</button>
+          {/* TODO: clicking cancel when the textarea is empty should either
+              a) Jump to the default landing song, or
+              b) (Preferably) go back to the last viewed canned song.
+              (Assuming there was no content previously. If there was, it should 
+               be resurrected.) */}
           <button id="cancelEdit" className="btn" onClick={this.abortEditing}>Cancel</button>
         </div>
       );
@@ -122,6 +137,7 @@ class LyricsPane extends Component {
     return (<div className="lyricsPane">
               <SongSelector 
                 selected={this.props.slug}
+                onEdit={this.onEditButton}
               />
              {filling}
            </div>);
@@ -132,6 +148,6 @@ LyricsPane.propTypes = {
   verse: React.PropTypes.object.isRequired,
   hover_cb: React.PropTypes.func,
   highlights: React.PropTypes.instanceOf(Map),
-}
+};
 
 export default LyricsPane;

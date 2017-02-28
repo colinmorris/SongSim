@@ -19,6 +19,7 @@ class SongSelector extends Component {
   }
 
   handleChange = (e) => {
+    // TODO: verify we're not already there?
     var slug = e.target.value;
     hashHistory.push(slug);
   }
@@ -77,12 +78,29 @@ class SongSelector extends Component {
       }
     }
     return (
+            <div className="form-horizontal songselector">
+              <div className="form-group">
+              <div className="col-xs-11">
               <select className="form-control input-lg" 
                 onChange={this.handleChange} value={selected} >
               {this.renderOptionGroups()}
-              </select>
+              </select></div>
+              <span className="col-xs-1 input-lg">
+                <button className="btn" onClick={this.props.onEdit}
+                  title="Edit custom song"
+                >
+                  <span className="glyphicon glyphicon-pencil" />
+                </button>
+              </span>
+              </div>
+            </div>
         );
   }
 }
+
+SongSelector.propTypes = {
+  selected: React.PropTypes.string,
+  onEdit: React.PropTypes.func,
+};
 
 export default SongSelector;

@@ -29,6 +29,7 @@ class Songsim extends Component {
       lyrics_focal: NOINDEX,
       mode: config.default_mode,
       ignore_singletons: false,
+      ignore_stopwords: config.stopwords,
     };
   }
 
@@ -278,11 +279,13 @@ class Songsim extends Component {
           focal_diags={this.focal_diags}
           mode={this.state.mode}
           ignore_singletons={this.state.ignore_singletons}
+          stopwords={this.state.ignore_stopwords}
           ref={(m) => {this.matrix = m}}
         />
       );
     }
     var debug;
+    // TODO: debug component?
     if (config.debug && this.state.verse) {
       var rects = Array.from(this.state.verse.rects());
       debug = (<div>
@@ -295,42 +298,42 @@ class Songsim extends Component {
     }
     var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
     return (
-        <div>
+      <div>
 
         <div className="mainContainer">
-        <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
-          lockAspectRatio={true}
-          >
-            {matrix}
-        </ResizableBox>
+          <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
+            lockAspectRatio={true}
+            >
+              {matrix}
+          </ResizableBox>
 
-        <div className="lyricsPane">
-            <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
-              loading={!this.state.verse}
-              hover_cb={(i) => this.setState({lyrics_focal: i})}
-              highlights={this.lyrics_highlights}
-              onChange={this.onTextChange}
-              slug={this.slug}
-            />
+          <div className="lyricsPane">
+              <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
+                loading={!this.state.verse}
+                hover_cb={(i) => this.setState({lyrics_focal: i})}
+                highlights={this.lyrics_highlights}
+                onChange={this.onTextChange}
+                slug={this.slug}
+              />
 
-            {this.state.verse && this.state.verse.isCustom() && 
-             !this.state.verse.isBlank() &&
-              <div>
-              <button className="btn" disabled={this.state.verse.isFrozen()} 
-                      onClick={!this.state.verse.isFrozen() && this.makePermalink}>
-                Export
-              </button>
-              {this.state.verse.key && 
-                <p><b>Permalink:</b> 
-                  <a href={this.state.verse.permalink}>
-                    {this.state.verse.permalink}
-                  </a>
-                </p>
+              {this.state.verse && this.state.verse.isCustom() && 
+               !this.state.verse.isBlank() &&
+                <div>
+                <button className="btn" disabled={this.state.verse.isFrozen()} 
+                        onClick={!this.state.verse.isFrozen() && this.makePermalink}>
+                  Export
+                </button>
+                {this.state.verse.key && 
+                  <p><b>Permalink:</b> 
+                    <a href={this.state.verse.permalink}>
+                      {this.state.verse.permalink}
+                    </a>
+                  </p>
+                }
+                </div>
               }
-              </div>
-            }
-        </div>
-        </div>
+          </div>
+        </div> {/* /mainContainer */}
 
         <div className="row">
           <label>

@@ -47,6 +47,7 @@ class BaseMatrix extends Component {
     return !(this.props.verse === nextProps.verse
         && this.props.mode === nextProps.mode
         && this.props.ignore_singletons === nextProps.ignore_singletons
+        && this.props.stopwords === nextProps.stopwords
         );
   }
 
@@ -85,7 +86,7 @@ class BaseMatrix extends Component {
       return;
     }
     // TODO: should probably go further up the chain
-    if (config.stopwords && STOPWORDS.has(this.props.verse.clean_words[r.x])
+    if (this.props.stopwords && STOPWORDS.has(this.props.verse.clean_words[r.x])
         && this.props.verse.matrix.is_singleton(r.x, r.y)
         ) {
       return;
