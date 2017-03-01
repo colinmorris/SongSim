@@ -25,7 +25,6 @@ class App extends Component {
   }
   render() {
     var links = LINKS.map(this.renderNavLink);
-    console.log(this.props.location);
     return (
       <div className="App">
         <nav className="navbar navbar-default">

@@ -5,8 +5,8 @@ import './About.css';
 
 const IMG_DIR = '/img/about/';
 
+// TODO: maybe move chapter/section data into a separate module
 const chapter_names = ['default', 'intro', 'advanced'];
-
 const SECTION_METADATA = {
   intro: {
     panelClass: "col-xs-12"

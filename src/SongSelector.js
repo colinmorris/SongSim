@@ -50,11 +50,8 @@ class SongSelector extends Component {
   }
 
   static loadSong(cb, canned) {
-    // TODO: hack
-    var title = canned.title;
-    var slug = canned.slug;
     var r = new XMLHttpRequest();
-    var url = process.env.PUBLIC_URL + '/canned/' + slug + '.txt';
+    var url = process.env.PUBLIC_URL + '/canned/' + canned.slug + '.txt';
     console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
@@ -64,7 +61,6 @@ class SongSelector extends Component {
     r.onerror = () => { console.log("uh oh"); };
     r.send();
   }
-
 
   render() {
     // It's possible the "selected" slug we got was actually a firebase key,

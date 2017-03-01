@@ -10,7 +10,7 @@ import config from './config.js';
 // TODO: colormap docs (https://www.npmjs.com/package/colormap) say that n>10
 // should be enough divisions for any colormap, but using the 'warm' colormap
 // with n=12 led to 4 repeated colors. Should file a bug.
-var MIN_COLORS = 128;
+//var MIN_COLORS = 128;
 
 /** For reasons of performance, we separate the highlighting effects we do on
  * hover into a separate component from the basic structure of the matrix. The
@@ -172,7 +172,7 @@ class ShadowMatrix extends Component {
 
   render() {
     var rects = [];
-    for (let [diag, label] of this.props.focal_diags) {
+    for (let [diag, _label] of this.props.focal_diags) {
       for (let [x, y] of diag.points()) {
         rects.push( this.renderRect( {x: x, y: y, width: 1, height: 1} ) );
       }

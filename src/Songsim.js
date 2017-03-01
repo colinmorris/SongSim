@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
 import { ResizableBox } from 'react-resizable';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
@@ -13,7 +12,7 @@ import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import {CustomVerse, CannedVerse} from './verse.js';
-import {CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
+import {CUSTOM_SLUG, NOINDEX} from './constants.js';
 import { LANDING_CANNED } from './canned.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';

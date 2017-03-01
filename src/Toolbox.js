@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import config from './config.js';
-import {CUSTOM_SLUG, NOINDEX, MODE} from './constants.js';
+import {MODE} from './constants.js';
 
 /**
  * Contains a bunch of controls for stuff like:

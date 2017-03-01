@@ -181,7 +181,6 @@ class Verse {
       lala = new Lala(lala_start, i-1, last_word);
       lalas.push(lala);
     }
-    console.log(`Skipped ${skipped} empty words`);
     this.raw_words = raw_words;
     this.clean_words = clean_words;
     this.newline_indices = newlines;
@@ -205,7 +204,6 @@ class Verse {
       this.word_ids = word_ids;
     }
     this.nWords = nWords;
-    console.log(`Found ${word_ids.size} unique words out of ${clean_words.length}`);
     this.matrix = new VerseMatrix(this.clean_words);
   }
 

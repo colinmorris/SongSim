@@ -43,16 +43,14 @@ class LyricsPane extends Component {
       console.error("Tried to edit a song that shouldn't be editable. Bailing.");
       return;
     }
-    // TODO: unnecessary?
-    //this.setState({editing: false});
-    // TODO: be a bit more careful here...
-    // - if the new text value is blank, revert to the old text
-    // - if the text is unchanged, don't do anything (we don't
-    //    want to overwrite a CannedVerse with a CustomVerse having
-    //    the same content).
-    console.log(this.ta.value);
-    var verse = new CustomVerse(this.ta.value);
+    // TODO: if the new text value is blank, revert to the old text
     console.log("Got text edit event");
+    if (this.ta.value === this.props.verse.raw) {
+      console.log("Detected that edit had no effect. Not regenerating verse.");
+      this.setState({editingExtant: false});
+      return;
+    }
+    var verse = new CustomVerse(this.ta.value);
     this.props.onChange(verse);
   }
 
