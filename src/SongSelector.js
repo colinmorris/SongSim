@@ -38,8 +38,10 @@ class SongSelector extends Component {
   renderOptionGroups() {
     var res = [];
     // The first option is a special case: custom song
-    var custom = (<option key='custom' value={CUSTOM_SLUG}>Custom</option>);
-    res.push(custom)
+    if (this.props.allowEdit) {
+      var custom = (<option key='custom' value={CUSTOM_SLUG}>Custom</option>);
+      res.push(custom);
+    }
     for (let [group, cans] of GROUPED_CANS) {
       let og = (<optgroup key={group} label={group}>
                   {cans.map(this.renderOption)}
@@ -71,6 +73,7 @@ class SongSelector extends Component {
                 onChange={this.handleChange} value={this.props.selected} >
               {this.renderOptionGroups()}
               </select></div>
+              {this.props.allowEdit &&
               <span className="col-xs-1 input-lg">
                 <button className="btn" onClick={this.props.onEdit}
                   title="Edit custom song"
@@ -78,6 +81,7 @@ class SongSelector extends Component {
                   <span className="glyphicon glyphicon-pencil" />
                 </button>
               </span>
+              }
               </div>
             </div>
         );
@@ -87,6 +91,11 @@ class SongSelector extends Component {
 SongSelector.propTypes = {
   selected: React.PropTypes.string,
   onEdit: React.PropTypes.func,
+  allowEdit: React.PropTypes.bool,
+};
+
+SongSelector.defaultProps = {
+  allowEdit: true,
 };
 
 export default SongSelector;

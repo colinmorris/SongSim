@@ -129,6 +129,10 @@ class Verse {
     this.parse(text);
   }
 
+  get length() {
+    return this.clean_words.length;
+  }
+
   static cleanWord(word) {
     var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
     word = word.toLowerCase(); 
@@ -271,6 +275,36 @@ class Verse {
   
   isBlank() {
     return this.raw === '';
+  }
+
+  diagText(diag) {
+    return this.textInRange(diag.x0, diag.x1);
+  }
+
+  textInRange(a, b) {
+    console.assert(a <= b);
+    var res = [];
+    if (a > b) {
+      return res;
+    }
+    var acc = '';
+    if (!this.newline_indices.includes(a-1)) {
+      acc = '... ';
+    }
+    for (let x=a; 0 <= x && x <= b && x < this.length; x++) {
+      acc += this.raw_words[x];
+      if (this.newline_indices.includes(x)) {
+        res.push(acc);
+        acc = '';
+      } else {
+        acc += ' ';
+      }
+    }
+    if (acc) {
+      acc += '...';
+      res.push(acc);
+    }
+    return res;
   }
 
 }

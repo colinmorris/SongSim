@@ -3,6 +3,10 @@
     margin: 10px;
 }
 
+.mainContainerMobile {
+
+}
+
 .react-resizable-handle {
     bottom: -20px !important;
     right: -20px !important;
@@ -12,3 +16,6 @@
 .lyricsPane {
 }
 
+.mobileMatrixContainer {
+    width: 300px;
+}

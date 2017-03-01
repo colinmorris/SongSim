@@ -5,6 +5,7 @@ import JSZip from 'jszip';
 
 import './Songsim.css';
 
+import LyricsPorthole from './LyricsPorthole.js';
 import Toolbox from './Toolbox';
 import Matrix from './Matrix.js';
 import { Diagonal } from './utils.js';
@@ -30,6 +31,7 @@ class Songsim extends Component {
       mode: config.default_mode,
       ignore_singletons: false,
       ignore_stopwords: config.stopwords,
+      mobile: true,
     };
   }
 
@@ -278,6 +280,9 @@ class Songsim extends Component {
         </div>);
     }
     var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
+    if (this.state.mobile) {
+      return this.renderMobile(matrix);
+    }
     return (
       <div>
 
@@ -316,6 +321,27 @@ class Songsim extends Component {
         {debug}
         </div>
         );
+  }
+
+  renderMobile(matrix) {
+    return (
+      <div className="mobileContainer">
+        <SongSelector
+          selected={this.state.verse && this.state.verse.id}
+          allowEdit={false}
+        />
+        
+        <div className="mobileMatrixContainer">
+        {matrix}
+        </div>
+
+        <LyricsPorthole
+          verse={this.state.verse}
+          focal={this.focal_local_diag}
+        />
+
+      </div>
+    )
   }
 }
 
