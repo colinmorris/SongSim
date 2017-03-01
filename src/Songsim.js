@@ -6,6 +6,7 @@ import JSZip from 'jszip';
 
 import './Songsim.css';
 
+import Toolbox from './Toolbox';
 import Matrix from './Matrix.js';
 import { Diagonal } from './utils.js';
 import DummyMatrix from './DummyMatrix.js';
@@ -36,7 +37,6 @@ class Songsim extends Component {
   get slug() {
     return this.props.params.songId || LANDING_CANNED.slug;
   }
-    
 
   componentWillReceiveProps(nextProps) {
     if (this.props.params.songId === nextProps.params.songId) {
@@ -50,7 +50,6 @@ class Songsim extends Component {
       lyrics_focal: NOINDEX});
 
   }
-
   
   // TODO: make this return a promise or something
   getVerse(songId) {
@@ -93,11 +92,8 @@ class Songsim extends Component {
     this.setState({verse: verse});
   }
 
-  onModeChange = (e) => {
-    this.setState({mode: e.target.value});
-  }
-
   makePermalink = () => {
+    console.log('Permalinking');
     console.assert(this.state.verse.isCustom() && !this.state.verse.key);
     var ref = this.db.push(this.state.verse);
     console.log(ref);
@@ -237,37 +233,15 @@ class Songsim extends Component {
     this.setState({matrix_focal: pt})
   }
 
-  renderRadio = (mode_key) => {
-    var mode = MODE[mode_key];
-    // TODO: Really when we get a change to state.verse, we should see if
-    // the new verse is custom && mode is color_title, and if so, we should
-    // automatically switch to a different mode. But bleh.
-    var disabled = (mode === MODE.color_title && 
-        (!this.state.verse || !this.state.verse.title));
-    var divCname = disabled ? "radio-inline disabled" : "radio-inline";
-    return (
-        <div className={divCname} key={mode}>
-          <label><input type="radio" 
-              disabled={disabled}
-              checked={this.state.mode === mode}
-              value={mode}
-              onChange={this.onModeChange}
-              name="mode" />
-            {mode}
-          </label>
-        </div>
-    );
-  }
-
   render() {
     // TODO: this method is getting pretty huge
     var rowcols = this.focal_rowcols;
     var rows = rowcols[0], cols = rowcols[1];
-    var radios = Object.keys(MODE).map(this.renderRadio);
     var matrix;
     if (!this.state.verse) {
       matrix = <DummyMatrix />;
     } else {
+      // TODO: probably passing way more props than necessary at this point
       matrix = (
         <Matrix 
           verse={this.state.verse} 
@@ -294,13 +268,14 @@ class Songsim extends Component {
           {rects.length} rects
           </p>
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
+          <button onClick={this.batchExportSVGs}>Do stuff</button>
         </div>);
     }
     var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
     return (
       <div>
 
-        <div className="mainContainer">
+        <div className="container-fluid mainContainer">
           <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
             lockAspectRatio={true}
             >
@@ -316,50 +291,21 @@ class Songsim extends Component {
                 slug={this.slug}
               />
 
-              {this.state.verse && this.state.verse.isCustom() && 
-               !this.state.verse.isBlank() &&
-                <div>
-                <button className="btn" disabled={this.state.verse.isFrozen()} 
-                        onClick={!this.state.verse.isFrozen() && this.makePermalink}>
-                  Export
-                </button>
-                {this.state.verse.key && 
-                  <p><b>Permalink:</b> 
-                    <a href={this.state.verse.permalink}>
-                      {this.state.verse.permalink}
-                    </a>
-                  </p>
-                }
-                </div>
-              }
           </div>
         </div> {/* /mainContainer */}
-
-        <div className="row">
-          <label>
-            Mode
-            <form className="form-control">
-              {radios}
-            </form>
-          </label>
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" checked={this.state.ignore_singletons}
-                onChange={(e) => {this.setState({ignore_singletons: e.target.checked});}}
-              />
-                Ignore single-word matches
-            </label>
-          </div>
+        <div className="container">
+        <Toolbox
+          verse={this.state.verse}
+          mode={this.state.mode}
+          ignoreSingletons={this.state.ignore_singletons}
+          onStateChange={(state) => {this.setState(state)}}
+          exportSVG={this.matrix && this.matrix.exportSVG}
+          onShare={this.makePermalink}
+        />
         </div>
-
+        {/* ^ This onStateChange thing sort of defies separation of concerns, 
+            but it also means writing less boilerplate code, sooooo */}
         {debug}
-
-        <div className="footer">
-          <Link to="/about">About</Link>
-        </div>
-
-        <button onClick={this.batchExportSVGs}>Do stuff</button>
-
         </div>
         );
   }

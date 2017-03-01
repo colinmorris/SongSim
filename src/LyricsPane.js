@@ -39,7 +39,7 @@ class LyricsPane extends Component {
   }
 
   onTextEdit = () => {
-    if (this.props.verse.isFrozen()) {
+    if (!this.props.verse.isCustom()) {
       console.error("Tried to edit a song that shouldn't be editable. Bailing.");
       return;
     }
@@ -126,7 +126,7 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
             <div className="words lyrics" 
-              onClick={!this.props.verse.isFrozen() && this.startEditing} >
+              onClick={this.startEditing} >
               {this.props.loading &&
                 <h3>Loading...</h3>
               }

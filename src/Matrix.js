@@ -224,9 +224,6 @@ class Matrix extends Component {
           />
         </g>
         </svg>
-        {config.exportSVGEnabled &&
-          <button onClick={this.exportSVG}>Export SVG</button>
-        }
         </div>
     );
     return res;

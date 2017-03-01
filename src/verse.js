@@ -275,13 +275,6 @@ class Verse {
     return this.raw === '';
   }
 
-  isFrozen() {
-    return true;
-  }
-
-  editable() {
-    return !this.isFrozen();
-  }
 }
 
 class CannedVerse extends Verse {
@@ -315,16 +308,13 @@ class CustomVerse extends Verse {
   isCustom() {
     return true;
   }
-  isFrozen() {
-    return this.key !== undefined && this.key.length > 0;
-  }
   get permalink() {
     if (this.key) {
       // TODO: probably a better way
       return window.location.origin + '/#/' + this.key;
     }
   }
-
+  
   // heh, I made a funny
   static BlankVerse() {
     return new CustomVerse('');
