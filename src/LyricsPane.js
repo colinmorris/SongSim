@@ -124,7 +124,7 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
             <div className="words lyrics" 
-              onClick={this.startEditing} >
+              onClick={this.props.verse && this.props.verse.isCustom() && this.startEditing} >
               {this.props.loading &&
                 <h3>Loading...</h3>
               }

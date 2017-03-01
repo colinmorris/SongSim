@@ -52,7 +52,7 @@ class About extends Component {
     var chapter_preamble;
     if (this.props.params.chapter === 'advanced') {
       chapter_preamble = (
-          <p>Below are some recurring patterns to look out for.</p>
+          <p>Below are some common patterns to look out for.</p>
       );
     }
     return (
@@ -66,7 +66,7 @@ class About extends Component {
             <Link to="/about/intro">Tutorial</Link>
           </li>
           <li className={chapter === 'advanced' ? 'active' : ''}>
-            <Link to="/about/advanced">Advanced</Link>
+            <Link to="/about/advanced">Field Guide</Link>
           </li>
         </ul>
         <div className="row preamble">
@@ -80,30 +80,40 @@ class About extends Component {
 const SECTIONS = 
 {
 'default': [
-  {img: 'barbie.png', paras: [
-    (k) => (<p key={k}>SongSim uses <a href="https://en.wikipedia.org/wiki/Self-similarity_matrix">self-similarity matrices</a> to visualize patterns of repetition in text. The cell at position (x, y) is filled in if the xth and yth words of the song are the same.</p>),
-    (k) => (<p key={k}>For more details, check out the <Link to="/about/intro">tutorial</Link>.</p>)
-    ]},
+  {img: 'barbie.png', body: (
+      <div>
+        <p>SongSim uses <a href="https://en.wikipedia.org/wiki/Self-similarity_matrix">self-similarity matrices</a> to visualize patterns of repetition in text. The cell at position (x, y) is filled in if the xth and yth words of the song are the same.</p>
+        <p>Confused? Check out the <Link to="/about/intro">tutorial</Link>, which
+        walks through the example of "Baa Baa Black Sheep".</p>
+        <p>Curious for more? Check out the <Link to="/about/advanced">field guide</Link> to
+        shapes and patterns of interest you're likely to encounter in these matrices.</p>
+      </div>)},
 ],
 'intro':
   [
     {img: 'baa1.png', paras: [
         'A self-similarity matrix is used to answer the question "which parts of this thing are alike?".',
         'Each row and column of the matrix corresponds to a word in a text. This 35 x 35 matrix represents the 35 words of "Baa Baa Black Sheep". The cell at (x, y) is filled in if the xth word and the yth word are the same.',
-        'The diagonal running from top-left to bottom-right corresponds to cases where x=y, and is always filled in. The portions on either side of it are symmetric.',
-      ]},
-    {img: 'baa_the.png', paras: [
-        'Single squares off the main diagonal like this represent words that are used repeatedly in the song (in this case, "the", which is used 4 times).',
-        'You can hide these by checking the "Ignore single-word matches" box.'
+        'The diagonal running from top-left to bottom-right (the "main diagonal") corresponds to cases where x=y, and is always filled in. The portions on either side of it are symmetric.',
       ]},
     {img: 'baa_oneforthe.png', paras: [
-        'Diagonal lines represent repeated sequences of words. "one for the" appears 3 times.'
+        'When a sequence of words is repeated, it creates a diagonal line off the main diagonal. "one for the" appears 3 times, leading to three diagonal lines on each side of the main diagonal.',
+        'The diagonal under the cursor represents the correspondence between the first and third instances of the phrase (which are bolded and underlined in the text).'
+      ]},
+    {img: 'baa_the.png', paras: [
+        'Single squares off the main diagonal represent individual words that are used repeatedly in the song. The word "the" is used 4 times in the rhyme. The first three uses are as part of the repeating phrase "one for the", but the last instance ("down the lane"), isn\'t part of a repeating phrase.',
+        '(By default, single-word matches on common words like "the" aren\'t shown, but this is configurable.).'
       ]},
     {img: 'baa_colorful.png', paras: [
-        '"Colorful" mode assigns a unique color to each repeated word. When there are several repeated themes, this can make it easier to distinguish them.'
+        '"Colorful" mode assigns a unique color to each repeated word (words appearing only once are black). When there are several repeated themes, this can make it easier to distinguish them.',
+        'It\'s clear now that the solitary squares correspond to the last word of the earlier repeating phrase ("one for the"), because they\'re both orange.',
+        'We can also see that the repetitions of that phrase aren\'t exactly head-to-tail. They\'re interrupted by a single word ("master", then "dame").'
       ]},
     {img: 'baa_siryes.png', paras: [
-        'Diagonals close to the main diagonal represent nearby repetitions ("yes sir, yes sir").'
+        'Diagonals close to the main diagonal represent nearby repetitions ("yes sir, yes sir").',
+    (k) => (<p key={k}><b>That's it</b>. Check out the <Link to="/about/advanced">Field Guide</Link> for
+        some more advanced tips and tricks for analysing these matrices. Or perhaps you'd rather play 
+        with some <Link to="/">live examples</Link>.</p>)
       ]},
 ],
 'advanced': [
@@ -188,5 +198,6 @@ const SECTIONS =
     </div>)}
 ]
 }
+// TODO: broken diagonals
 
 export default About;

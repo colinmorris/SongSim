@@ -309,7 +309,7 @@ class CustomVerse extends Verse {
   }
   get_permalink(router) {
     if (this.key) {
-      return router.createHref('/custom/' + this.key);
+      return window.location.origin + router.createHref('/custom/' + this.key);
     }
   }
   

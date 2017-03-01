@@ -95,7 +95,7 @@ class Toolbox extends Component {
     if (!(this.props.verse && this.props.verse.isCustom() && !this.props.verse.isBlank())) {
       return;
     }
-    var perma = window.location.origin + this.props.verse.get_permalink(this.props.router);
+    var perma = this.props.verse.get_permalink(this.props.router);
     if (perma) {
       return (
           <div className="col-xs-2 col-md-2">
