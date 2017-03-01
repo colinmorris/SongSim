@@ -23,7 +23,7 @@ class Songsim extends Component {
   constructor(props) {
     super(props);
     this.db = new DBHelper();
-    var verse = this.getVerse(this.props.params.songId);
+    var verse = this.getVerse();
     this.state = {verse: verse,
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
@@ -33,57 +33,60 @@ class Songsim extends Component {
     };
   }
 
-  get slug() {
-    return this.props.params.songId || LANDING_CANNED.slug;
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (this.props.params.songId === nextProps.params.songId) {
+    if (this.props.location.pathname === nextProps.location.pathname) {
+      console.log('Ignoring props update');
       return;
     }
     // new songid
     // update verse
-    var verse = this.getVerse(nextProps.params.songId);
+    var verse = this.getVerse(nextProps);
     // and clear any old highlighting
     this.setState({verse: verse, matrix_focal: {x: NOINDEX, y:NOINDEX},
       lyrics_focal: NOINDEX});
 
   }
+
   
   // TODO: make this return a promise or something
-  getVerse(songId) {
-    // Four possibilities:
-    // - no songId -> return default landing song
-    // - songId that matches one of our canned slugs -> load that canned song
-    // - songId === CUSTOM_SLUG -> load an empty custom verse and go into edit mode
-    //          (TODO: maybe this should just redirect to #/ on load?
-    // - other songId, which is presumably a key in our firebase store
-    if (!songId) {
-      // No song id in the URL. Return the default landing song.
+  /** Fetches an initial verse corresponding to the given props (i.e. the URL).
+   * If possible, return the appropriate verse immediately. Otherwise, return
+   * a dummy value and asynchronously request the corresponding data, and then
+   * set the verse state when it's ready.
+   */
+  getVerse(props) {
+    props = props || this.props;
+    // Four possibilities wrt URL:
+    // - /custom/[key] : firebase key
+    // - /custom       : blank custom verse
+    // - /             : default landing song (return it immediately)
+    // - /[slug]       : canned song slug
+    if (props.params.customKey) {
+      // it's a firebase key
+      var key = props.params.customKey;
+      console.log(`Looking up firebase key ${key}`);
+      this.db.load(key).then( (snapshot) => {
+        // TODO: gracefully fail here?
+        var txt = snapshot.val();
+        var verse = new CustomVerse(txt, key);
+        this.onTextChange(verse);
+      });
+    } else if (props.location.pathname === "/custom") {
+      return CustomVerse.BlankVerse();
+    } else if (props.params.songId) {
+      let songId = props.params.songId;
+      var canned = SongSelector.lookupCanned(songId);
+      if (canned) {
+        SongSelector.loadSong(this.onTextChange, canned);
+      } else {
+        console.error(`Uh oh. Failed to load slug ${songId}`);
+      }
+    } else {
+      // Return the default landing song.
       var c = LANDING_CANNED;
       return CannedVerse.fromCanned(c, LANDING_LYRICS);
     }
-    if (songId === CUSTOM_SLUG) {
-      return CustomVerse.BlankVerse();
-    }
-    // We have a song id in the URL. We're going to have to perform a request
-    // to get the text. Until that happens, just return a placeholder.
-    // TODO: should handle this more gracefully. e.g. define an isLoading state
-    // variable, and when it's true, hold off on rendering the matrix/lyrics
-    // stuff, and just show some kind of "loading" animation
-    var canned = SongSelector.lookupCanned(songId);
-    if (canned) {
-      SongSelector.loadSong(this.onTextChange, canned);
-    } else {
-      // Okay, it's a firebase key
-      console.log(`Looking up firebase key ${songId}`);
-      this.db.load(songId).then( (snapshot) => {
-        // TODO: gracefully fail here?
-        var txt = snapshot.val();
-        var verse = new CustomVerse(txt, songId);
-        this.onTextChange(verse);
-      });
-    }
+    // If we've reached this far, we must be loading asynchronously. Return nothing.
     return undefined;
   }
 
@@ -91,6 +94,7 @@ class Songsim extends Component {
     this.setState({verse: verse});
   }
 
+  // TODO: sort of confusingly named at this point
   makePermalink = () => {
     console.log('Permalinking');
     console.assert(this.state.verse.isCustom() && !this.state.verse.key);
@@ -268,6 +272,9 @@ class Songsim extends Component {
           </p>
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
           <button onClick={this.batchExportSVGs}>Do stuff</button>
+          <a href={this.props.router.createHref('custom/' + config.testingFBKey)}>
+            Custom song.
+          </a>
         </div>);
     }
     var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
@@ -287,7 +294,7 @@ class Songsim extends Component {
                 hover_cb={(i) => this.setState({lyrics_focal: i})}
                 highlights={this.lyrics_highlights}
                 onChange={this.onTextChange}
-                slug={this.slug}
+                slug={this.state.verse && this.state.verse.id}
               />
 
           </div>
@@ -301,6 +308,7 @@ class Songsim extends Component {
           onStateChange={(state) => {this.setState(state)}}
           exportSVG={this.matrix && this.matrix.exportSVG}
           onShare={this.makePermalink}
+          router={this.props.router}
         />
         </div>
         {/* ^ This onStateChange thing sort of defies separation of concerns, 

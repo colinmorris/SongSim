@@ -293,6 +293,7 @@ class CannedVerse extends Verse {
   }
 
   get slug() {
+    // TODO: just rename id to slug
     return this.id;
   }
 }
@@ -306,10 +307,9 @@ class CustomVerse extends Verse {
   isCustom() {
     return true;
   }
-  get permalink() {
+  get_permalink(router) {
     if (this.key) {
-      // TODO: probably a better way
-      return window.location.origin + '/#/' + this.key;
+      return router.createHref('/custom/' + this.key);
     }
   }
   

@@ -9,6 +9,7 @@ var config = {
   rect_saturation: 100, // range [0-100]
   rect_lightness: 50, // range [0-100]
   stopwords: true,
+  testingFBKey: '-KeAcPBicxmHgZNEY9UM',
 };
 
 export default config;

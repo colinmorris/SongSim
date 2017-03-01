@@ -95,7 +95,7 @@ class Toolbox extends Component {
     if (!(this.props.verse && this.props.verse.isCustom() && !this.props.verse.isBlank())) {
       return;
     }
-    var perma = this.props.verse.permalink;
+    var perma = window.location.origin + this.props.verse.get_permalink(this.props.router);
     if (perma) {
       return (
           <div className="col-xs-2 col-md-2">
@@ -103,8 +103,8 @@ class Toolbox extends Component {
               Permalink:
               <input 
                 type="text" readOnly={true} 
-                value={this.props.verse.permalink} />
-            <button id="perma" className="btn" data-clipboard-text={this.props.verse.permalink}>
+                value={perma} />
+            <button id="perma" className="btn" data-clipboard-text={perma}>
               <span className="glyphicon glyphicon-paperclip" />
             </button>
             </label>
