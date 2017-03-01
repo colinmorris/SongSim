@@ -67,9 +67,11 @@ class Toolbox extends Component {
       ));
     }
     return (
-        <div className="form-group">
+        <div className="col-xs-4 col-md-4">
           <label>Single-word matches</label>
+          <form className="form-control">
           {radios}
+          </form>
         </div>
     );
   }
@@ -77,12 +79,14 @@ class Toolbox extends Component {
   renderSave = () => {
     if (this.props.verse && config.exportSVGEnabled && this.props.exportSVG) {
       return (
+          <div className="col-xs-2 col-md-1">
           <button className="btn"
             onClick={this.props.exportSVG}    
             title="Save matrix as SVG file"
           >
             <span className="glyphicon glyphicon-save" />
           </button>
+          </div>
       );
     }
   }
@@ -94,7 +98,7 @@ class Toolbox extends Component {
     var perma = this.props.verse.permalink;
     if (perma) {
       return (
-          <div className="form-group">
+          <div className="col-xs-2 col-md-2">
             <label>
               Permalink:
               <input 
@@ -108,7 +112,7 @@ class Toolbox extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="col-xs-2 col-md-1">
           <button className="btn" onClick={this.props.onShare}>
             Export
           </button>
@@ -120,21 +124,20 @@ class Toolbox extends Component {
   render() {
     var moderadios = Object.keys(MODE).map(this.renderModeRadio);
     return (
-        <div className="row">
+        <div className="form-horizontal">
 
-          <div className="form-group">
+          <div className="col-xs-4">
             <label>
               Mode
               <form className="form-control">
                 {moderadios}
               </form>
             </label>
+          </div>
 
-            {this.renderSave()}
-            {this.renderPermalink()}
-            {this.renderSingletonRadios()}
-
-          </div> {/* /form-group */}
+          {this.renderSave()}
+          {this.renderPermalink()}
+          {this.renderSingletonRadios()}
 
         </div>
     );
