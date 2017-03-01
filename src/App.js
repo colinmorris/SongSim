@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
+import octocat from './octocat.svg';
 
 const LINKS = [
   {path: "/", name: "Songsim"},
@@ -31,6 +32,13 @@ class App extends Component {
           <div className="container-fluid">
             <ul className="nav navbar-nav">
               {links}
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <a className="navbar-brand" href="https://github.com/colinmorris/SongSim">
+                  <img src={octocat} />
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
