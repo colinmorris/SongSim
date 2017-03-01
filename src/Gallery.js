@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import './Gallery.css';
+
 import { GROUPED_CANS } from './canned.js';
 
 const GALLERY_FILE_PATH = '/img/gallery/'
@@ -10,10 +12,13 @@ class Gallery extends Component {
   renderCanned = (c) => {
     return (
         <div key={c.slug} className="col-xs-4 col-lg-3">
+          <div className="galleryFrame">
           <img className="img-responsive" 
             src={process.env.PUBLIC_URL + GALLERY_FILE_PATH + c.slug + '.png'}
             />
-          <span><Link to={c.href}>{c.tagline}</Link></span>
+          <div className="galleryLabel"><Link to={c.href}>{c.tagline}</Link>
+          </div>
+          </div>
         </div>
     );
   }

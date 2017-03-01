@@ -1,0 +1,12 @@
+.galleryFrame {
+    width: 95%;
+    margin-left: 2.5%;
+}
+
+.galleryFrame img {
+    background-color: rgb(250, 250, 255);
+}
+
+.galleryLabel {
+    height: 5em;
+}
