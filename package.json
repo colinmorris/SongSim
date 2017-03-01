@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "clipboard": "^1.6.1",
     "file-saver": "^1.3.3",
     "firebase": "^3.6.10",
     "gh-pages": "^0.12.0",

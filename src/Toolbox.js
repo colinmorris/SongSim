@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import Clipboard from 'clipboard';
 
 import config from './config.js';
 import {MODE} from './constants.js';
+
+// TODO: is this really the orthodox way to do this? :/
+new Clipboard('#perma');
 
 /**
  * Contains a bunch of controls for stuff like:
@@ -59,11 +63,17 @@ class Toolbox extends Component {
     var perma = this.props.verse.permalink;
     if (perma) {
       return (
-          <p><b>Permalink:</b> 
-            <a href={this.props.verse.permalink}>
-              {this.props.verse.permalink}
-            </a>
-          </p>
+          <div className="form-group">
+            <label>
+              Permalink:
+              <input 
+                type="text" readOnly={true} 
+                value={this.props.verse.permalink} />
+            <button id="perma" className="btn" data-clipboard-text={this.props.verse.permalink}>
+              <span className="glyphicon glyphicon-paperclip" />
+            </button>
+            </label>
+          </div>
       );
     } else {
       return (
