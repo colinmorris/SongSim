@@ -43,6 +43,37 @@ class Toolbox extends Component {
     );
   }
 
+  renderSingletonRadios = () => {
+    var singstop = [this.props.ignoreSingletons, this.props.ignore_stopwords];
+    var modes = [
+      {label: 'show all', ss: [false, false]},
+      {label: 'ignore all', ss: [true, false]},
+      {label: 'ignore stopwords', ss: [false, true]},
+    ];
+    var radios = [];
+    for (let mode of modes) {
+      radios.push((
+          <label key={mode.label}>
+            <input type="radio"
+              checked={singstop[0] === mode.ss[0] && singstop[1] === mode.ss[1]}
+              value={mode.ss}
+              onChange={(e) => {
+                this.props.onStateChange({ignore_singletons: mode.ss[0], 
+                  ignore_stopwords: mode.ss[1]});
+              }}
+              />
+            {mode.label}
+          </label>
+      ));
+    }
+    return (
+        <div className="form-group">
+          <label>Single-word matches</label>
+          {radios}
+        </div>
+    );
+  }
+
   renderSave = () => {
     if (this.props.verse && config.exportSVGEnabled && this.props.exportSVG) {
       return (
@@ -99,19 +130,9 @@ class Toolbox extends Component {
               </form>
             </label>
 
-            <div className="checkbox">
-              <label>
-                <input type="checkbox" checked={this.props.ignore_singletons}
-                  onChange={(e) => {
-                    this.onStateChange({ignore_singletons: e.target.checked});
-                  }}
-                />
-                Ignore single-word matches
-              </label>
-            </div>
-
             {this.renderSave()}
             {this.renderPermalink()}
+            {this.renderSingletonRadios()}
 
           </div> {/* /form-group */}
 

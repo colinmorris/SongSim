@@ -221,6 +221,7 @@ class Matrix extends Component {
             hover_cb={this.props.hover_cb}
             mode={this.props.mode}
             ignore_singletons={this.props.ignore_singletons}
+            stopwords={this.stopwords}
           />
         </g>
         </svg>

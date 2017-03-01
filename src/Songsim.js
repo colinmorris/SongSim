@@ -297,6 +297,7 @@ class Songsim extends Component {
           verse={this.state.verse}
           mode={this.state.mode}
           ignoreSingletons={this.state.ignore_singletons}
+          ignore_stopwords={this.state.ignore_stopwords}
           onStateChange={(state) => {this.setState(state)}}
           exportSVG={this.matrix && this.matrix.exportSVG}
           onShare={this.makePermalink}
