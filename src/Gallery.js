@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import { GROUPED_CANS } from './canned.js';
 
-const GALLERY_FILE_PATH = 'img/gallery/'
+const GALLERY_FILE_PATH = '/img/gallery/'
 
 class Gallery extends Component {
 
