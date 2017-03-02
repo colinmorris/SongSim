@@ -35,7 +35,14 @@ class LyricsPane extends Component {
 
   renderLine = (line, idx) => {
     var words = line.map(this.renderWord);
-    return <div key={idx}>{words}</div>;
+    var x = [];
+    // Hack to put spaces between word spans. We could just put them in the spans
+    // themselves, but then we get funny underlining behaviour.
+    for (let word of words) {
+      x.push(word);
+      x.push(" ");
+    }
+    return <div key={idx}>{x.slice(0,-1)}</div>;
   }
 
   onTextEdit = () => {
@@ -124,7 +131,8 @@ class LyricsPane extends Component {
       var lines = this.props.verse.lines.map(this.renderLine);
       filling = (
             <div className="words lyrics" 
-              onClick={this.props.verse && this.props.verse.isCustom() && this.startEditing} >
+              onClick={this.props.verse && this.props.verse.isCustom() && this.startEditing} 
+            >
               {this.props.loading &&
                 <h3>Loading...</h3>
               }

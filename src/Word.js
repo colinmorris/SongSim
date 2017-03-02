@@ -18,7 +18,7 @@ class Word extends Component {
     var kls = "word" + (this.props.focus ? " "+this.props.focus : "");
     return (<span className={kls} onMouseEnter={this.onEnter}
              onMouseLeave={this.onLeave}>
-              {this.props.raw}{" "}
+              {this.props.raw}
             </span>);
   }
 
