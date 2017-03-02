@@ -4,7 +4,7 @@ import Clipboard from 'clipboard';
 import './Toolbox.css';
 
 import config from './config.js';
-import {MODE} from './constants.js';
+import {MODE, MODE_TOOLTIPS} from './constants.js';
 
 // TODO: is this really the orthodox way to do this? :/
 new Clipboard('#perma');
@@ -23,6 +23,7 @@ class Toolbox extends Component {
   
   renderModeRadio = (mode_key) => {
     var mode = MODE[mode_key];
+    var tt = MODE_TOOLTIPS[mode_key];
     // TODO: Really when we get a change to state.verse, we should see if
     // the new verse is custom && mode is color_title, and if so, we should
     // automatically switch to a different mode. But bleh.
@@ -31,7 +32,8 @@ class Toolbox extends Component {
     var divCname = disabled ? "radio-inline disabled" : "radio-inline";
     return (
         <div className={divCname} key={mode}>
-          <label><input type="radio" 
+          <label title={tt}>
+              <input type="radio" 
               disabled={disabled}
               checked={this.props.mode === mode}
               value={mode}
@@ -50,12 +52,13 @@ class Toolbox extends Component {
     var modes = [
       {label: 'show all', ss: [false, false]},
       {label: 'ignore all', ss: [true, false]},
-      {label: 'ignore stopwords', ss: [false, true]},
+      {label: 'ignore stopwords', ss: [false, true], 
+        tt: 'Show single-word matches, unless they\'re common words like "the" or "and"'},
     ];
     var radios = [];
     for (let mode of modes) {
       radios.push((
-          <label key={mode.label}>
+          <label key={mode.label} title={mode.tt}>
             <input type="radio"
               checked={singstop[0] === mode.ss[0] && singstop[1] === mode.ss[1]}
               value={mode.ss}
@@ -70,7 +73,9 @@ class Toolbox extends Component {
     }
     return (
         <div className="col-xs-12 col-md-4">
-          <label>Single-word matches</label>
+          <label title="How to treat individual squares floating off the main diagonal">
+            Single-word matches
+          </label>
           <form className="form-control">
           {radios}
           </form>
@@ -81,7 +86,9 @@ class Toolbox extends Component {
   renderMobileCheckbox = () => {
     return (
         <div className="col-xs-6 col-md-2">
-        <div className="checkbox">
+        <div className="checkbox"
+          title="(Janky) UI intended for small screens"
+        >
           <label>
             <input type="checkbox" checked={this.props.mobile}
               onChange={(e) => {
@@ -152,7 +159,7 @@ class Toolbox extends Component {
 
           <div className="col-xs-12 col-md-5">
             <label>
-              Mode
+              Color Mode
               <form className="form-control">
                 {moderadios}
               </form>
