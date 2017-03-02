@@ -7,3 +7,14 @@ There are lots of examples of researchers constructing self-similarity matrices 
 ### Note on canned data
 
 `public/canned` contains a bunch of text files with examples of verse (pop songs, poems, nursery rhymes, etc.). Some of these works are in the public domain, and some are not. I don't own any of that content (and the license on the software in this repo does not extend to those files). My use of the songs which are under copyright is presumed to be fair, given the transformativeness of the use, and that purpose of use is educational and non-commercial.
+
+### Generating matrix image files
+
+(This is mostly a note to myself so I don't forget.)
+
+- set config.debug = true
+- in browser, press 'batch export' button
+    - (this will respect all current settings wrt color, single-word matches, etc.)
+- unzip
+- run pngify.sh
+- move pngs to public/img/gallery (or wherever else they're needed)

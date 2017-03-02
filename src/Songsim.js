@@ -138,11 +138,10 @@ class Songsim extends Component {
   }
 
   /** Only used to generate SVGs for gallery. Super hacky. **/
-  batchExportSVGs = () => {
+  batchExportSVGs = (max) => {
     let zip = new JSZip();
     let i = 0;
     let dur = 3000;
-    var max = 333;
     for (let canned of CANNED_SONGS) {
       window.setTimeout(() => {
       SongSelector.loadSong( (verse) => {
@@ -163,8 +162,6 @@ class Songsim extends Component {
         saveAs(c, 'matrices.zip');
       });
     }, dur * Math.min(max, CANNED_SONGS.length));
-    //var blob = new Blob(['hello world'], {type: 'text/plain'});
-    //saveAs(blob, 'hello.txt');
   }
 
   get focal_rowcols() {
@@ -297,7 +294,12 @@ class Songsim extends Component {
           {rects.length} rects
           </p>
           <p>Custom: {JSON.stringify(this.state.verse.isCustom())}</p>
-          <button onClick={this.batchExportSVGs}>Do stuff</button>
+          <button onClick={()=>(this.batchExportSVGs(11222))}>
+            Batch export (SLOW)
+          </button>
+          <button onClick={()=>(this.batchExportSVGs(4))}>
+            Mini batch export (only a little SLOW)
+          </button>
           <a href={this.props.router.createHref('custom/' + config.testingFBKey)}>
             Custom song.
           </a>
