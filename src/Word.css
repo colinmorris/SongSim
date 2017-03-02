@@ -12,3 +12,7 @@
 .incidental {
     text-shadow: 0 0 1.5em rgb(0, 135, 255);
 }
+
+.word {
+    cursor: default;
+}
