@@ -279,7 +279,27 @@ class Songsim extends Component {
           </a>
         </div>);
     }
-    var defaultMatrixSize = 500; // TODO: have this flow from above (and calculate from screen.height or something)
+    var dfm;
+    var h = screen.height;
+    var w = screen.width;
+    var mindim = Math.min(h, w);
+    if (this.state.mobile) {
+      dfm = mindim * .9;
+    } else {
+      if (w < 1180) {
+        dfm = w * .4;
+      } else {
+        dfm = w * .6;
+      }
+    }
+    var defaultMatrixSize = dfm; // TODO: have this flow from above (and calculate from screen.height or something)
+    matrix = (
+          <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
+            lockAspectRatio={true}
+            >
+              {matrix}
+          </ResizableBox>
+    );
     if (this.state.mobile) {
       return this.renderMobile(matrix);
     }
@@ -287,11 +307,8 @@ class Songsim extends Component {
       <div>
 
         <div className="container-fluid mainContainer">
-          <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
-            lockAspectRatio={true}
-            >
-              {matrix}
-          </ResizableBox>
+
+          {matrix}
 
           <div className="lyricsPane">
               <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 

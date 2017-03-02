@@ -32,10 +32,8 @@ class App extends Component {
           <div className="container-fluid">
             <ul className="nav navbar-nav">
               {links}
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li>
-                <a className="navbar-brand" href="https://github.com/colinmorris/SongSim">
+              <li className="octo">
+                <a href="https://github.com/colinmorris/SongSim">
                   <img src={octocat} />
                 </a>
               </li>
@@ -44,6 +42,7 @@ class App extends Component {
         </nav>
 
         {this.props.children}
+
       </div>
     );
   }
