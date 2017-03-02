@@ -45,7 +45,7 @@ class LyricsPorthole extends Component {
     inner = this.props.verse.diagText(diag);  
     inner = this.parify(inner);
     return (
-      <div className="container porthole">
+      <div className="porthole">
         <div className="row">
           <div className="col-xs-6">
             <b>x:</b>{this.renderContext(-1, 'x')}

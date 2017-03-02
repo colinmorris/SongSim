@@ -293,6 +293,7 @@ class Songsim extends Component {
       }
     }
     var defaultMatrixSize = dfm; // TODO: have this flow from above (and calculate from screen.height or something)
+    /*
     matrix = (
           <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
             lockAspectRatio={true}
@@ -300,6 +301,7 @@ class Songsim extends Component {
               {matrix}
           </ResizableBox>
     );
+    */
     if (this.state.mobile) {
       return this.renderMobile(matrix);
     }
@@ -342,7 +344,7 @@ class Songsim extends Component {
 
   renderMobile(matrix) {
     return (
-      <div className="mobileContainer">
+      <div className="container mobileContainer">
         <SongSelector
           selected={this.state.verse && this.state.verse.id}
           allowEdit={false}
