@@ -8,3 +8,7 @@
     border-color: rgb(220, 240, 255);
 }
 
+
+.chapter-advanced img {
+    border: 1px solid hsl(0, 0%, 75%);
+}
