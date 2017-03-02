@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Clipboard from 'clipboard';
 
+import './Toolbox.css';
+
 import config from './config.js';
 import {MODE} from './constants.js';
 
@@ -67,7 +69,7 @@ class Toolbox extends Component {
       ));
     }
     return (
-        <div className="col-xs-4 col-md-4">
+        <div className="col-xs-12 col-md-4">
           <label>Single-word matches</label>
           <form className="form-control">
           {radios}
@@ -76,8 +78,26 @@ class Toolbox extends Component {
     );
   }
 
+  renderMobileCheckbox = () => {
+    return (
+        <div className="col-xs-6 col-md-2">
+        <div className="checkbox">
+          <label>
+            <input type="checkbox" checked={this.props.mobile}
+              onChange={(e) => {
+                this.props.onStateChange({mobile: e.target.checked});
+              }}
+            />
+            Mobile mode
+          </label>
+        </div>
+        </div>
+    );
+  }
+
   renderSave = () => {
-    if (this.props.verse && config.exportSVGEnabled && this.props.exportSVG) {
+    if (!this.props.mobile && this.props.verse && config.exportSVGEnabled 
+        && this.props.exportSVG) {
       return (
           <div className="col-xs-2 col-md-1">
           <button className="btn"
@@ -92,7 +112,8 @@ class Toolbox extends Component {
   }
 
   renderPermalink = () => {
-    if (!(this.props.verse && this.props.verse.isCustom() && !this.props.verse.isBlank())) {
+    if (this.props.mobile || 
+        !(this.props.verse && this.props.verse.isCustom() && !this.props.verse.isBlank())) {
       return;
     }
     var perma = this.props.verse.get_permalink(this.props.router);
@@ -123,10 +144,13 @@ class Toolbox extends Component {
 
   render() {
     var moderadios = Object.keys(MODE).map(this.renderModeRadio);
+    var kls = this.props.mobile ? "" : "form-horizontal";
+    kls += ' toolbox';
+    kls = 'form-horizontal toolbox';
     return (
-        <div className="form-horizontal">
+        <div className={kls}>
 
-          <div className="col-xs-4">
+          <div className="col-xs-12 col-md-5">
             <label>
               Mode
               <form className="form-control">
@@ -138,6 +162,7 @@ class Toolbox extends Component {
           {this.renderSave()}
           {this.renderPermalink()}
           {this.renderSingletonRadios()}
+          {this.renderMobileCheckbox()}
 
         </div>
     );

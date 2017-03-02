@@ -10,3 +10,7 @@
 p.continuation {
     text-align: right;
 }
+
+.porthole {
+    min-height: 130px;
+}

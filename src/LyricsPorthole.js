@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './LyricsPorthole.css';
 
+
 class LyricsPorthole extends Component {
 
   renderContext(dir, ax) {
@@ -39,7 +40,7 @@ class LyricsPorthole extends Component {
   render() {
     var diag = this.props.focal;
     if (!diag) {
-      return <div />;
+      return <div className="porthole" />;
     }
     var inner;
     inner = this.props.verse.diagText(diag);  

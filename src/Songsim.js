@@ -20,6 +20,8 @@ import config from './config.js';
 import DBHelper from './firebasehelper.js';
 import CANNED_SONGS from './canned-data.js';
 
+const MOBILE_THRESH = 768;
+
 class Songsim extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +33,12 @@ class Songsim extends Component {
       mode: config.default_mode,
       ignore_singletons: false,
       ignore_stopwords: config.stopwords,
-      mobile: true,
+      mobile: this.shouldDefaultMobileMode(),
     };
+  }
+
+  shouldDefaultMobileMode() {
+    return screen.height < MOBILE_THRESH;    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -284,16 +290,11 @@ class Songsim extends Component {
     var w = screen.width;
     var mindim = Math.min(h, w);
     if (this.state.mobile) {
-      dfm = mindim * .9;
+      dfm = Math.min(768, mindim * .9); // testing
     } else {
-      if (w < 1180) {
-        dfm = w * .4;
-      } else {
-        dfm = w * .6;
-      }
+      dfm = Math.min(w * .45, h*.8);
     }
     var defaultMatrixSize = dfm; // TODO: have this flow from above (and calculate from screen.height or something)
-    /*
     matrix = (
           <ResizableBox width={defaultMatrixSize} height={defaultMatrixSize}
             lockAspectRatio={true}
@@ -301,9 +302,22 @@ class Songsim extends Component {
               {matrix}
           </ResizableBox>
     );
-    */
+    var toolbox = (
+      <Toolbox
+        verse={this.state.verse}
+        mode={this.state.mode}
+        ignoreSingletons={this.state.ignore_singletons}
+        ignore_stopwords={this.state.ignore_stopwords}
+        mobile={this.state.mobile}
+        onStateChange={(state) => {this.setState(state)}}
+        exportSVG={this.matrix && this.matrix.exportSVG}
+        onShare={this.makePermalink}
+        router={this.props.router}
+        mobile={this.state.mobile}
+      />
+    );
     if (this.state.mobile) {
-      return this.renderMobile(matrix);
+      return this.renderMobile(matrix, toolbox);
     }
     return (
       <div>
@@ -324,16 +338,7 @@ class Songsim extends Component {
           </div>
         </div> {/* /mainContainer */}
         <div className="container">
-        <Toolbox
-          verse={this.state.verse}
-          mode={this.state.mode}
-          ignoreSingletons={this.state.ignore_singletons}
-          ignore_stopwords={this.state.ignore_stopwords}
-          onStateChange={(state) => {this.setState(state)}}
-          exportSVG={this.matrix && this.matrix.exportSVG}
-          onShare={this.makePermalink}
-          router={this.props.router}
-        />
+          {toolbox}
         </div>
         {/* ^ This onStateChange thing sort of defies separation of concerns, 
             but it also means writing less boilerplate code, sooooo */}
@@ -342,7 +347,7 @@ class Songsim extends Component {
         );
   }
 
-  renderMobile(matrix) {
+  renderMobile(matrix, toolbox) {
     return (
       <div className="container mobileContainer">
         <SongSelector
@@ -358,6 +363,8 @@ class Songsim extends Component {
           verse={this.state.verse}
           focal={this.focal_local_diag}
         />
+
+        {toolbox}
 
       </div>
     )
