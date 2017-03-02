@@ -11,6 +11,7 @@
     bottom: -20px !important;
     right: -20px !important;
     background-size: 10px !important;
+    background-position: top left !important;
 }
 
 .lyricsPane {
