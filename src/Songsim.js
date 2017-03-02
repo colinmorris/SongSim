@@ -26,8 +26,7 @@ class Songsim extends Component {
   constructor(props) {
     super(props);
     this.db = new DBHelper();
-    var verse = this.getVerse();
-    this.state = {verse: verse,
+    this.state = {
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
       mode: config.default_mode,
@@ -35,6 +34,8 @@ class Songsim extends Component {
       ignore_stopwords: config.stopwords,
       mobile: this.shouldDefaultMobileMode(),
     };
+    var verse = this.getVerse();
+    this.state['verse'] = verse;
   }
 
   shouldDefaultMobileMode() {
@@ -43,6 +44,7 @@ class Songsim extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname === nextProps.location.pathname) {
+      // Not sure if this is even necessary at this point?
       console.log('Ignoring props update');
       return;
     }
@@ -54,7 +56,6 @@ class Songsim extends Component {
       lyrics_focal: NOINDEX});
 
   }
-
   
   // TODO: make this return a promise or something
   /** Fetches an initial verse corresponding to the given props (i.e. the URL).
@@ -80,6 +81,14 @@ class Songsim extends Component {
         this.onTextChange(verse);
       });
     } else if (props.location.pathname === "/custom") {
+      // We don't allow editing in mobile mode. Cause I was too lazy to build the UI.
+      if (this.state.mobile) {
+        // hacky hack hack hack
+        setTimeout(() => {
+          this.props.router.replace('/');
+        }, 0);
+        return;
+      }
       return CustomVerse.BlankVerse();
     } else if (props.params.songId) {
       let songId = props.params.songId;
