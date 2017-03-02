@@ -75,11 +75,20 @@ class Songsim extends Component {
       var key = props.params.customKey;
       console.log(`Looking up firebase key ${key}`);
       this.db.load(key).then( (snapshot) => {
-        // TODO: gracefully fail here?
         var txt = snapshot.val();
+        if (txt === null) {
+          console.warn(`Couldn't find value for key ${key}`);
+          this.props.router.replace('/');
+          return;
+        }
         var verse = new CustomVerse(txt, key);
         this.onTextChange(verse);
-      });
+      },
+        (err) => {
+          console.log(err);
+          this.props.router.replace('/');
+        }
+      );
     } else if (props.location.pathname === "/" + CUSTOM_SLUG) {
       // We don't allow editing in mobile mode. Cause I was too lazy to build the UI.
       if (this.state.mobile) {
