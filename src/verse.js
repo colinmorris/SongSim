@@ -145,7 +145,6 @@ class Verse {
     var raw_words = [];
     var clean_words = [];
     var newlines = [];
-    var skipped = 0;
     var word_ids = new Map();
     var lalas = [];
     var lala_start;
@@ -155,7 +154,6 @@ class Verse {
     for (const line of text.split(/[\n\r]+/)) {
       for (const word of line.trim().split(/\s+/)) {
         if (!word) {
-          skipped ++;
           continue;
         }
         raw_words.push(word);

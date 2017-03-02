@@ -34,7 +34,7 @@ class App extends Component {
               {links}
               <li className="octo">
                 <a href="https://github.com/colinmorris/SongSim">
-                  <img src={octocat} />
+                  <img alt="fork me on GitHub" src={octocat} />
                 </a>
               </li>
             </ul>

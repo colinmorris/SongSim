@@ -80,7 +80,7 @@ class Songsim extends Component {
         var verse = new CustomVerse(txt, key);
         this.onTextChange(verse);
       });
-    } else if (props.location.pathname === "/custom") {
+    } else if (props.location.pathname === "/" + CUSTOM_SLUG) {
       // We don't allow editing in mobile mode. Cause I was too lazy to build the UI.
       if (this.state.mobile) {
         // hacky hack hack hack

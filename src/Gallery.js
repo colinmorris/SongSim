@@ -22,6 +22,7 @@ class Gallery extends Component {
         <div key={c.slug} className="col-xs-4 col-lg-3">
           <div className="galleryFrame">
             <img className="img-responsive" 
+              alt={`Self-similarity matrix of ${c.title} by ${c.artist}`}
               onClick={(e) => {
                 this.setState({lightbox_index: i})
               }}              
