@@ -31,8 +31,7 @@ class Toolbox extends Component {
         (!this.props.verse || !this.props.verse.title));
     var divCname = disabled ? "radio-inline disabled" : "radio-inline";
     return (
-        <div className={divCname} key={mode}>
-          <label title={tt}>
+          <label title={tt} key={mode} className={divCname}>
               <input type="radio" 
               disabled={disabled}
               checked={this.props.mode === mode}
@@ -43,7 +42,6 @@ class Toolbox extends Component {
               name="mode" />
             {mode}
           </label>
-        </div>
     );
   }
 
@@ -58,7 +56,7 @@ class Toolbox extends Component {
     var radios = [];
     for (let mode of modes) {
       radios.push((
-          <label key={mode.label} title={mode.tt}>
+          <label className="radio-inline" key={mode.label} title={mode.tt}>
             <input type="radio"
               checked={singstop[0] === mode.ss[0] && singstop[1] === mode.ss[1]}
               value={mode.ss}
@@ -72,24 +70,20 @@ class Toolbox extends Component {
       ));
     }
     return (
-        <div className="col-xs-12 col-md-4">
-          <label title="How to treat individual squares floating off the main diagonal">
+        <fieldset>
+          <legend title="How to treat individual squares floating off the main diagonal">
             Single-word matches
-          </label>
-          <form className="form-control">
+          </legend>
           {radios}
-          </form>
-        </div>
+        </fieldset>
     );
   }
 
   renderMobileCheckbox = () => {
     return (
-        <div className="col-xs-6 col-md-2">
-        <div className="checkbox"
-          title="(Janky) UI intended for small screens"
-        >
-          <label>
+          <label className="checkbox-inline"
+            title="(Janky) UI intended for small screens"
+          >
             <input type="checkbox" checked={this.props.mobile}
               onChange={(e) => {
                 this.props.onStateChange({mobile: e.target.checked});
@@ -97,8 +91,6 @@ class Toolbox extends Component {
             />
             Mobile mode
           </label>
-        </div>
-        </div>
     );
   }
 
@@ -106,14 +98,12 @@ class Toolbox extends Component {
     if (!this.props.mobile && this.props.verse && config.exportSVGEnabled 
         && this.props.exportSVG) {
       return (
-          <div className="col-xs-2 col-md-1">
           <button className="btn"
             onClick={this.props.exportSVG}    
             title="Save matrix as SVG file"
           >
             <span className="glyphicon glyphicon-save" />
           </button>
-          </div>
       );
     }
   }
@@ -126,8 +116,7 @@ class Toolbox extends Component {
     var perma = this.props.verse.get_permalink(this.props.router);
     if (perma) {
       return (
-          <div className="col-xs-2 col-md-2">
-            <label>
+            <label className="form-inline">
               Permalink:
               <input 
                 type="text" readOnly={true} 
@@ -136,15 +125,14 @@ class Toolbox extends Component {
               <span className="glyphicon glyphicon-copy" />
             </button>
             </label>
-          </div>
       );
     } else {
       return (
-        <div className="col-xs-2 col-md-1">
-          <button className="btn" onClick={this.props.onShare}>
-            Export
+          <button className="btn" onClick={this.props.onShare}
+            title="Generate a shareable permalink for this song"
+          >
+            Permalink
           </button>
-        </div>
       );
     }
   }
@@ -154,22 +142,31 @@ class Toolbox extends Component {
     var kls = this.props.mobile ? "" : "form-horizontal";
     kls += ' toolbox';
     kls = 'form-horizontal toolbox';
+    //kls = 'row toolbox';
+    var radioKls = 'col-xs-12 col-md-6 col-lg-4';
     return (
         <div className={kls}>
-
-          <div className="col-xs-12 col-md-5">
-            <label>
-              Color Mode
-              <form className="form-control">
+          <div className={radioKls}>
+            <fieldset>
+              <legend>
+                Color Mode
+              </legend>
                 {moderadios}
-              </form>
-            </label>
+            </fieldset>
+          </div>
+          <div className={radioKls}>
+            {this.renderSingletonRadios()}
           </div>
 
-          {this.renderSave()}
-          {this.renderPermalink()}
-          {this.renderSingletonRadios()}
+          <div className='col-xs-5 col-md-4 col-lg-2'>
           {this.renderMobileCheckbox()}
+          </div>
+          <div className='col-xs-3 col-md-2 col-lg-1'>
+          {this.renderSave()}
+          </div>
+          <div className='col-xs-8 col-md-6'>
+          {this.renderPermalink()}
+          </div>
 
         </div>
     );

@@ -328,7 +328,7 @@ class Songsim extends Component {
         ignore_stopwords={this.state.ignore_stopwords}
         mobile={this.state.mobile}
         onStateChange={(state) => {this.setState(state)}}
-        exportSVG={this.matrix && this.matrix.exportSVG}
+        exportSVG={() => (this.matrix && this.matrix.exportSVG())}
         onShare={this.makePermalink}
         router={this.props.router}
         mobile={this.state.mobile}
