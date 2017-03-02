@@ -341,7 +341,11 @@ class CustomVerse extends Verse {
   }
   get_permalink(router) {
     if (this.key) {
-      return window.location.origin + router.createHref('/custom/' + this.key);
+      // TODO: pretty darn hacky. Surely there's a better way?
+      return (window.location.origin 
+          + window.location.pathname
+          + router.createHref('/custom/' + this.key)
+      );
     }
   }
   

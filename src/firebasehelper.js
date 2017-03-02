@@ -9,8 +9,8 @@ const config = {
   messagingSenderId: "845644117075"
 };
 
-//const SONG_PREFIX = '/songs/';
-const SONG_PREFIX = '/songsTest/';
+const SONG_PREFIX = '/songs/';
+//const SONG_PREFIX = '/songsTest/';
 
 class DBHelper {
 
