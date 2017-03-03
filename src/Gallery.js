@@ -68,7 +68,7 @@ class Gallery extends Component {
       return GROUPED_CANS.get(cat);
     }
     var flatcans = [];
-    for (let [group, cans] of GROUPED_CANS.entries()) {
+    for (let cans of GROUPED_CANS.values()) {
       flatcans = flatcans.concat(cans);
     }
 

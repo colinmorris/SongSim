@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ResizableBox } from 'react-resizable';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
+import { hashHistory } from 'react-router';
 
 import './Songsim.css';
 
@@ -12,6 +13,7 @@ import { Diagonal } from './utils.js';
 import DummyMatrix from './DummyMatrix.js';
 import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
+import LyricsEditor from './LyricsEditor.js';
 import {CustomVerse, CannedVerse} from './verse.js';
 import {CUSTOM_SLUG, NOINDEX} from './constants.js';
 import { LANDING_CANNED } from './canned.js';
@@ -22,6 +24,13 @@ import CANNED_SONGS from './canned-data.js';
 
 const MOBILE_THRESH = 768;
 
+// TODO: Would be kind of nice to refactor this into two components.
+// An outer component responsible for fetching verses when the path
+// changes and showing loading screen when in limbo (having verse 
+// as a state variable, like here), and an inner
+// component that always has a verse (as a prop). 
+// Cause this component has too much going on, and it's ugly having to 
+// constantly check whether state.verse is undefined.
 class Songsim extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +42,7 @@ class Songsim extends Component {
       ignore_singletons: false,
       ignore_stopwords: config.stopwords,
       mobile: this.shouldDefaultMobileMode(),
+      editing: false,
     };
     var verse = this.getVerse();
     this.state['verse'] = verse;
@@ -53,7 +63,7 @@ class Songsim extends Component {
     var verse = this.getVerse(nextProps);
     // and clear any old highlighting
     this.setState({verse: verse, matrix_focal: {x: NOINDEX, y:NOINDEX},
-      lyrics_focal: NOINDEX});
+      lyrics_focal: NOINDEX, editing: false});
 
   }
   
@@ -258,6 +268,21 @@ class Songsim extends Component {
   matrix_hover_cb = (pt) => {
     this.setState({matrix_focal: pt})
   }
+  
+  // Called then the new/edit button is clicked.
+  onEditButton = () => {
+    if (this.state.verse.isCustom()) {
+      this.setState({editing: true});
+    } else {
+      hashHistory.push(CUSTOM_SLUG); 
+    }
+  }
+
+  // This thing sort of defies separation of concerns, 
+  // but it also means writing less boilerplate code, sooooo
+  stateChanger = (state) => {
+    this.setState(state);
+  }
 
   render() {
     // TODO: this method is getting pretty huge
@@ -329,39 +354,49 @@ class Songsim extends Component {
         ignoreSingletons={this.state.ignore_singletons}
         ignore_stopwords={this.state.ignore_stopwords}
         mobile={this.state.mobile}
-        onStateChange={(state) => {this.setState(state)}}
+        onStateChange={this.stateChanger}
         exportSVG={() => (this.matrix && this.matrix.exportSVG())}
         onShare={this.makePermalink}
         router={this.props.router}
-        mobile={this.state.mobile}
       />
     );
     if (this.state.mobile) {
       return this.renderMobile(matrix, toolbox);
     }
+    var lyrics;
+    if (this.state.verse && (this.state.verse.isBlank() || this.state.editing)) {
+      lyrics = (
+          <LyricsEditor
+            verse={this.state.verse}
+            onChange={this.onTextChange}
+            onStateChange={this.stateChanger}
+          />);
+    } else {
+      lyrics = (
+        <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
+          loading={!this.state.verse}
+          hover_cb={(i) => this.setState({lyrics_focal: i})}
+          highlights={this.lyrics_highlights}
+          onEditButton={this.onEditButton}
+        />);
+    }
     return (
       <div>
-
         <div className="container-fluid mainContainer">
-
           {matrix}
-
           <div className="lyricsPane">
-              <LyricsPane verse={this.state.verse || CustomVerse.BlankVerse()} 
-                loading={!this.state.verse}
-                hover_cb={(i) => this.setState({lyrics_focal: i})}
-                highlights={this.lyrics_highlights}
+              <SongSelector
+                selected={this.state.verse && this.state.verse.id}
+                onEdit={this.onEditButton}
                 onChange={this.onTextChange}
-                slug={this.state.verse && this.state.verse.id}
+                onStateChange={this.stateChanger}
               />
-
+              {lyrics}
           </div>
-        </div> {/* /mainContainer */}
+        </div>
         <div className="container">
           {toolbox}
         </div>
-        {/* ^ This onStateChange thing sort of defies separation of concerns, 
-            but it also means writing less boilerplate code, sooooo */}
         {debug}
         </div>
         );
