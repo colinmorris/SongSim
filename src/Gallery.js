@@ -4,9 +4,12 @@ import Lightbox from 'react-image-lightbox';
 
 import './Gallery.css';
 
-import { GROUPED_CANS } from './canned.js';
+import { Canned, GROUPED_CANS } from './canned.js';
+import CANNED_SONGS, { ORDERED_CATEGORIES } from './canned-data.js';
 
-const GALLERY_FILE_PATH = '/img/gallery/'
+const GALLERY_FILE_PATH = '/img/gallery/';
+
+const DEFAULT_CAT_SLUG = ORDERED_CATEGORIES[0].slug;
 
 class Gallery extends Component {
 
@@ -15,6 +18,10 @@ class Gallery extends Component {
     this.state = {
       lightbox_index: -1,
     };
+  }
+
+  get cat() {
+    return this.props.params.cat || DEFAULT_CAT_SLUG;
   }
 
   renderCanned = (c, i) => {
@@ -56,21 +63,43 @@ class Gallery extends Component {
     );
   }
 
-  render() {
-    var i = 0;
-    var sections = [];
+  songsForCat(cat) {
+    if (cat !== 'all') {
+      return GROUPED_CANS.get(cat);
+    }
     var flatcans = [];
     for (let [group, cans] of GROUPED_CANS.entries()) {
-      sections.push(this.renderGroup(group, cans, i));
-      i += cans.length;
       flatcans = flatcans.concat(cans);
     }
+
+  }
+
+  render() {
+    var songs;
+    if (this.cat === 'all') {
+      // blargh
+      songs = CANNED_SONGS.map((o) => (new Canned(o)));
+    } else {
+      songs = GROUPED_CANS.get(this.cat);
+    }
+    var imgs = songs.map(this.renderCanned);
+    var cats = [{label: 'All', slug: 'all'}].concat(ORDERED_CATEGORIES);
+    var pills = cats.map((cat) => (
+          <li key={cat.slug} className={this.cat === cat.slug ? "active" : ""}>
+            <Link to={"/gallery/"+cat.slug}>{cat.label}</Link>
+          </li>
+    ));
+    var nav = (
+        <ul className="nav nav-tabs">
+          {pills}
+        </ul>
+    );
     var lightbox;
     if (this.state.lightbox_index !== -1) {
       let li = this.state.lightbox_index;
-      let can = flatcans[this.state.lightbox_index];
-      let next = this.state.lightbox_index < flatcans.length-1 ? flatcans[li+1] : undefined;
-      let prev = this.state.lightbox_index > 0 ? flatcans[li-1] : undefined;
+      let can = songs[this.state.lightbox_index];
+      let next = this.state.lightbox_index < songs.length-1 ? songs[li+1] : undefined;
+      let prev = this.state.lightbox_index > 0 ? songs[li-1] : undefined;
       lightbox = (
         <Lightbox
           mainSrc={this.cannedSrc(can)}
@@ -92,7 +121,10 @@ class Gallery extends Component {
     }
     return (
         <div className="container">
-          {sections}
+          {nav}
+          <div className="row">
+            {imgs}
+          </div>
           {lightbox}
         </div>
         );

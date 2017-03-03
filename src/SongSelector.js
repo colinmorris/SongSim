@@ -5,7 +5,7 @@ import './SongSelector.css';
 
 import {CUSTOM_SLUG} from './constants.js';
 import { GROUPED_CANS } from './canned.js';
-import CANNED_SONGS from './canned-data.js';
+import CANNED_SONGS, { ORDERED_CATEGORIES } from './canned-data.js';
 import {CannedVerse} from './verse.js';
 
   
@@ -42,8 +42,9 @@ class SongSelector extends Component {
       var custom = (<option key='custom' value={CUSTOM_SLUG}>Custom</option>);
       res.push(custom);
     }
-    for (let [group, cans] of GROUPED_CANS) {
-      let og = (<optgroup key={group} label={group}>
+    for (let cat of ORDERED_CATEGORIES) {
+      let cans = GROUPED_CANS.get(cat.slug);
+      let og = (<optgroup key={cat.slug} label={cat.label}>
                   {cans.map(this.renderOption)}
                 </optgroup>);
       res.push(og);

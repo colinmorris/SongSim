@@ -15,7 +15,7 @@ ReactDOM.render(
   (<Router history={hashHistory}>
     <Route path="/" component={App} >
       <Route path="about(/:chapter)" component={About} />
-      <Route path="gallery" component={Gallery} />
+      <Route path="gallery(/:cat)" component={Gallery} />
       <Route path="custom(/:customKey)" component={Songsim} />
       <Route path="(:songId)" component={Songsim} />
       <IndexRoute component={Songsim} />

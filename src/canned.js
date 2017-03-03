@@ -1,6 +1,6 @@
-import CANNED_SONGS, { POP } from './canned-data.js';
+import CANNED_SONGS from './canned-data.js';
 
-var LANDING_CANNED = {slug: 'buddyholly', artist: 'Weezer', title: 'Buddy Holly', group: POP};
+var LANDING_CANNED = CANNED_SONGS[25]; 
 
 class Canned {
   constructor(o) {
@@ -48,4 +48,4 @@ for (let [k, cans] of GROUPED_CANS) {
   GROUPED_CANS.set(k, cans.sort(cmp));
 }
   
-export { GROUPED_CANS, LANDING_CANNED };
+export { Canned, GROUPED_CANS, LANDING_CANNED };
