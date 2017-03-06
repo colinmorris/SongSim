@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './LyricsPane.css';
 
 import Word from './Word.js';
+import { NOINDEX } from './constants.js';
 
 class LyricsPane extends Component {
 
@@ -23,6 +24,10 @@ class LyricsPane extends Component {
       x.push(" ");
     }
     return <div key={idx}>{x.slice(0,-1)}</div>;
+  }
+
+  componentWillUnmount() {
+    this.props.hover_cb(NOINDEX);
   }
 
   render() {
