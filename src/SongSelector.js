@@ -44,6 +44,8 @@ class SongSelector extends Component {
     }
     for (let cat of ORDERED_CATEGORIES) {
       let cans = GROUPED_CANS.get(cat.slug);
+      cans = cans.filter((c) => (c.dropdown || c.slug === this.props.selected));
+      if (cans.length === 0) continue;
       let og = (<optgroup key={cat.slug} label={cat.label}>
                   {cans.map(this.renderOption)}
                 </optgroup>);

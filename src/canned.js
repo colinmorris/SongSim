@@ -8,6 +8,8 @@ class Canned {
     this.artist = o.artist;
     this.title = o.title;
     this.group = o.group;
+    this.dropdown = o.dropdown;
+    // deprectated?
     this.hidden = o.hidden;
   }
 
