@@ -124,7 +124,6 @@ var CANNED_SONGS = [
   {slug: "supermodel", artist: "RuPaul", title: "Supermodel (You Better Work)", group: NINETIES.slug},
   {slug: "team", artist: "Lorde", title: "Team", group: CONTEMP.slug},
   {slug: "temptation", artist: "New Order", title: "Temptation", group: EIGHTIES.slug},
-  {slug: "test", artist: "colinmorris", title: "test", group: MISC.slug},
   {slug: "thatthing", artist: "Lauryn Hill", title: "Doo Wop (That Thing)", group: NINETIES.slug},
   {slug: "theechoinggreen", artist: "William Blake", title: "The Echoing Green", group: POETRY.slug},
   {slug: "thelamb", artist: "William Blake", title: "The Lamb", group: POETRY.slug},
@@ -136,7 +135,7 @@ var CANNED_SONGS = [
   {slug: "tiktok", artist: "Kesha", title: "Tik Tok", group: CONTEMP.slug},
   {slug: "totheend", artist: "Florrie", title: "To The End", group: CONTEMP.slug},
   {slug: "toxic", artist: "Britney Spears", title: "Toxic", group: NAUGHTS.slug},
-  {slug: "unconventionalgirl", artist: "Kate Nash", title: "Unconventional Girl", group: CONTEMP.slug},
+  {slug: "conventionalgirl", artist: "Kate Nash", title: "Conventional Girl", group: CONTEMP.slug},
   {slug: "vroomvroom", artist: "Charli XCX", title: "Vroom Vroom", group: CONTEMP.slug},
   {slug: "walkinginla", artist: "Missing Persons", title: "Walking In L.A.", group: EIGHTIES.slug},
   {slug: "wannadancewithsomebody", artist: "Whitney Houston", title: "I Wanna Dance With Somebody", group: EIGHTIES.slug},
@@ -152,6 +151,18 @@ var CANNED_SONGS = [
   {slug: "workbitch", artist: "Britney Spears", title: "Work Bitch", group: CONTEMP.slug},
   {slug: "wouldntitbenice", artist: "The Beach Boys", title: "Wouldn't It Be Nice", group: SIXTIES.slug},
   {slug: "youbelongwithme", artist: "Taylor Swift", title: "You Belong With Me", group: NAUGHTS.slug},
+
+
+  {slug: "goodvibrations", artist: "The Beach Boys", title: "Good Vibrations", group: SIXTIES.slug},
+  {slug: "jimmymack", artist: "Martha & The Vandellas", title: "Jimmy Mack", group: SIXTIES.slug},
+  {slug: "moreperfect", artist: "Barack Obama", title: "A More Perfect Union (excerpt)", group: MISC.slug},
+  {slug: "ocanada", artist: "", title: "O Canada", group: MISC.slug},
+  {slug: "onthebeaches", artist: "Winston Churchill", title: "We Shall Fight On The Beaches (excerpt)", group: MISC.slug},
+  {slug: "sohappytogether", artist: "The Turtles", title: "So Happy Together", group: SIXTIES.slug},
+  {slug: "starspangled", artist: "", title: "The Star-Spangled Banner", group: MISC.slug},
+  {slug: "suspiciousminds", artist: "Elvis Presley", title: "Suspicious Minds", group: SIXTIES.slug},
+  {slug: "thatstheway", artist: "KC And The Sunshine Band", title: "That's The Way (I Like It)", group: SEVENTIES.slug},
+  {slug: "think", artist: "Aretha Franklin", title: "Think", group: SIXTIES.slug},
 ];
 
 export {ORDERED_CATEGORIES, CANNED_SONGS as default};
