@@ -15,7 +15,7 @@ import LyricsPane from './LyricsPane.js';
 import SongSelector from './SongSelector.js';
 import LyricsEditor from './LyricsEditor.js';
 import {CustomVerse, CannedVerse} from './verse.js';
-import {CUSTOM_SLUG, NOINDEX} from './constants.js';
+import { MODE, CUSTOM_SLUG, NOINDEX } from './constants.js';
 import { LANDING_CANNED } from './canned.js';
 import LANDING_LYRICS from './landing_lyrics.js';
 import config from './config.js';
@@ -127,7 +127,11 @@ class Songsim extends Component {
   }
 
   onTextChange = (verse) => {
-    this.setState({verse: verse});
+    let state = {verse: verse};
+    if (verse.isCustom() && this.state.mode === MODE.color_title) {
+        state['mode'] = config.default_mode;
+    }
+    this.setState(state);
   }
 
   // TODO: sort of confusingly named at this point
