@@ -195,6 +195,24 @@ const SECTIONS =
       <code>verse - chorus - verse - chorus - chorus - outro</code>.</p>
       <p>With "color mode" turned on, verses can also be identified by a preponderance
       of black, the color used for any words that appear only once in the song.</p>
+    </div>)},
+  {img: 'adamssong_color.png', body: (
+    <div>
+      <p><b>Broken diagonals</b> suggest a variation on the chorus or another major repeating section. The example on the left 
+      is <Link to="/adamssong">Adam's Song</Link> by blink-182. The song begins <code>verse - chorus - verse - chorus</code>, but
+      at the very end, something odd happens. The last section of the song looks like a corrupted version of the chorus, with some
+      words moved around or swapped out. And that's exactly what happened. The 'normal' chorus goes:</p>
+      <blockquote>
+        ... Sixteen just held such better days <br/>
+        Days when I still felt alive <br/>
+        We couldn't wait to get outside... <br />
+      </blockquote>
+      <p>The version at the very end goes...</p>
+      <blockquote>
+        Tomorrow holds such better days<br/>
+        Days when I can still feel alive<br/>
+        When I can't wait to get outside...<br/>
+      </blockquote>
     </div>)}
 ]
 }
