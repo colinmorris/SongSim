@@ -23,6 +23,26 @@ class Canned {
   get href() {
     return "/" + this.slug;
   }
+
+  static comparator(cana, canb) {
+    let textcmp = (t1, t2) => {
+        return t1 === t2 ? 0
+            : (t1 < t2 ? -1 : 1);
+    }
+    if (cana.artist && !canb.artist) {
+      return 1;
+    } else if (canb.artist && !cana.artist) {
+      return -1;
+    } else if (!cana.artist && !canb.artist) {
+      return textcmp(cana.title, canb.title);
+    }
+    // Both songs have artists
+    if (cana.artist === canb.artist) {
+      return textcmp(cana.title, canb.title);
+    }
+    return textcmp(cana.artist, canb.artist)
+  }
+
 }
 
 var CANNED = [];

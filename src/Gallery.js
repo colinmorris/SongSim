@@ -79,8 +79,10 @@ class Gallery extends Component {
     if (this.cat === 'all') {
       // blargh
       songs = CANNED_SONGS.map((o) => (new Canned(o)));
+      songs = songs.sort(Canned.comparator);
     } else {
       songs = GROUPED_CANS.get(this.cat);
+      songs = songs.filter((c) => (!c.hidden));
     }
     var imgs = songs.map(this.renderCanned);
     var cats = [{label: 'All', slug: 'all'}].concat(ORDERED_CATEGORIES);
