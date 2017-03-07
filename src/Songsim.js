@@ -44,6 +44,7 @@ class Songsim extends Component {
       mobile: this.shouldDefaultMobileMode(),
       editing: false,
     };
+    this.bornMobile = this.state.mobile;
     var verse = this.getVerse();
     this.state['verse'] = verse;
   }
@@ -424,6 +425,10 @@ class Songsim extends Component {
         />
 
         {toolbox}
+
+          {this.bornMobile && 
+            <p className="bg-danger"></p>
+          }
 
       </div>
     )
