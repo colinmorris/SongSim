@@ -6,6 +6,8 @@
 .galleryFrame img {
     background-color: rgb(250, 250, 255);
     border: 1px solid hsl(0, 0%, 75%);
+    width: 100%;
+    image-rendering: pixelated;
 }
 
 .galleryLabel {
@@ -14,6 +16,9 @@
 
 img.image-current {
     background-color: rgb(250, 250, 255);
+    width: 66vmin !important;
+    height: 66vmin !important;
+    image-rendering: pixelated;
 }
 
 ul.nav {
