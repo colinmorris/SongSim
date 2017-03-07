@@ -151,7 +151,7 @@ class Verse {
     var last_word;
     var i = 0;
     var lala;
-    for (const line of text.split(/[\n\r]+/)) {
+    for (const line of text.split(/\n\r|\r\n|\n|\r/)) {
       for (const word of line.trim().split(/\s+/)) {
         if (!word) {
           continue;

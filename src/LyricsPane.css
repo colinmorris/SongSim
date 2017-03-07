@@ -15,3 +15,7 @@ textarea {
     min-height: 25vh;
     column-width: 15em;
 }
+
+.line {
+    min-height: .6em;
+}

@@ -25,7 +25,7 @@ class LyricsPane extends Component {
       x.push(word);
       x.push(" ");
     }
-    return <div key={idx}>{x.slice(0,-1)}</div>;
+    return <div className="line" key={idx}>{x.slice(0,-1)}</div>;
   }
 
   componentWillUnmount() {
