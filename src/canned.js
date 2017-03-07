@@ -9,8 +9,8 @@ class Canned {
     this.title = o.title;
     this.group = o.group;
     this.dropdown = o.dropdown;
-    // deprectated?
     this.hidden = o.hidden;
+    this.mini = o.mini;
   }
 
   get tagline() {

@@ -25,10 +25,14 @@ class Gallery extends Component {
   }
 
   renderCanned = (c, i) => {
+    let kls = "img-responsive";
+    if (c.mini) {
+      kls += " mini";
+    }
     return (
         <div key={c.slug} className="col-xs-4 col-lg-3">
           <div className="galleryFrame">
-            <img className="img-responsive" 
+            <img className={kls} 
               alt={`Self-similarity matrix of ${c.title} by ${c.artist}`}
               onClick={(e) => {
                 this.setState({lightbox_index: i})
