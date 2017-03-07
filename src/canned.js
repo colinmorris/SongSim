@@ -1,6 +1,7 @@
 import CANNED_SONGS from './canned-data.js';
 
-var LANDING_CANNED = CANNED_SONGS[25]; 
+// 25 = buddy holly, 27 = callmemaybe
+var LANDING_CANNED = CANNED_SONGS[27]; 
 
 class Canned {
   constructor(o) {

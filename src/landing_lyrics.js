@@ -1,46 +1,105 @@
-// This is kinda silly, but it's definitely the easiest way.
-export default `What's with these homies, dissing my girl?
-Why do they gotta front?
-What did we ever do to these guys
-That made them so violent?
-Woo-hoo, but you know I'm yours
-Woo-hoo, and I know you're mine
-Woo-hoo, and that's for all time 
+export default `I threw a wish in the well,
+Don't ask me, I'll never tell
+I looked to you as it fell,
+And now you're in my way
 
-Oo-ee-oo I look just like Buddy Holly
-Oh-oh, and you're Mary Tyler Moore
-I don't care what they say about us anyway
-I don't care bout that 
+I'd trade my soul for a wish,
+Pennies and dimes for a kiss
+I wasn't looking for this,
+But now you're in my way
 
-Don't you ever fear, I'm always near
-I know that you need help
-Your tongue is twisted, your eyes are slit
-You need a guardian
-Woo-hoo, and you know I'm yours
-Woo-hoo, and I know you're mine
-Woo-hoo, and that's for all time 
+Your stare was holdin',
+Ripped jeans, skin was showin'
+Hot night, wind was blowin'
+Where you think you're going, baby?
 
-Oo-ee-oo I look just like Buddy Holly
-Oh-oh, and you're Mary Tyler Moore
-I don't care what they say about us anyway
-I don't care bout that
-I don't care bout that 
+Hey, I just met you,
+And this is crazy,
+But here's my number,
+So call me, maybe!
 
-Bang, bang a knock on the door
-Another big bang and you're down on the floor
-Oh no! What do we do?
-Don't look now but I lost my shoe
-I can't run and I can't kick
-What's a matter babe are you feeling sick?
-what's a matter, what's a matter, what's a matter you?
-What's a matter babe, are you feeling blue? oh-oh!
-And that's for all time
-And that's for all time 
+It's hard to look right
+At you baby,
+But here's my number,
+So call me, maybe!
 
-Oo-ee-oo I look just like Buddy Holly
-Oh-oh, and you're Mary Tyler Moore
-I don't care what they say about us anyway
-I don't care bout that
-I don't care bout that
-I don't care bout that
-I don't care bout that`;
+Hey, I just met you,
+And this is crazy,
+But here's my number,
+So call me, maybe!
+
+And all the other boys,
+Try to chase me,
+But here's my number,
+So call me, maybe!
+
+You took your time with the call,
+I took no time with the fall
+You gave me nothing at all,
+But still, you're in my way
+
+I beg, and borrow and steal
+At first sight and it's real
+I didn't know I would feel it,
+But it's in my way
+
+Your stare was holdin',
+Ripped jeans, skin was showin'
+Hot night, wind was blowin'
+Where you think you're going, baby?
+
+Hey, I just met you,
+And this is crazy,
+But here's my number,
+So call me, maybe!
+
+It's hard to look right
+At you baby,
+But here's my number,
+So call me, maybe!
+
+Hey, I just met you,
+And this is crazy,
+But here's my number,
+So call me, maybe!
+
+And all the other boys,
+Try to chase me,
+But here's my number,
+So call me, maybe!
+
+Before you came into my life
+I missed you so bad
+I missed you so bad
+I missed you so, so bad
+
+Before you came into my life
+I missed you so bad
+And you should know that
+I missed you so, so bad (bad, bad)
+
+It's hard to look right
+At you baby,
+But here's my number,
+So call me, maybe!
+
+Hey, I just met you,
+And this is crazy,
+But here's my number,
+So call me, maybe!
+
+And all the other boys,
+Try to chase me,
+But here's my number,
+So call me, maybe!
+
+Before you came into my life
+I missed you so bad
+I missed you so bad
+I missed you so, so bad
+
+Before you came into my life
+I missed you so bad
+And you should know that
+
+So call me, maybe!`;
