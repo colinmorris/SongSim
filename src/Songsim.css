@@ -1,6 +1,12 @@
 .mainContainer {
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     margin: 10px;
+}
+
+.matrixPane {
+    flex: none;
 }
 
 .mainContainerMobile {
@@ -15,4 +21,5 @@
 }
 
 .lyricsPane {
+    flex: 1 1 auto;
 }

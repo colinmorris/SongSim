@@ -4,21 +4,6 @@
     text-align: center;
 }
 
-@media (max-width: 800px) {
-    div.words {
-        column-count: 1;
-    }
-    .lyricsPane {
-        width: 300px;
-    }
-}
-
-@media (min-width: 800px) {
-    div.words {
-        column-count: 2;
-    }
-}
-
 textarea {
     width: 90%;
 }
@@ -28,4 +13,5 @@ textarea {
     border-style: solid;
     border-color: rgb(240, 240, 255);
     min-height: 25vh;
+    column-width: 15em;
 }

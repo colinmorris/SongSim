@@ -5,6 +5,8 @@ import './LyricsPane.css';
 import Word from './Word.js';
 import { NOINDEX } from './constants.js';
 
+/** Shows the entire current verse in a big multi-column block. Not responsible
+ * for the editing view. */
 class LyricsPane extends Component {
 
   renderWord = (word) => {

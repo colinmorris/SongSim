@@ -388,7 +388,9 @@ class Songsim extends Component {
     return (
       <div>
         <div className="container-fluid mainContainer">
-          {matrix}
+          <div className="matrixPane">
+            {matrix}
+          </div>
           <div className="lyricsPane">
               <SongSelector
                 selected={this.state.verse && this.state.verse.id}
