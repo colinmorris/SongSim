@@ -426,10 +426,22 @@ class Songsim extends Component {
           focal={this.focal_local_diag}
         />
 
+        <div className="toolboxContainer row">
         {toolbox}
+        </div>
 
           {this.bornMobile && 
-            <p className="bg-danger"></p>
+            <div className="bg-danger">
+            <p>
+              Looks like you're on a phone. Running in "mobile mode".
+              Tap a diagonal to see the matched text (highlighted in green) and
+              some context around the x and y position where the matched text appears.
+            </p>
+            <p>
+              This UI is kind of janky. For the best experience you should probably
+              use a computer. Sorry.
+            </p>
+            </div>
           }
 
       </div>

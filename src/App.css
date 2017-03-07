@@ -22,3 +22,16 @@
 .nav > li {
     display: inline-block !important;
 }
+
+li.octo {
+    max-height: 50px;
+}
+
+li.octo a {
+    max-height: 50px;
+}
+
+li.octo img {
+    position: relative;
+    top: -5px;
+}

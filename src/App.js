@@ -33,8 +33,11 @@ class App extends Component {
             <ul className="nav navbar-nav">
               {links}
               <li className="octo">
-                <a href="https://github.com/colinmorris/SongSim">
-                  <img alt="fork me on GitHub" src={octocat} />
+                <a title="Fork me on GitHub" 
+                  href="https://github.com/colinmorris/SongSim"
+                  target="_blank"
+                >
+                  <img alt="octocat" src={octocat} />
                 </a>
               </li>
             </ul>
