@@ -13,7 +13,6 @@ class LyricsEditor extends Component {
       return;
     }
     if (this.ta.value.length === 0) {
-      console.log('Got blur event with no text entered.');
       if (this.props.verse.isBlank()) {
         // Do nothing
         return;
@@ -31,10 +30,7 @@ class LyricsEditor extends Component {
       console.error("Tried to edit a song that shouldn't be editable. Bailing.");
       return;
     }
-    // TODO: if the new text value is blank, revert to the old text
-    console.log("Got text edit event");
     if (this.ta.value === this.props.verse.raw) {
-      console.log("Detected that edit had no effect. Not regenerating verse.");
       return;
     }
     var verse = new CustomVerse(this.ta.value);

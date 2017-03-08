@@ -57,13 +57,12 @@ class SongSelector extends Component {
   static loadSong(cb, canned) {
     var r = new XMLHttpRequest();
     var url = process.env.PUBLIC_URL + '/canned/' + canned.slug + '.txt';
-    console.log(`Loading ${url}`);
     r.open('GET', url);
     r.onload = () => {
       var verse = CannedVerse.fromCanned(canned, r.response);
       cb(verse);
     };
-    r.onerror = () => { console.log("uh oh"); };
+    r.onerror = () => { console.error(`uh oh. Failed to fetch ${url}`); };
     r.send();
   }
   render() {

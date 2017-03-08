@@ -56,7 +56,6 @@ class Songsim extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname === nextProps.location.pathname) {
       // Not sure if this is even necessary at this point?
-      console.log('Ignoring props update');
       return;
     }
     // new songid
@@ -84,7 +83,6 @@ class Songsim extends Component {
     if (props.params.customKey) {
       // it's a firebase key
       var key = props.params.customKey;
-      console.log(`Looking up firebase key ${key}`);
       this.db.load(key).then( (snapshot) => {
         var txt = snapshot.val();
         if (txt === null) {
@@ -137,12 +135,8 @@ class Songsim extends Component {
 
   // TODO: sort of confusingly named at this point
   makePermalink = () => {
-    console.log('Permalinking');
     console.assert(this.state.verse.isCustom() && !this.state.verse.key);
     var ref = this.db.push(this.state.verse);
-    console.log(ref);
-    console.log(`Url = ${ref.toString()}`);
-    console.log(`key = ${ref.key}`);
     this.setState(prevState => ({
       verse: new CustomVerse(prevState.verse.raw, ref.key)
     }));
