@@ -12,3 +12,7 @@
 .chapter-advanced img {
     border: 1px solid hsl(0, 0%, 75%);
 }
+
+.abtPanel img {
+    margin-bottom: 15px;
+}
