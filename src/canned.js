@@ -52,9 +52,6 @@ var GROUPED_CANS = new Map();
 for (let c of CANNED_SONGS) {
   var can = new Canned(c);
   CANNED.push(can);
-  if (can.hidden) {
-    continue;
-  }
   if (!GROUPED_CANS.has(can.group)) {
     GROUPED_CANS.set(can.group, []);
   }
