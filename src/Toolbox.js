@@ -122,7 +122,7 @@ class Toolbox extends Component {
                 type="text" readOnly={true} 
                 value={perma} />
             <button id="perma" className="btn" data-clipboard-text={perma}>
-              <span className="glyphicon glyphicon-copy" />
+              <span className="glyphicon glyphicon-copy" title="copy" />
             </button>
             </label>
       );

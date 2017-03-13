@@ -4,7 +4,7 @@ import './App.css';
 import octocat from './octocat.svg';
 
 const LINKS = [
-  {path: "/", name: "Songsim"},
+  {path: "/", name: "SongSim"},
   {path: "/about", name: "About"},
   {path: "/gallery", name: "Gallery"}
 ];
@@ -19,7 +19,7 @@ class App extends Component {
         : 
         this.props.location.pathname.startsWith(link.path)
     ;
-    return (<li className={active ? "active" : ""}
+    return (<li className={"navLink" + link.name + (active ? " active" : "")}
             key={link.name}
           >
             <Link to={link.path}>{link.name}</Link></li>);
