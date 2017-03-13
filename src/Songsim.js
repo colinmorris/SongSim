@@ -3,6 +3,7 @@ import { ResizableBox } from 'react-resizable';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { hashHistory } from 'react-router';
+import browser from 'detect-browser';
 
 import './Songsim.css';
 
@@ -283,6 +284,12 @@ class Songsim extends Component {
     this.setState(state);
   }
 
+  renderBrowserWarning() {
+    if (browser.name && browser.name !== 'chrome') {
+      return (<p className="bg-danger"><b>Warning:</b> This site runs best on Chrome. It may run slowly on other browsers, or not at all.</p>);
+    }
+  }
+
   render() {
     // TODO: this method is getting pretty huge
     var rowcols = this.focal_rowcols;
@@ -398,6 +405,7 @@ class Songsim extends Component {
         <div className="container">
           {toolbox}
         </div>
+        {this.renderBrowserWarning()}
         {debug}
         </div>
         );
@@ -437,6 +445,7 @@ class Songsim extends Component {
             </p>
             </div>
           }
+          {this.renderBrowserWarning()}
 
       </div>
     )
