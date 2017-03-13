@@ -75,7 +75,8 @@ class BaseMatrix extends Component {
       if (idx === -1) {
         return 'black';
       }
-      return BaseMatrix.colorify(idx, title_tokens.length);
+      return 'fuchsia';
+      //return BaseMatrix.colorify(idx, title_tokens.length);
     } else {
       console.error("Not implemented");
     }
