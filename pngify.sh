@@ -2,8 +2,8 @@
 
 imgsize=800
 #dest=public/img/gallery/
-dest='pngs/'
-dpi=180
+dest='./'
+dpi=90
 for path in "$@"
 do
     fname=$(basename "$path")
