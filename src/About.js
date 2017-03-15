@@ -157,34 +157,17 @@ const SECTIONS =
       </blockquote>
       <p>The second-last line produces the checkerboard pattern.</p>
     </div>)},
-  // Epizeuxis
-  {img: 'cgyoomh_blocks.png', body: (
+  {img: 'psychokiller.png', body: (
     <div>
       <p><b>Filled-in blocks</b> are another special case of the 'stripey squares' pattern, where what's chanted is just a single word.</p>
-      <p>The song on the left, <Link to="/cgyoomh">Can't Get You Out Of My Head</Link> by Kylie Minogue is an especially dramatic example. It's about 47% "la la la" by volume.</p>
-      <p>The Greeks called this <a href="https://en.wiktionary.org/wiki/epizeuxis">epizeuxis</a>. I just call it great pop music.</p>
-    </div>)},
-  {img: 'badromance_trunc.png', body: (
-    <div>
-      <p><b>Short diagonals</b> represent some phrase that 
-      the artist is riffing on. The matrix to the left is the beginning of Lady 
-      Gaga's "Bad Romance", up to the end of the first chorus. The first verse goes...</p>
+      <p>The song on the left, <Link to="/psychokiller">Psycho Killer</Link> by Talking Heads has two runs of repeated words in the chorus:.</p>
       <blockquote>
-        I want your ugly<br/>
-        I want your disease<br/>
-        I want your everything as long as it's free<br/>
-        I want your love<br/>
-        Love-love-love<br/>
-        I want your love<br/><br/>
-        I want your drama<br/>
-        The touch of your hand<br/>
-        I want your leather studded kiss in the sand<br/>
-        I want your love<br/>
-        Love-love-love, I want your love (Love-love-love, I want your love)
+        Psycho killer< br/>
+        Qu'est-ce que c'est< br/>
+        Fa fa fa fa fa fa fa fa fa far better< br/>
+        Run run run run run run run away< br/>
       </blockquote>
-      <p>The many short diagonals around the middle of the matrix correspond to the
-      phrase "I want your", which begins nearly every line of the verses.
-      (In rhetoric, this is called <a href="https://en.wikipedia.org/wiki/Anaphora_(rhetoric)">anaphora</a>.)</p>
+      <p>The Greeks called this <a href="https://en.wiktionary.org/wiki/epizeuxis">epizeuxis</a>. I just call it great pop music.</p>
     </div>)},
   {img: 'lovefool_color.png', body: (
     <div>
