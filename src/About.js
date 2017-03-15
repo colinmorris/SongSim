@@ -87,6 +87,7 @@ const SECTIONS =
         walks through the example of "Baa Baa Black Sheep".</p>
         <p>Curious for more? Check out the <Link to="/about/advanced">field guide</Link> to
         shapes and patterns of interest you're likely to encounter in these matrices.</p>
+        <p>Want to read even more pontification on this stuff? Check out my blog post, <a href="/blog/weird-pop-songs">6 Weird Pop Songs, Visualized</a>.</p>
       </div>)},
 ],
 'intro':
