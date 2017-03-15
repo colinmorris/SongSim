@@ -24,6 +24,10 @@ class Gallery extends Component {
     return this.props.params.cat || DEFAULT_CAT_SLUG;
   }
 
+  componentDidMount() {
+    document.title = "Gallery - SongSim";
+  }
+
   renderCanned = (c, i) => {
     let kls = "img-responsive";
     if (c.mini) {

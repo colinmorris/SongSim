@@ -99,6 +99,7 @@ class Songsim extends Component {
           this.props.router.replace('/');
         }
       );
+      document.title = config.base_title;
     } else if (props.location.pathname === "/" + CUSTOM_SLUG) {
       // We don't allow editing in mobile mode. Cause I was too lazy to build the UI.
       if (this.state.mobile) {
@@ -114,12 +115,14 @@ class Songsim extends Component {
       var canned = SongSelector.lookupCanned(songId);
       if (canned) {
         SongSelector.loadSong(this.onTextChange, canned);
+        document.title = canned.title + ' - ' + config.base_title;
       } else {
         console.error(`Uh oh. Failed to load slug ${songId}`);
       }
     } else {
       // Return the default landing song.
       var c = LANDING_CANNED;
+      document.title = config.base_title;
       return CannedVerse.fromCanned(c, LANDING_LYRICS);
     }
     // If we've reached this far, we must be loading asynchronously. Return nothing.

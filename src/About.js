@@ -45,6 +45,10 @@ class About extends Component {
             </div>
           </div>);
   }
+  
+  componentDidMount() {
+    document.title = "About - SongSim";
+  }
 
   render() {
     var chapter = this.props.params.chapter || 'default';
