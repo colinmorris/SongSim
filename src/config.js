@@ -8,8 +8,10 @@ var config = {
   checkerboard: true,
   rect_saturation: 100, // range [0-100]
   rect_lightness: 50, // range [0-100]
-  stopwords: true,
   testingFBKey: '-KeAcPBicxmHgZNEY9UM',
+  // Make sure the two options below sum to 1. (I know, this is dumb. Too lazy to refactor.)
+  stopwords: false,
+  default_ignore_singletons: true,
 };
 
 export default config;

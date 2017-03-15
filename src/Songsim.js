@@ -40,7 +40,7 @@ class Songsim extends Component {
       matrix_focal: {x: NOINDEX, y: NOINDEX},
       lyrics_focal: NOINDEX,
       mode: config.default_mode,
-      ignore_singletons: false,
+      ignore_singletons: config.default_ignore_singletons,
       ignore_stopwords: config.stopwords,
       mobile: this.shouldDefaultMobileMode(),
       editing: false,

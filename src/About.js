@@ -103,7 +103,7 @@ const SECTIONS =
       ]},
     {img: 'baa_the.png', paras: [
         'Single squares off the main diagonal represent individual words that are used repeatedly in the song. The word "the" is used 4 times in the rhyme. The first three uses are as part of the repeating phrase "one for the", but the last instance ("down the lane"), isn\'t part of a repeating phrase.',
-        '(By default, single-word matches on common words like "the" aren\'t shown, but this is configurable.).'
+        '(By default, single-word matches are ignored, but this is configurable.).'
       ]},
     {img: 'baa_colorful.png', paras: [
         '"Colorful" mode assigns a unique color to each repeated word (words appearing only once are black). When there are several repeated themes, this can make it easier to distinguish them.',
