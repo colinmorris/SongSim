@@ -71,7 +71,7 @@ var CANNED_SONGS = [
   {slug: "hotlinebling", artist: "Drake", title: "Hotling Bling", group: CONTEMP.slug, dropdown: true},
   {slug: "humps", artist: "The Black-eyed Peas", title: "My Humps", group: NAUGHTS.slug},
   {slug: "ibleed", artist: "The Pixies", title: "I Bleed", group: NINETIES.slug},
-  {slug: "ifeellove", artist: "Diana Ross", title: "I Feel Love", group: SEVENTIES.slug, dropdown: true},
+  {slug: "ifeellove", artist: "Donna Summer", title: "I Feel Love", group: SEVENTIES.slug, dropdown: true},
   {slug: "ikissedagirl", artist: "Katy Perry", title: "I Kissed A Girl", group: NAUGHTS.slug},
   {slug: "iknowwhatboyslike", artist: "The Waitresses", title: "I Know What Boys Like", group: EIGHTIES.slug},
   {slug: "independentwomen", artist: "Destiny's Child", title: "Independent Women Pt. 1", group: NAUGHTS.slug},
