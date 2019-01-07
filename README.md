@@ -1,3 +1,5 @@
+# [SongSim](https://colinmorris.github.io/SongSim/#/)
+
 A little web app for making interactive [self-similarity matrices](https://en.wikipedia.org/wiki/Self-similarity_matrix) from text (in particular, song lyrics and poetry). 
 
 Given a text of length n tokens, constructs an n x n matrix, where (i, j) is filled in iff the ith and jth words are the same (after some normalization).
