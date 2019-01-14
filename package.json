@@ -9,6 +9,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "clipboard": "^1.6.1",
+    "colormap": "^2.3.0",
     "detect-browser": "^1.6.2",
     "file-saver": "^1.3.3",
     "firebase": "^3.6.10",

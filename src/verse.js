@@ -1,5 +1,6 @@
 import {Diagonal} from './utils.js';
 import {CUSTOM_SLUG} from './constants.js';
+import colormap from 'colormap';
 
 /** A sequence of repeated words. */
 class Lala {
@@ -206,6 +207,12 @@ class Verse {
       this.word_ids = word_ids;
     }
     this.nWords = nWords;
+    this.colorMap = colormap({
+         colormap: 'plasma',
+         nshades: nWords,
+         format: 'hex',
+         alpha: 1
+     });
     this.matrix = new VerseMatrix(this.clean_words);
   }
 

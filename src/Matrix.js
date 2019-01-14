@@ -51,11 +51,6 @@ class BaseMatrix extends Component {
         );
   }
 
-  static colorify(i, n_indices) {
-    var hue = Math.min(360, Math.floor(360 * i/n_indices));
-    return hsluvToHex([hue, config.rect_saturation, config.rect_lightness]);
-  }
-
   rectColor(x) {
     if (this.props.mode === MODE.vanilla) {
       return 'black';
@@ -64,7 +59,7 @@ class BaseMatrix extends Component {
       if (i === -1) { // hapax
         return 'black';
       }
-      return BaseMatrix.colorify(i, this.props.verse.nWords);
+      return this.props.verse.colorMap[i];
     } else if (this.props.mode === MODE.color_title) {
       // TODO: maybe should only color intact instances of the title? kind of 
       // annoying to draw a bunch of useless colored dots because the title
