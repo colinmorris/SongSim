@@ -20,3 +20,11 @@ There are lots of examples of researchers constructing self-similarity matrices 
 - unzip
 - run pngify.sh
 - move pngs to public/img/gallery (or wherever else they're needed)
+
+### Demo
+
+[View demo at https://colinmorris.github.io/SongSim](https://colinmorris.github.io/SongSim)
+
+### License
+
+MIT
