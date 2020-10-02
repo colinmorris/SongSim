@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import './LyricsPane.css';
+import '../lyrics.css';
 
-import {CustomVerse} from './verse.js';
+import {CustomVerse} from '../../../utils/verse.js';
 
 class LyricsEditor extends Component {
   

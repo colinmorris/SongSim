@@ -1,18 +1,18 @@
-var POETRY = {label: 'Poetry', slug: 'poetry'};
-var NR = {label: "Nursery Rhymes", slug: "nursery_rhymes"};
-var MISC = {label: "Misc", slug: "misc"};
-var SIXTIES = {label: "60's", slug: "60s"};
-var SEVENTIES = {label: "70's", slug: "70s"};
-var EIGHTIES = {label: "80's", slug: "80s"};
-var NINETIES = {label: "90's", slug: "90s"};
-var NAUGHTS = {label: "00's", slug: "00s"};
-var CONTEMP = {label: "Contemporary", slug: "contemp"};
+const POETRY = {label: 'Poetry', slug: 'poetry'};
+const NR = {label: "Nursery Rhymes", slug: "nursery_rhymes"};
+const MISC = {label: "Misc", slug: "misc"};
+const SIXTIES = {label: "60's", slug: "60s"};
+const SEVENTIES = {label: "70's", slug: "70s"};
+const EIGHTIES = {label: "80's", slug: "80s"};
+const NINETIES = {label: "90's", slug: "90s"};
+const NAUGHTS = {label: "00's", slug: "00s"};
+const CONTEMP = {label: "Contemporary", slug: "contemp"};
 
-var ORDERED_CATEGORIES = [
+const ORDERED_CATEGORIES = [
   CONTEMP, NAUGHTS, NINETIES, EIGHTIES, SEVENTIES, SIXTIES, NR, POETRY, MISC
 ];
 
-var CANNED_SONGS = [
+const CANNED_SONGS = [
   {slug: "12daysofxmas", artist: "", title: "The 12 Days Of Christmas", group: MISC.slug, dropdown: true},
   {slug: "4thofjuly", artist: "Kelis", title: "4th Of July", group: NAUGHTS.slug, hidden: true},
   {slug: "abc", artist: "Jackson 5", title: "ABC", group: SEVENTIES.slug, dropdown: true},

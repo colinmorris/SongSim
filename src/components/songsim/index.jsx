@@ -5,23 +5,23 @@ import JSZip from 'jszip';
 import { hashHistory } from 'react-router';
 import browser from 'detect-browser';
 
-import './Songsim.css';
+import './style.css';
 
-import LyricsPorthole from './LyricsPorthole.js';
-import Toolbox from './Toolbox';
-import Matrix from './Matrix.js';
-import { Diagonal } from './utils.js';
-import DummyMatrix from './DummyMatrix.js';
-import LyricsPane from './LyricsPane.js';
-import SongSelector from './SongSelector.js';
-import LyricsEditor from './LyricsEditor.js';
-import {CustomVerse, CannedVerse} from './verse.js';
-import { MODE, CUSTOM_SLUG, NOINDEX } from './constants.js';
-import { LANDING_CANNED } from './canned.js';
-import LANDING_LYRICS from './landing_lyrics.js';
-import config from './config.js';
-import DBHelper from './firebasehelper.js';
-import CANNED_SONGS from './canned-data.js';
+import LyricsPorthole from '../lyrics/porthole';
+import Toolbox from '../toolbox';
+import Matrix from '../matrix';
+import { Diagonal } from '../../utils';
+import DummyMatrix from '../matrix/DummyMatrix';
+import LyricsPane from '../lyrics/pane';
+import SongSelector from '../song-selector';
+import LyricsEditor from '../lyrics/editor';
+import {CustomVerse, CannedVerse} from '../../utils/verse';
+import { MODE, CUSTOM_SLUG, NOINDEX } from '../../constants';
+import { LANDING_CANNED } from '../../utils/canned';
+import LANDING_LYRICS from '../../utils/landing-lyrics';
+import config from '../../config';
+import DBHelper from '../../utils/firebasehelper';
+import CANNED_SONGS from '../../utils/canned.data';
 
 const MOBILE_THRESH = 768;
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import './App.css';
-import octocat from './octocat.svg';
+import './style.css';
+import octocat from '../../octocat.svg';
 
 const LINKS = [
   {path: "/", name: "SongSim"},
@@ -9,10 +9,10 @@ const LINKS = [
   {path: "/gallery", name: "Gallery"}
 ];
 
-class App extends Component {
+class Home extends Component {
   renderNavLink = (link) => {
     // I'm sure there's a better way to do this...
-    let active = link.path === "/" ? 
+    const active = link.path === "/" ? 
         !LINKS.some((l) => 
             ( l.path !== "/" && this.props.location.pathname.startsWith(l.path))
         )
@@ -25,7 +25,7 @@ class App extends Component {
             <Link to={link.path}>{link.name}</Link></li>);
   }
   render() {
-    var links = LINKS.map(this.renderNavLink);
+    const links = LINKS.map(this.renderNavLink);
     return (
       <div className="App">
         <nav className="navbar navbar-default">
@@ -51,4 +51,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;

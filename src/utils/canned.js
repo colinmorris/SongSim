@@ -1,4 +1,4 @@
-import CANNED_SONGS from './canned-data.js';
+import CANNED_SONGS from './canned.data.js';
 
 // 25 = buddy holly, 27 = callmemaybe
 var LANDING_CANNED = CANNED_SONGS[27]; 
@@ -46,11 +46,11 @@ class Canned {
 
 }
 
-var CANNED = [];
-var GROUPED_CANS = new Map();
+const CANNED = [];
+const GROUPED_CANS = new Map();
 
 for (let c of CANNED_SONGS) {
-  var can = new Canned(c);
+  const can = new Canned(c);
   CANNED.push(can);
   if (!GROUPED_CANS.has(can.group)) {
     GROUPED_CANS.set(can.group, []);
@@ -58,9 +58,9 @@ for (let c of CANNED_SONGS) {
   GROUPED_CANS.get(can.group).push(can);
 }
 // sort values
-let cmp = (a,b) => {
-  var keya = a.artist || a.title;
-  var keyb = b.artist || b.title;
+const cmp = (a,b) => {
+  const keya = a.artist || a.title;
+  const keyb = b.artist || b.title;
   return keya < keyb ? -1 : 
     (keyb < keya ? 1 : 0)
 };

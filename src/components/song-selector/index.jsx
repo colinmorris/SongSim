@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
 
-import './SongSelector.css';
+import './style.css';
 
-import {CUSTOM_SLUG} from './constants.js';
-import { GROUPED_CANS } from './canned.js';
-import CANNED_SONGS, { ORDERED_CATEGORIES } from './canned-data.js';
-import {CannedVerse} from './verse.js';
+import {CUSTOM_SLUG} from '../../constants';
+import { GROUPED_CANS } from '../../utils/canned';
+import CANNED_SONGS, { ORDERED_CATEGORIES } from '../../utils/canned.data';
+import {CannedVerse} from '../../utils/verse';
 
   
 class SongSelector extends Component {

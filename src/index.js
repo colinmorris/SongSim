@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import About from './About.js';
-import Gallery from './Gallery.js';
-import Songsim from './Songsim.js';
+import Home from './routes/home';
+import About from './routes/about';
+import Gallery from './routes/gallery';
+import Songsim from './components/songsim';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 import './index.css';
 
@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
   (<Router history={hashHistory}>
-    <Route path="/" component={App} >
+      <Route path="/" component={Home} >
       <Route path="about(/:chapter)" component={About} />
       <Route path="gallery(/:cat)" component={Gallery} />
       <Route path="custom(/:customKey)" component={Songsim} />

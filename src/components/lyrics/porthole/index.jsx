@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './LyricsPorthole.css';
+import './style.css';
 
 
 class LyricsPorthole extends Component {

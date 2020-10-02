@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { hsluvToHex } from 'hsluv';
 import { saveAs } from 'file-saver';
 
-import './Matrix.css';
+import './style.css';
 
-import {STOPWORDS, NOINDEX, MODE} from './constants.js';
-import config from './config.js';
+import {STOPWORDS, NOINDEX, MODE} from '../../constants.js';
+import config from '../../config.js';
 
 // TODO: colormap docs (https://www.npmjs.com/package/colormap) say that n>10
 // should be enough divisions for any colormap, but using the 'warm' colormap

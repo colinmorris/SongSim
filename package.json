@@ -6,6 +6,9 @@
   "devDependencies": {
     "react-scripts": "0.9.0"
   },
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "clipboard": "^1.6.1",

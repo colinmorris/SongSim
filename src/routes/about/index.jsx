@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import './About.css';
+import './style.css';
 
 const IMG_DIR = '/img/about/';
 
@@ -28,7 +28,7 @@ class About extends Component {
         return p(i);
       });
     }
-    var panelClass = SECTION_METADATA[chapter] ? 
+    let panelClass = SECTION_METADATA[chapter] ? 
       SECTION_METADATA[chapter].panelClass
       : "col-lg-10 col-lg-offset-1 col-xs-12";
     panelClass += " abtPanel";
@@ -51,9 +51,9 @@ class About extends Component {
   }
 
   render() {
-    var chapter = this.props.params.chapter || 'default';
-    var sections = SECTIONS[chapter].map((sect) => (this.renderSection(sect, chapter)));
-    var chapter_preamble;
+    const chapter = this.props.params.chapter || 'default';
+    const sections = SECTIONS[chapter].map((sect) => (this.renderSection(sect, chapter)));
+    let chapter_preamble;
     if (this.props.params.chapter === 'advanced') {
       chapter_preamble = (
           <p>Below are some common patterns to look out for.</p>
@@ -81,6 +81,7 @@ class About extends Component {
   }
 }
 
+// TODO: check what that do (seems like its hardcoded)
 const SECTIONS = 
 {
 'default': [

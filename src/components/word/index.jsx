@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import {NOINDEX} from './constants.js';
+import {NOINDEX} from '../../constants';
 
-import './Word.css';
+import './style.css';
 
 
 class Word extends Component {

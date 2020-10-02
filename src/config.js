@@ -1,9 +1,9 @@
 import {MODE} from './constants.js';
 
-var config = {
+const config = {
   alleys: true, 
   default_mode: MODE.vanilla,
-  debug: false,
+  debug: true,
   exportSVGEnabled: true,
   checkerboard: true,
   rect_saturation: 100, // range [0-100]

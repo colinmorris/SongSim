@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import './LyricsPane.css';
+import '../lyrics.css';
 
-import Word from './Word.js';
-import { NOINDEX } from './constants.js';
+import Word from '../../word/';
+import { NOINDEX } from '../../../constants';
 
 /** Shows the entire current verse in a big multi-column block. Not responsible
  * for the editing view. */

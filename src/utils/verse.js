@@ -1,5 +1,5 @@
-import {Diagonal} from './utils.js';
-import {CUSTOM_SLUG} from './constants.js';
+import {Diagonal} from './index.js';
+import {CUSTOM_SLUG} from '../constants.js';
 
 /** A sequence of repeated words. */
 class Lala {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Matrix.css';
+import './style.css';
 
 class DummyMatrix extends Component {
 

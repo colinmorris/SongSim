@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Lightbox from 'react-image-lightbox';
 
-import './Gallery.css';
+import './style.css';
 
-import { Canned, GROUPED_CANS } from './canned.js';
-import CANNED_SONGS, { ORDERED_CATEGORIES } from './canned-data.js';
+import { Canned, GROUPED_CANS } from '../../utils/canned';
+import CANNED_SONGS, { ORDERED_CATEGORIES } from '../../utils/canned.data';
 
 const GALLERY_FILE_PATH = '/img/gallery/';
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Clipboard from 'clipboard';
 
-import './Toolbox.css';
+import './style.css';
 
-import config from './config.js';
-import {MODE, MODE_TOOLTIPS} from './constants.js';
+import config from '../../config';
+import {MODE, MODE_TOOLTIPS} from '../../constants';
 
 // TODO: is this really the orthodox way to do this? :/
 new Clipboard('#perma');
